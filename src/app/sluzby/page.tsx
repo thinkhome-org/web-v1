@@ -1,7 +1,8 @@
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+
 export default function ContactPage() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-8 text-center bg-background">
+    <main className="flex flex-col items-center justify-start p-8 text-center bg-background relative">
       {/* Page heading */}
       <h1 className="text-5xl font-extrabold mb-10 text-white drop-shadow-lg">
         Naše služby
