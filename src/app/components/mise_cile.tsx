@@ -1,21 +1,21 @@
-import { Clock, Shield, Cpu, Users } from "lucide-react";
+import { IconClock, IconShield, IconCpu, IconUsers } from "@tabler/icons-react";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 
 const missions = [
   {
-    icon: Clock,
+    icon: IconClock,
     text: "Šetříme zákazníkům čas i peníze chytře automatizovaným a bezpečným IT.",
   },
   {
-    icon: Shield,
+    icon: IconShield,
     text: "Budujeme spolehlivé a stabilní prostředí, které roste s vaší firmou.",
   },
   {
-    icon: Cpu,
+    icon: IconCpu,
     text: "Nasazujeme moderní technologie pro reálné potřeby klientů.",
   },
   {
-    icon: Users,
+    icon: IconUsers,
     text: "Pomáháme s konzultací, správou i vývojem na míru – lidsky, rychle a srozumitelně.",
   },
 ];
