@@ -6,6 +6,7 @@ import {
   IconExchange,
   IconHome,
   IconNewSection,
+  IconUser,
   IconTerminal2,
 } from "@tabler/icons-react";
 
@@ -32,6 +33,20 @@ export function FloatingDockDemo() {
         <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "/kontakt",
+    },
+    {
+      title: "Náš tým",
+      icon: (
+        <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
+      href: "/tym",
+    },
+    {
+      title: "Github",
+      icon: (
+        <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
+      href: "https://github.com/thinkhome-org/web-v1",
     },
   ];
   return (
