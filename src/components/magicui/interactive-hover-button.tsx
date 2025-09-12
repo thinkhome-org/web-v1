@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight } from "lucide-react";
+import { IconArrowRight } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
 interface InteractiveHoverButtonProps
@@ -26,7 +26,7 @@ export const InteractiveHoverButton = React.forwardRef<
       </div>
       <div className="absolute top-0 z-10 flex h-full w-full translate-x-12 items-center justify-center gap-2 text-primary-foreground opacity-0 transition-all duration-400 group-hover:-translate-x-5 group-hover:opacity-100">
         <span>{children}</span>
-        <ArrowRight />
+        <IconArrowRight />
       </div>
     </button>
   );

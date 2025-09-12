@@ -1,15 +1,15 @@
-import { Mail, Phone } from "lucide-react";
+import { IconMail, IconPhone } from "@tabler/icons-react";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import { CopyText } from "@/components/copyText";
 import { Footer } from "@/app/components/footer";
 const contactWays = [
   {
-    icon: Mail,
+    icon: IconMail,
 
     value: "info@thinkhome.org",
   },
   {
-    icon: Phone,
+    icon: IconPhone,
     value: "+420 910 129 289",
   },
 ];
