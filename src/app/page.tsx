@@ -3,7 +3,6 @@ import { FloatingDockDemo } from "./components/dock";
 import { Hero } from "./components/hero";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { MiseCile } from "./components/mise_cile";
-import { Footer } from "./components/footer";
 
 export default function Home() {
     return (
@@ -13,9 +12,6 @@ export default function Home() {
             </BlurFade>
             <BlurFade>
                 <MiseCile />
-            </BlurFade>
-            <BlurFade>
-                <Footer />
             </BlurFade>
         </main>
     );
