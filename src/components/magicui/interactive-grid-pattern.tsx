@@ -1,55 +1,66 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-/**
- * InteractiveGridPattern is a component that renders a grid pattern with interactive squares.
- *
- * @param width - The width of each square.
- * @param height - The height of each square.
- * @param squares - The number of squares in the grid. The first element is the number of horizontal squares, and the second element is the number of vertical squares.
- * @param className - The class name of the grid.
- * @param squaresClassName - The class name of the squares.
- */
 interface InteractiveGridPatternProps extends React.SVGProps<SVGSVGElement> {
-  width?: number;
-  height?: number;
-  squares?: [number, number]; // [horizontal, vertical]
+  width?: number; // width of each square
+  height?: number; // height of each square
   className?: string;
   squaresClassName?: string;
 }
 
-/**
- * The InteractiveGridPattern component.
- *
- * @see InteractiveGridPatternProps for the props interface.
- * @returns A React component.
- */
 export function InteractiveGridPattern({
   width = 40,
   height = 40,
-  squares = [24, 24],
   className,
   squaresClassName,
   ...props
 }: InteractiveGridPatternProps) {
-  const [horizontal, vertical] = squares;
+  const [viewport, setViewport] = useState({ w: 0, h: 0, scrollY: 0 });
   const [hoveredSquare, setHoveredSquare] = useState<number | null>(null);
+
+  useEffect(() => {
+    const update = () => {
+      setViewport({
+        w: window.innerWidth,
+        h: window.innerHeight,
+        scrollY: window.scrollY,
+      });
+    };
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update);
+    };
+  }, []);
+
+  if (!viewport.w || !viewport.h) return null;
+
+  const cols = Math.ceil(viewport.w / width);
+  const rows = Math.ceil(viewport.h / height);
+  const totalSquares = cols * rows;
 
   return (
     <svg
-      width={width * horizontal}
-      height={height * vertical}
+      width={viewport.w}
+      height={viewport.h}
+      style={{ transform: `translateY(${viewport.scrollY}px)` }}
       className={cn(
-        "absolute inset-0 h-full w-full border border-gray-400/30",
-        className,
+        "fixed top-0 left-0 w-screen h-screen pointer-events-auto z-0",
+        className
       )}
       {...props}
     >
-      {Array.from({ length: horizontal * vertical }).map((_, index) => {
-        const x = (index % horizontal) * width;
-        const y = Math.floor(index / horizontal) * height;
+      {Array.from({ length: totalSquares }).map((_, index) => {
+        const col = index % cols;
+        const row = Math.floor(index / cols);
+
+        const x = col * width;
+        const y = row * height;
+
         return (
           <rect
             key={index}
@@ -58,9 +69,9 @@ export function InteractiveGridPattern({
             width={width}
             height={height}
             className={cn(
-              "stroke-gray-400/30 transition-all duration-100 ease-in-out [&:not(:hover)]:duration-1000",
+              "stroke-gray-400/30 transition-all duration-100 ease-in-out",
               hoveredSquare === index ? "fill-gray-300/30" : "fill-transparent",
-              squaresClassName,
+              squaresClassName
             )}
             onMouseEnter={() => setHoveredSquare(index)}
             onMouseLeave={() => setHoveredSquare(null)}

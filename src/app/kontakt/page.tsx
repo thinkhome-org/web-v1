@@ -48,10 +48,7 @@ export default function ContactPage() {
           })}
         </div>
 
-        <InteractiveGridPattern
-          squares={[100, 100]}
-          className="z-0 opacity-10"
-        />
+        <InteractiveGridPattern  className="z-0 opacity-10" />
       </div>
 
       <Footer />
