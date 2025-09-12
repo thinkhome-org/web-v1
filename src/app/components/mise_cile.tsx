@@ -1,21 +1,23 @@
-import { IconClock, IconShield, IconCpu, IconUsers } from "@tabler/icons-react";
+"use client";
+
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+import { FeatureCard } from "@/components/ui/feature-card";
 
 const missions = [
   {
-    icon: IconClock,
+    icon: 'clock' as const,
     text: "Šetříme zákazníkům čas i peníze chytře automatizovaným a bezpečným IT.",
   },
   {
-    icon: IconShield,
+    icon: 'shield' as const,
     text: "Budujeme spolehlivé a stabilní prostředí, které roste s vaší firmou.",
   },
   {
-    icon: IconCpu,
+    icon: 'cpu' as const,
     text: "Nasazujeme moderní technologie pro reálné potřeby klientů.",
   },
   {
-    icon: IconUsers,
+    icon: 'users' as const,
     text: "Pomáháme s konzultací, správou i vývojem na míru – lidsky, rychle a srozumitelně.",
   },
 ];
@@ -31,24 +33,14 @@ export function MiseCile() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {missions.map((mission, index) => {
-            const IconComponent = mission.icon;
-            return (
-              <div
-                key={index}
-                className="group p-6 rounded-lg bg-card/80 border z-20 border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-md"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-2 rounded-lg bg-muted/90 group-hover:bg-muted/80 transition-colors flex-shrink-0 backdrop-blur-sm">
-                    <IconComponent className="h-6 w-6 text-foreground" />
-                  </div>
-                  <p className="text-foreground leading-relaxed text-pretty">
-                    {mission.text}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+          {missions.map((mission, index) => (
+            <FeatureCard
+              key={index}
+              icon={mission.icon}
+              description={mission.text}
+              className="z-20"
+            />
+          ))}
         </div>
         <InteractiveGridPattern className="z-0 opacity-10" />
       </div>
