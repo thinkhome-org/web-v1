@@ -18,19 +18,6 @@ export const metadata: Metadata = {
     title: "ThinkHome - Moderní IT bez starostí",
     description: "Zbavte se starostí o technologie a zaměřte se na své podnikání. ThinkHome nabízí kompletní správu firemního IT – od hardware, přes weby až po moderní bezpečnostní řešení.",
     metadataBase: new URL('https://thinkhome.org'),
-    icons: {
-        icon: [
-            { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
-            { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-            { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-            { url: '/favicon.svg', type: 'image/svg+xml' },
-        ],
-        apple: [
-            { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-        ],
-        shortcut: '/favicon.ico',
-    },
-    manifest: '/site.webmanifest',
     openGraph: {
         title: "ThinkHome - Moderní IT bez starostí",
         description: "Zbavte se starostí o technologie a zaměřte se na své podnikání. ThinkHome nabízí kompletní správu firemního IT – od hardware, přes weby až po moderní bezpečnostní řešení.",
@@ -55,6 +42,10 @@ export const metadata: Metadata = {
             'max-snippet': -1,
         },
     },
+    icons: {
+        icon: '/favicon.ico'
+    },
+    manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
