@@ -54,4 +54,23 @@ export function MiseCile() {
       </div>
     </section>
   );
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {missions.map((mission, index) => {
+                        const IconComponent = mission.icon;
+                        return (
+                            <div key={index} className="group p-6 rounded-lg bg-card/80 border z-20 border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-md">
+                                <div className="flex items-start gap-4">
+                                    <div className="p-2 rounded-lg bg-muted/90 group-hover:bg-muted/80 transition-colors flex-shrink-0 backdrop-blur-sm">
+                                        <IconComponent className="h-6 w-6 text-foreground" />
+                                    </div>
+                                    <p className="text-foreground leading-relaxed text-pretty">{mission.text}</p>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+                <InteractiveGridPattern className="z-0 opacity-10" />
+            </div>
+        </section>
+    );
 }
