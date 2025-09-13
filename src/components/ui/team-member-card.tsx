@@ -59,7 +59,7 @@ export function TeamMemberCard({
   return (
     <div
       className={cn(
-        "group p-6 rounded-lg bg-card/80 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-md z-10",
+        "group p-6 rounded-lg bg-card/60 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-xl z-10",
         onCardClick && "cursor-pointer",
         className
       )}
@@ -68,7 +68,7 @@ export function TeamMemberCard({
       <div className="flex flex-col items-center gap-4 h-full">
         {/* Avatar */}
         <div className={cn(
-          "relative rounded-lg bg-muted/90 group-hover:bg-muted/80 transition-colors backdrop-blur-sm overflow-hidden",
+          "relative rounded-lg bg-muted/70 group-hover:bg-muted/60 transition-colors backdrop-blur-lg overflow-hidden",
           avatarSizes[avatarSize]
         )}>
           {member.photo_location && member.photo_location !== '' ? (

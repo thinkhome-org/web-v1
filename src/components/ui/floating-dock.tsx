@@ -86,7 +86,7 @@ const FloatingDockMobile = ({
               <div key={item.title} className="opacity-100">
                 <a
                   href={item.href}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-200"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
                 </a>
@@ -121,7 +121,7 @@ const FloatingDockMobile = ({
               >
                 <a
                   href={item.href}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-200"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
                 </a>
@@ -144,7 +144,7 @@ const ToggleButton = ({
 }) => (
   <button
     onClick={() => setOpen(!open)}
-    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-200"
+    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
   >
     <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
   </button>
@@ -165,7 +165,7 @@ const FloatingDockDesktop = ({
   const mouseX = useMotionValue(Infinity); // Always called
 
   const containerClass = cn(
-    "mx-auto hidden h-16 items-end gap-4 rounded-2xl bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 px-4 pb-3 md:flex shadow-lg",
+    "mx-auto hidden h-16 items-end gap-4 rounded-2xl bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 px-4 pb-3 md:flex shadow-lg",
     className
   );
 

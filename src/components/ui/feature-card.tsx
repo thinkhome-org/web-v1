@@ -92,7 +92,7 @@ export function FeatureCard({
   return (
     <div
       className={cn(
-        "group p-6 rounded-lg bg-card/80 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-md z-10",
+        "group p-6 rounded-lg bg-card/60 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-xl z-10",
         onCardClick && "cursor-pointer",
         className
       )}
@@ -104,7 +104,7 @@ export function FeatureCard({
       )}>
         {/* Icon Container */}
         <div className={cn(
-          "p-2 rounded-lg bg-muted/90 group-hover:bg-muted/80 transition-colors flex-shrink-0 backdrop-blur-sm",
+          "p-2 rounded-lg bg-muted/70 group-hover:bg-muted/60 transition-colors flex-shrink-0 backdrop-blur-lg",
           layout === "vertical" ? "" : "",
           iconContainerClassName
         )}>

@@ -31,10 +31,10 @@ export default function ContactPage() {
             return (
               <div
                 key={index}
-                className="group p-6 rounded-lg bg-card/80 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-md z-10"
+                className="group p-6 rounded-lg bg-card/60 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-xl z-10"
               >
                 <div className="flex flex-col items-center justify-center gap-4 h-full">
-                  <div className="p-3 rounded-lg bg-muted/90 group-hover:bg-muted/80 transition-colors backdrop-blur-sm">
+                  <div className="p-3 rounded-lg bg-muted/70 group-hover:bg-muted/60 transition-colors backdrop-blur-lg">
                     <Icon className="h-6 w-6 text-foreground" />
                   </div>
                   <CopyText
