@@ -17,9 +17,6 @@ export const Hero = () => {
           weby až po moderní bezpečnostní řešení. Vše vyřešíme spolehlivě,
           rychle a efektivně. Přitom nic nemusíte řešit!
         </p>
-        <InteractiveHoverButton className="w-fit z-20 ml-0 sm:ml-6 lg:ml-12">
-          To chceme!
-        </InteractiveHoverButton>
       </div>
       <InteractiveGridPattern className="z-0 opacity-10" />
     </div>
