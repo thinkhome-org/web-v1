@@ -27,7 +27,7 @@ export function MiseCile() {
     <section className="py-16 px-4 bg-background dark">
       <div className="max-w-6xl w-[75%] mx-auto">
         <div className="text-left z-20 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance text-neutral-400">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
             Naše mise
           </h2>
         </div>

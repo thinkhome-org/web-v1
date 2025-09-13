@@ -4,7 +4,19 @@ import { cn } from "@/lib/utils";
 import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
 import { AnimatePresence, MotionValue, motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+
+// Check if motion is supported
+const useMotionSupport = () => {
+  const [isSupported, setIsSupported] = useState(false);
+  
+  useEffect(() => {
+    // Check if motion is available
+    setIsSupported(typeof window !== 'undefined' && 'requestAnimationFrame' in window);
+  }, []);
+  
+  return isSupported;
+};
 
 export const FloatingDock = ({ items, desktopClassName, mobileClassName }: { items: { title: string; icon: React.ReactNode; href: string }[]; desktopClassName?: string; mobileClassName?: string }) => {
     return (
@@ -17,6 +29,30 @@ export const FloatingDock = ({ items, desktopClassName, mobileClassName }: { ite
 
 const FloatingDockMobile = ({ items, className }: { items: { title: string; icon: React.ReactNode; href: string }[]; className?: string }) => {
     const [open, setOpen] = useState(false);
+    const isMotionSupported = useMotionSupport();
+    
+    if (!isMotionSupported) {
+        // Fallback for browsers without motion support
+        return (
+            <div className={cn("relative block md:hidden", className)}>
+                {open && (
+                    <div className="absolute inset-x-0 bottom-full mb-2 flex flex-col gap-2">
+                        {items.map((item, idx) => (
+                            <div key={item.title} className="opacity-100">
+                                <a href={item.href} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-200">
+                                    <div className="h-4 w-4">{item.icon}</div>
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                <button onClick={() => setOpen(!open)} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-200">
+                    <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
+                </button>
+            </div>
+        );
+    }
+    
     return (
         <div className={cn("relative block md:hidden", className)}>
             <AnimatePresence>
@@ -39,7 +75,7 @@ const FloatingDockMobile = ({ items, className }: { items: { title: string; icon
                                 }}
                                 transition={{ delay: (items.length - 1 - idx) * 0.05 }}
                             >
-                                <a href={item.href} key={item.title} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg">
+                                <a href={item.href} key={item.title} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-200">
                                     <div className="h-4 w-4">{item.icon}</div>
                                 </a>
                             </motion.div>
@@ -47,7 +83,7 @@ const FloatingDockMobile = ({ items, className }: { items: { title: string; icon
                     </motion.div>
                 )}
             </AnimatePresence>
-            <button onClick={() => setOpen(!open)} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-lg">
+            <button onClick={() => setOpen(!open)} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-200">
                 <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
             </button>
         </div>
@@ -55,6 +91,23 @@ const FloatingDockMobile = ({ items, className }: { items: { title: string; icon
 };
 
 const FloatingDockDesktop = ({ items, className }: { items: { title: string; icon: React.ReactNode; href: string }[]; className?: string }) => {
+    const isMotionSupported = useMotionSupport();
+    
+    if (!isMotionSupported) {
+        // Fallback for browsers without motion support
+        return (
+            <div className={cn("mx-auto hidden h-16 items-end gap-4 rounded-2xl bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 px-4 pb-3 md:flex shadow-lg", className)}>
+                {items.map((item) => (
+                    <div key={item.title} className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 hover:bg-gray-300 dark:hover:bg-neutral-700 transition-all duration-200">
+                        <a href={item.href} className="flex h-8 w-8 items-center justify-center">
+                            {item.icon}
+                        </a>
+                    </div>
+                ))}
+            </div>
+        );
+    }
+    
     let mouseX = useMotionValue(Infinity);
     return (
         <motion.div onMouseMove={(e) => mouseX.set(e.pageX)} onMouseLeave={() => mouseX.set(Infinity)} className={cn("mx-auto hidden h-16 items-end gap-4 rounded-2xl bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 px-4 pb-3 md:flex shadow-lg", className)}>

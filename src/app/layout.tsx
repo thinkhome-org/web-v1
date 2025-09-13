@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import { FloatingDockDemo } from "./components/dock";
 import { Footer } from "./components/footer";
+import "@/lib/polyfills";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

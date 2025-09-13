@@ -1,7 +1,6 @@
 import { IconMail, IconPhone } from "@tabler/icons-react";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import { CopyText } from "@/components/copyText";
-import { Footer } from "@/app/components/footer";
 const contactWays = [
   {
     icon: IconMail,
@@ -19,10 +18,10 @@ export default function ContactPage() {
     <main className="relative min-h-screen flex flex-col bg-background">
       {/* === Content section === */}
       <div className="flex-1 p-8 text-center flex flex-col items-center">
-        <h1 className="text-4xl font-bold pl-12 text-neutral-300 p-3">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold pl-0 sm:pl-6 lg:pl-12 text-foreground p-3">
           Kontaktujte nás
         </h1>
-        <p className="text-neutral-400 pl-12 w-2/3 pb-3">
+        <p className="text-muted-foreground pl-0 sm:pl-6 lg:pl-12 w-full sm:w-5/6 lg:w-2/3 pb-3">
           Nevíte si rady? Chcete si poztěžovat?
         </p>
 
@@ -50,8 +49,6 @@ export default function ContactPage() {
 
         <InteractiveGridPattern  className="z-0 opacity-10" />
       </div>
-
-      <Footer />
     </main>
   );
 }

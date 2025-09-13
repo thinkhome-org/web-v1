@@ -84,10 +84,10 @@ export default function TeamPage() {
   return (
     <main className="relative min-h-screen flex flex-col bg-background">
       <div className="p-8 text-center">
-        <h1 className="text-4xl font-bold text-neutral-300 mb-4">
+        <h1 className="text-4xl font-bold text-foreground mb-4">
           Členové týmu
         </h1>
-        <p className="text-neutral-400 mb-8 w-2/3 mx-auto">
+        <p className="text-muted-foreground mb-8 w-2/3 mx-auto">
           Poznejte náš tým odborníků, kteří vám pomohou s IT řešeními
         </p>
 
