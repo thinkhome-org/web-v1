@@ -119,4 +119,42 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Safari-specific fixes for better performance and compatibility */
+  .group:hover .group-hover\:translate-x-12 {
+    -webkit-transform: translateZ(0) translateX(3rem);
+    transform: translateZ(0) translateX(3rem);
+  }
+  
+  .group:hover .group-hover\:-translate-x-5 {
+    -webkit-transform: translateZ(0) translateX(-1.25rem);
+    transform: translateZ(0) translateX(-1.25rem);
+  }
+  
+  .group:hover .group-hover\:scale-\[100\.8\] {
+    -webkit-transform: translateZ(0) scale(1.008);
+    transform: translateZ(0) scale(1.008);
+  }
+  
+  /* Ensure smooth transitions on Safari */
+  .transition-all {
+    -webkit-transition: all 400ms ease-in-out;
+    transition: all 400ms ease-in-out;
+  }
+  
+  /* Fix for Safari button rendering issues */
+  button {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Hardware acceleration for Safari */
+  .transform-gpu {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
 }

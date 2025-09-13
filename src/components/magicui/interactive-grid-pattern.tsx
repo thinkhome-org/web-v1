@@ -17,7 +17,7 @@ export function InteractiveGridPattern({
   squaresClassName,
   ...props
 }: InteractiveGridPatternProps) {
-  const [viewport, setViewport] = useState({ w: 0, h: 0, scrollY: 0 });
+  const [viewport, setViewport] = useState({ w: 0, h: 0 });
   const [hoveredSquare, setHoveredSquare] = useState<number | null>(null);
 
   useEffect(() => {
@@ -25,15 +25,12 @@ export function InteractiveGridPattern({
       setViewport({
         w: window.innerWidth,
         h: window.innerHeight,
-        scrollY: window.scrollY,
       });
     };
     update();
     window.addEventListener("resize", update);
-    window.addEventListener("scroll", update);
     return () => {
       window.removeEventListener("resize", update);
-      window.removeEventListener("scroll", update);
     };
   }, []);
 
@@ -47,7 +44,7 @@ export function InteractiveGridPattern({
     <svg
       width={viewport.w}
       height={viewport.h}
-      style={{ transform: `translateY(${viewport.scrollY}px)` }}
+
       className={cn(
         "fixed top-0 left-0 w-screen h-screen pointer-events-auto z-0",
         className
