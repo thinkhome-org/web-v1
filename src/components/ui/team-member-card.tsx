@@ -73,7 +73,7 @@ export function TeamMemberCard({
         )}>
           {member.photo_location && member.photo_location !== '' ? (
             <img 
-              src={member.photo_location.startsWith('/') ? member.photo_location : `/tym/pictures/${member.photo_location}`} 
+              src={member.photo_location.startsWith('/') ? member.photo_location : `/team/pictures/${member.photo_location}`} 
               alt={member.name}
               className="w-full h-full object-cover"
               onError={handleImageError}

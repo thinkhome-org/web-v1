@@ -1,6 +1,6 @@
 import { IconMail, IconPhone } from "@tabler/icons-react";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
-import { CopyText } from "@/components/copyText";
+import { CopyText } from "@/components/copy-text";
 const contactWays = [
   {
     icon: IconMail,

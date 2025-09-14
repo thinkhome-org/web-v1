@@ -5,7 +5,7 @@ import { Providers } from "@/components/providers";
 import { FloatingDockDemo } from "@/components/layout/dock";
 import { Footer } from "@/components/layout/footer";
 import "@/lib/polyfills";
-import CookieBanner from "@/components/cookiebanner";
+import CookieBanner from "@/components/cookie-banner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

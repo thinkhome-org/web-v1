@@ -59,7 +59,7 @@ export default function TeamPage() {
   useEffect(() => {
     async function loadTeamData() {
       try {
-        const response = await fetch('/tym/source.csv');
+        const response = await fetch('/team/source.csv');
         const csvContent = await response.text();
         const members = parseCSV(csvContent);
         setTeamMembers(members);
