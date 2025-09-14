@@ -74,13 +74,9 @@ export default function RootLayout({
           <BlurFade delay={0.3} inView>
             <CookieBanner />
           </BlurFade>
-          <BlurFade delay={0.4} inView>
-            <Footer />
-          </BlurFade>
-        </Providers>
-        <BlurFade delay={0.5} inView>
-          <FloatingDockDemo />
-        </BlurFade>
+          <Footer />
+         </Providers>
+         <FloatingDockDemo />
       </body>
     </html>
   );
