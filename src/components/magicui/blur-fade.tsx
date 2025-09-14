@@ -70,7 +70,7 @@ export function BlurFade({
         transition={{
           delay: 0.04 + delay,
           duration,
-          ease: animations.easing.out,
+          ease: "easeOut",
         }}
         className={className}
         {...props}
