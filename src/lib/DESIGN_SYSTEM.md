@@ -12,6 +12,7 @@ src/lib/design-system.ts
 
 ### Barvy (Colors)
 - **Základní barvy**: `background`, `foreground`
+- **Textové barvy**: `text.title`, `text.subtitle`, `text.body`, `text.secondary`, `text.link`, `text.linkHover`, `text.accent`, `text.success`, `text.warning`, `text.info`
 - **Primární barvy**: `primary`, `primaryForeground`
 - **Sekundární barvy**: `secondary`, `secondaryForeground`
 - **Muted barvy**: `muted`, `mutedForeground`
@@ -31,6 +32,7 @@ Každá barva má varianty pro světlý (`light`) a tmavý (`dark`) mód.
 - **Font weights**: `fontWeight.thin` až `fontWeight.black`
 - **Line heights**: `lineHeight.none` až `lineHeight.loose`
 - **Letter spacing**: `letterSpacing.tighter` až `letterSpacing.widest`
+- **Textové styly**: `styles.title`, `styles.subtitle`, `styles.section`, `styles.subsection`, `styles.heading`, `styles.body`, `styles.large`, `styles.small`, `styles.tiny`, `styles.link`, `styles.button`, `styles.code`, `styles.quote`
 
 ### Mezery (Spacing)
 - **Spacing scale**: `spacing.0` až `spacing.96` (4px grid)
@@ -160,6 +162,22 @@ const fontSize = getTypography('lg'); // 1.125rem
 const fontWeight = getTypography('bold'); // 700
 ```
 
+### `getTextColor(colorKey, mode)`
+Vrací textovou barvu pro aktuální mód.
+
+```typescript
+const titleColor = getTextColor('title', 'light'); // #171717
+const linkColor = getTextColor('link', 'dark'); // #60a5fa
+```
+
+### `getTextStyle(styleKey, colorKey?, mode)`
+Vrací kompletní textový styl.
+
+```typescript
+const titleStyle = getTextStyle('title', 'title', 'light');
+// { fontSize: '3rem', fontWeight: '800', lineHeight: '1.1', color: '#171717', ... }
+```
+
 ## 🎯 Výhody
 
 1. **Centralizace**: Všechny designové hodnoty na jednom místě
@@ -221,6 +239,52 @@ export const Button = ({
     >
       {children}
     </button>
+  );
+};
+```
+
+## 📝 Příklad textových komponent
+
+```typescript
+import React from 'react';
+import { 
+  Title, 
+  Subtitle, 
+  Section, 
+  Body, 
+  Link, 
+  Code, 
+  Quote 
+} from '@/components/ui/text';
+
+export const Article = () => {
+  return (
+    <article>
+      <Title color="title" mode="light">
+        Hlavní nadpis článku
+      </Title>
+      
+      <Subtitle color="subtitle" mode="light">
+        Podnadpis s popisem
+      </Subtitle>
+      
+      <Body color="body" mode="light">
+        Toto je běžný text článku. Používá konzistentní typografii z design systému.
+      </Body>
+      
+      <Section color="title" mode="light">
+        Sekce článku
+      </Section>
+      
+      <Body color="body" mode="light">
+        Další obsah s <Link href="#" color="link" mode="light">odkazem</Link> a 
+        <Code color="body" mode="light">kódem</Code>.
+      </Body>
+      
+      <Quote color="secondary" mode="light">
+        "Inspirativní citát z článku."
+      </Quote>
+    </article>
   );
 };
 ```

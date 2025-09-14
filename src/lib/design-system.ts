@@ -18,6 +18,60 @@ export const colors = {
     dark: '#fafafa',
   },
   
+  // Textové barvy pro různé typy obsahu
+  text: {
+    // Hlavní nadpisy
+    title: {
+      light: '#171717',
+      dark: '#fafafa',
+    },
+    // Podnadpisy
+    subtitle: {
+      light: '#404040',
+      dark: '#d4d4d8',
+    },
+    // Běžný text
+    body: {
+      light: '#262626',
+      dark: '#fafafa',
+    },
+    // Sekundární text
+    secondary: {
+      light: '#737373',
+      dark: '#a3a3a3',
+    },
+    // Odkazy
+    link: {
+      light: '#2563eb', // blue-600
+      dark: '#60a5fa', // blue-400
+    },
+    // Hover stavy odkazů
+    linkHover: {
+      light: '#1d4ed8', // blue-700
+      dark: '#93c5fd', // blue-300
+    },
+    // Důležité/akcentní text
+    accent: {
+      light: '#dc2626', // red-600
+      dark: '#f87171', // red-400
+    },
+    // Úspěšné stavy
+    success: {
+      light: '#16a34a', // green-600
+      dark: '#4ade80', // green-400
+    },
+    // Varování
+    warning: {
+      light: '#d97706', // amber-600
+      dark: '#fbbf24', // amber-400
+    },
+    // Informace
+    info: {
+      light: '#0891b2', // cyan-600
+      dark: '#22d3ee', // cyan-400
+    },
+  },
+  
   // Primární barvy
   primary: {
     light: '#171717',
@@ -214,6 +268,104 @@ export const typography = {
     wider: '0.05em',
     widest: '0.1em',
   },
+  
+  // Specifické typografické styly pro různé typy obsahu
+  styles: {
+    // Hlavní nadpisy (H1)
+    title: {
+      fontSize: '3rem', // 48px
+      fontWeight: '800', // extrabold
+      lineHeight: '1.1',
+      letterSpacing: '-0.025em',
+    },
+    // Podnadpisy (H2)
+    subtitle: {
+      fontSize: '2.25rem', // 36px
+      fontWeight: '700', // bold
+      lineHeight: '1.2',
+      letterSpacing: '-0.025em',
+    },
+    // Sekční nadpisy (H3)
+    section: {
+      fontSize: '1.875rem', // 30px
+      fontWeight: '600', // semibold
+      lineHeight: '1.3',
+      letterSpacing: '0em',
+    },
+    // Podsekční nadpisy (H4)
+    subsection: {
+      fontSize: '1.5rem', // 24px
+      fontWeight: '600', // semibold
+      lineHeight: '1.4',
+      letterSpacing: '0em',
+    },
+    // Malé nadpisy (H5, H6)
+    heading: {
+      fontSize: '1.25rem', // 20px
+      fontWeight: '600', // semibold
+      lineHeight: '1.4',
+      letterSpacing: '0em',
+    },
+    // Běžný text
+    body: {
+      fontSize: '1rem', // 16px
+      fontWeight: '400', // normal
+      lineHeight: '1.6',
+      letterSpacing: '0em',
+    },
+    // Velký text
+    large: {
+      fontSize: '1.125rem', // 18px
+      fontWeight: '400', // normal
+      lineHeight: '1.6',
+      letterSpacing: '0em',
+    },
+    // Malý text
+    small: {
+      fontSize: '0.875rem', // 14px
+      fontWeight: '400', // normal
+      lineHeight: '1.5',
+      letterSpacing: '0em',
+    },
+    // Velmi malý text
+    tiny: {
+      fontSize: '0.75rem', // 12px
+      fontWeight: '400', // normal
+      lineHeight: '1.4',
+      letterSpacing: '0.025em',
+    },
+    // Odkazy
+    link: {
+      fontSize: '1rem', // 16px
+      fontWeight: '500', // medium
+      lineHeight: '1.5',
+      letterSpacing: '0em',
+      textDecoration: 'underline',
+    },
+    // Tlačítka
+    button: {
+      fontSize: '0.875rem', // 14px
+      fontWeight: '600', // semibold
+      lineHeight: '1.4',
+      letterSpacing: '0.025em',
+    },
+    // Kódy
+    code: {
+      fontSize: '0.875rem', // 14px
+      fontWeight: '400', // normal
+      lineHeight: '1.5',
+      letterSpacing: '0em',
+      fontFamily: 'var(--font-geist-mono), Consolas, monospace',
+    },
+    // Citace
+    quote: {
+      fontSize: '1.125rem', // 18px
+      fontWeight: '400', // normal
+      lineHeight: '1.6',
+      letterSpacing: '0em',
+      fontStyle: 'italic',
+    },
+  },
 } as const;
 
 // ============================================================================
@@ -395,6 +547,10 @@ export function getColor(colorKey: keyof typeof colors, mode: 'light' | 'dark' =
     // Chart colors
     return color as any;
   }
+  if (typeof color === 'object' && 'title' in color) {
+    // Text colors
+    return color as any;
+  }
   return color as string;
 }
 
@@ -432,11 +588,39 @@ export function getTypography(property: keyof typeof typography.fontSize | keyof
   return '';
 }
 
+/**
+ * Vrací textovou barvu pro aktuální mód
+ */
+export function getTextColor(colorKey: keyof typeof colors.text, mode: 'light' | 'dark' = 'light') {
+  return colors.text[colorKey][mode];
+}
+
+/**
+ * Vrací kompletní textový styl
+ */
+export function getTextStyle(styleKey: keyof typeof typography.styles, colorKey?: keyof typeof colors.text, mode: 'light' | 'dark' = 'light') {
+  const style = typography.styles[styleKey];
+  const color = colorKey ? colors.text[colorKey][mode] : undefined;
+  
+  return {
+    ...style,
+    ...(color && { color }),
+  };
+}
+
+/**
+ * Vrací CSS custom property pro textovou barvu
+ */
+export function getTextColorVar(colorKey: keyof typeof colors.text) {
+  return `var(--text-${colorKey})`;
+}
+
 // ============================================================================
 // EXPORT TYPES
 // ============================================================================
 
 export type ColorKey = keyof typeof colors;
+export type TextColorKey = keyof typeof colors.text;
 export type SpacingKey = keyof typeof spacing;
 export type SizingKey = keyof typeof sizing;
 export type BreakpointKey = keyof typeof breakpoints;
@@ -445,3 +629,4 @@ export type ShadowKey = keyof typeof shadows;
 export type AnimationDurationKey = keyof typeof animations.duration;
 export type AnimationEasingKey = keyof typeof animations.easing;
 export type ZIndexKey = keyof typeof zIndex;
+export type TextStyleKey = keyof typeof typography.styles;

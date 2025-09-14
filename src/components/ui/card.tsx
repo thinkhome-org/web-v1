@@ -1,7 +1,8 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
-import { borderRadius, spacing, shadows } from "@/lib/design-system"
+import { borderRadius, spacing, shadows, getTextStyle, getTextColor } from "@/lib/design-system"
+import { Body, Small } from "@/components/ui/text"
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -38,29 +39,29 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+function CardTitle({ className, children, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-title"
       className={cn("leading-none", className)}
-      style={{
-        fontWeight: 600, // font-semibold equivalent
-      }}
+      style={getTextStyle('heading', 'title', 'light')}
       {...props}
-    />
+    >
+      {children}
+    </div>
   )
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
+function CardDescription({ className, children, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-description"
-      className={cn("text-muted-foreground", className)}
-      style={{
-        fontSize: '0.875rem', // text-sm equivalent
-      }}
+      className={cn("", className)}
+      style={getTextStyle('small', 'secondary', 'light')}
       {...props}
-    />
+    >
+      {children}
+    </div>
   )
 }
 

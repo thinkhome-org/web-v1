@@ -9,6 +9,9 @@ export function cn(...inputs: ClassValue[]) {
 export { 
   getColor, 
   getColorVar, 
+  getTextColor,
+  getTextColorVar,
+  getTextStyle,
   getBreakpoint, 
   getSpacing, 
   getTypography,

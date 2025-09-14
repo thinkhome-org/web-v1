@@ -7,6 +7,7 @@ import {
   typography, 
   animations 
 } from "@/lib/design-system";
+import { Button } from "@/components/ui/text";
 
 interface InteractiveHoverButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
@@ -44,14 +45,16 @@ export const InteractiveHoverButton = React.forwardRef<
             transition: `all 400ms ${animations.easing.out}`,
           }}
         ></div>
-        <span 
+        <Button 
+          color="body" 
+          mode="light"
           className="inline-block group-hover:translate-x-12 group-hover:opacity-0"
           style={{
             transition: `all 400ms ${animations.easing.out}`,
           }}
         >
           {children}
-        </span>
+        </Button>
       </div>
       <div 
         className="absolute top-0 z-10 flex h-full w-full translate-x-12 items-center justify-center text-primary-foreground opacity-0 group-hover:-translate-x-5 group-hover:opacity-100"
@@ -60,7 +63,7 @@ export const InteractiveHoverButton = React.forwardRef<
           transition: `all 400ms ${animations.easing.out}`,
         }}
       >
-        <span>{children}</span>
+        <Button color="body" mode="light">{children}</Button>
         <IconArrowRight />
       </div>
     </button>

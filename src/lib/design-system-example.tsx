@@ -14,8 +14,22 @@ import {
   getColor,
   getSpacing,
   getTypography,
-  getBreakpoint
+  getBreakpoint,
+  getTextStyle,
+  getTextColor
 } from './design-system';
+import { 
+  Title, 
+  Subtitle, 
+  Section, 
+  Body, 
+  Link, 
+  Code, 
+  Quote,
+  Button,
+  Large,
+  Small
+} from '@/components/ui/text';
 
 // Příklad komponenty používající design systém
 export const DesignSystemExample = () => {
@@ -34,24 +48,14 @@ export const DesignSystemExample = () => {
         transition: animations.transition.all,
       }}
     >
-      <h2 style={{ 
-        fontSize: getTypography('2xl'),
-        fontWeight: getTypography('bold'),
-        marginBottom: getSpacing(4),
-        color: getColor('primary', 'light')
-      }}>
+      <Title color="title" mode="light">
         Design System Příklad
-      </h2>
+      </Title>
       
-      <p style={{
-        fontSize: getTypography('base'),
-        lineHeight: typography.lineHeight.relaxed,
-        color: getColor('mutedForeground', 'light'),
-        marginBottom: getSpacing(6)
-      }}>
+      <Body color="secondary" mode="light" style={{ marginBottom: getSpacing(6) }}>
         Tato komponenta demonstruje použití centralizovaného design systému.
         Všechny barvy, fonty, mezery a další hodnoty pocházejí z jednoho místa.
-      </p>
+      </Body>
       
       <div style={{
         display: 'flex',
@@ -64,12 +68,12 @@ export const DesignSystemExample = () => {
           padding: `${getSpacing(2)} ${getSpacing(4)}`,
           borderRadius: borderRadius.md,
           border: 'none',
-          fontSize: getTypography('sm'),
-          fontWeight: getTypography('medium'),
           cursor: 'pointer',
           transition: animations.transition.colors,
         }}>
-          Primární tlačítko
+          <Button color="body" mode="light">
+            Primární tlačítko
+          </Button>
         </button>
         
         <button style={{
@@ -78,12 +82,12 @@ export const DesignSystemExample = () => {
           padding: `${getSpacing(2)} ${getSpacing(4)}`,
           borderRadius: borderRadius.md,
           border: 'none',
-          fontSize: getTypography('sm'),
-          fontWeight: getTypography('medium'),
           cursor: 'pointer',
           transition: animations.transition.colors,
         }}>
-          Sekundární tlačítko
+          <Button color="body" mode="light">
+            Sekundární tlačítko
+          </Button>
         </button>
       </div>
     </div>
@@ -122,7 +126,6 @@ export const ResponsiveExample = () => {
     <div 
       style={{
         padding: getSpacing(4),
-        fontSize: getTypography('base'),
       }}
       className={`
         ${getBreakpoint('sm')} { padding: ${getSpacing(6)}; }
@@ -130,13 +133,60 @@ export const ResponsiveExample = () => {
         ${getBreakpoint('lg')} { padding: ${getSpacing(12)}; }
       `}
     >
-      <h3 style={{ fontSize: getTypography('xl') }}>
+      <Section color="title" mode="light">
         Responsive Design s Design System
-      </h3>
+      </Section>
       
-      <p>
+      <Body color="body" mode="light">
         Tato komponenta používá breakpointy z design systému pro responsive design.
-      </p>
+      </Body>
+    </div>
+  );
+};
+
+// Příklad textových stylů
+export const TypographyExample = () => {
+  return (
+    <div style={{ padding: getSpacing(8) }}>
+      <Title color="title" mode="light">
+        Typography Showcase
+      </Title>
+      
+      <Subtitle color="subtitle" mode="light">
+        Různé typy textu v design systému
+      </Subtitle>
+      
+      <Section color="title" mode="light">
+        Sekční nadpis
+      </Section>
+      
+      <Body color="body" mode="light">
+        Toto je běžný text v design systému. Obsahuje všechny potřebné styly pro konzistentní vzhled.
+      </Body>
+      
+      <Large color="body" mode="light">
+        Toto je větší text pro důležité informace.
+      </Large>
+      
+      <Small color="secondary" mode="light">
+        Malý text pro sekundární informace.
+      </Small>
+      
+      <div style={{ marginTop: getSpacing(4) }}>
+        <Link href="#" color="link" mode="light">
+          Toto je odkaz s hover efektem
+        </Link>
+      </div>
+      
+      <div style={{ marginTop: getSpacing(4) }}>
+        <Code color="body" mode="light">
+          console.log('Hello World');
+        </Code>
+      </div>
+      
+      <Quote color="secondary" mode="light">
+        "Design is not just what it looks like and feels like. Design is how it works."
+      </Quote>
     </div>
   );
 };

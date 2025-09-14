@@ -7,8 +7,11 @@ import {
   spacing, 
   typography, 
   animations,
-  getColor 
+  getColor,
+  getTextStyle,
+  getTextColor
 } from "@/lib/design-system";
+import { Section, Body } from "@/components/ui/text";
 
 type IconName = 'clock' | 'shield' | 'cpu' | 'users';
 
@@ -149,25 +152,21 @@ export function FeatureCard({
           layout === "vertical" ? "text-center" : ""
         )}>
           {title && (
-            <h3 
-              className="text-foreground"
-              style={{
-                fontSize: typography.fontSize.lg,
-                fontWeight: typography.fontWeight.semibold,
-                marginBottom: spacing[2],
-              }}
+            <Section 
+              color="title" 
+              mode="light"
+              style={{ marginBottom: spacing[2] }}
             >
               {title}
-            </h3>
+            </Section>
           )}
-          <p 
-            className="text-foreground text-pretty"
-            style={{
-              lineHeight: typography.lineHeight.relaxed,
-            }}
+          <Body 
+            color="body" 
+            mode="light"
+            className="text-pretty"
           >
             {description}
-          </p>
+          </Body>
         </div>
       </div>
     </div>

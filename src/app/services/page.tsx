@@ -7,6 +7,7 @@ import {
   typography, 
   animations 
 } from "@/lib/design-system";
+import { Title, Subtitle, Section, Body } from "@/components/ui/text";
 
 interface ServiceProps {
   title: string;
@@ -26,15 +27,13 @@ function Service({ title, children }: ServiceProps) {
           transition: `color ${animations.duration[200]} ${animations.easing.out}`,
         }}
       >
-        <h2 
-          className="text-foreground group-hover:text-primary"
-          style={{
-            fontSize: typography.fontSize['2xl'],
-            fontWeight: typography.fontWeight.semibold,
-          }}
+        <Section 
+          color="title" 
+          mode="light"
+          className="group-hover:text-primary"
         >
           {title}
-        </h2>
+        </Section>
         <span 
           className="text-muted-foreground"
           style={{
@@ -46,16 +45,13 @@ function Service({ title, children }: ServiceProps) {
         </span>
       </button>
       {open && (
-        <div 
-          className="text-muted-foreground"
-          style={{
-            marginTop: spacing[3],
-            fontSize: typography.fontSize.lg,
-            lineHeight: typography.lineHeight.relaxed,
-          }}
+        <Body 
+          color="secondary" 
+          mode="light"
+          style={{ marginTop: spacing[3] }}
         >
           {children}
-        </div>
+        </Body>
       )}
     </div>
   );
@@ -73,16 +69,14 @@ export default function ContactPage() {
           paddingBottom: spacing[12],
         }}
       >
-        <h1 
-          className="text-foreground drop-shadow-lg"
-          style={{
-            fontSize: typography.fontSize['5xl'],
-            fontWeight: typography.fontWeight.extrabold,
-            marginBottom: spacing[10],
-          }}
+        <Title 
+          color="title" 
+          mode="light"
+          className="drop-shadow-lg"
+          style={{ marginBottom: spacing[10] }}
         >
           Naše služby
-        </h1>
+        </Title>
 
         <div 
           className="relative z-10"

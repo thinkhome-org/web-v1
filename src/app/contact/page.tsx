@@ -8,6 +8,7 @@ import {
   animations,
   getColor 
 } from "@/lib/design-system";
+import { Title, Body, Section } from "@/components/ui/text";
 const contactWays = [
   {
     icon: IconMail,
@@ -28,28 +29,27 @@ export default function ContactPage() {
         className="flex-1 text-center flex flex-col items-center"
         style={{ padding: spacing[8] }}
       >
-        <h1 
-          className="text-foreground"
+        <Title 
+          color="title" 
+          mode="light"
           style={{
-            fontSize: typography.fontSize['2xl'],
-            fontWeight: typography.fontWeight.bold,
             paddingLeft: spacing[0],
             padding: spacing[3],
           }}
         >
           Kontaktujte nás
-        </h1>
-        <p 
-          className="text-muted-foreground w-full"
+        </Title>
+        <Body 
+          color="secondary" 
+          mode="light"
+          className="w-full"
           style={{
             paddingLeft: spacing[0],
             paddingBottom: spacing[3],
-            fontSize: typography.fontSize.base,
-            lineHeight: typography.lineHeight.relaxed,
           }}
         >
           Nevíte si rady? Chcete si poztěžovat?
-        </p>
+        </Body>
 
         <div 
           className="grid grid-cols-1 md:grid-cols-2 max-w-6xl w-full"

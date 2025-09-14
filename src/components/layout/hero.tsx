@@ -7,6 +7,7 @@ import {
   typography, 
   breakpoints 
 } from "@/lib/design-system";
+import { Subtitle, Body } from "@/components/ui/text";
 
 export const Hero = () => {
   return (
@@ -36,31 +37,30 @@ export const Hero = () => {
           className="w-auto hidden dark:block"
           style={{ height: spacing[12] }}
         />
-        <h2 
-          className="text-foreground"
+        <Subtitle 
+          color="title" 
+          mode="light"
           style={{
-            fontSize: typography.fontSize['2xl'],
-            fontWeight: typography.fontWeight.bold,
             paddingLeft: spacing[0],
             padding: spacing[3],
           }}
         >
           Moderní IT bez starostí
-        </h2>
-        <p 
-          className="text-muted-foreground w-full"
+        </Subtitle>
+        <Body 
+          color="secondary" 
+          mode="light"
+          className="w-full"
           style={{
             paddingLeft: spacing[0],
             paddingBottom: spacing[3],
-            fontSize: typography.fontSize.base,
-            lineHeight: typography.lineHeight.relaxed,
           }}
         >
           Zbavte se starostí o technologie a zaměřte se na své podnikání.
           ThinkHome nabízí kompletní správu firemního IT – od hardware, přes
           weby až po moderní bezpečnostní řešení. Vše vyřešíme spolehlivě,
           rychle a efektivně. Přitom nic nemusíte řešit!
-        </p>
+        </Body>
       </div>
       <InteractiveGridPattern className="z-0 opacity-10" />
     </div>

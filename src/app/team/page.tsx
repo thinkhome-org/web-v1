@@ -7,6 +7,7 @@ import {
   spacing, 
   typography 
 } from "@/lib/design-system";
+import { Title, Body } from "@/components/ui/text";
 
 
 
@@ -80,14 +81,9 @@ export default function TeamPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div 
-          className="text-foreground"
-          style={{
-            fontSize: typography.fontSize.xl,
-          }}
-        >
+        <Body color="body" mode="light">
           Loading team data...
-        </div>
+        </Body>
       </div>
     );
   }
@@ -98,26 +94,21 @@ export default function TeamPage() {
         className="text-center"
         style={{ padding: spacing[8] }}
       >
-        <h1 
-          className="text-foreground"
-          style={{
-            fontSize: typography.fontSize['4xl'],
-            fontWeight: typography.fontWeight.bold,
-            marginBottom: spacing[4],
-          }}
+        <Title 
+          color="title" 
+          mode="light"
+          style={{ marginBottom: spacing[4] }}
         >
           Členové týmu
-        </h1>
-        <p 
-          className="text-muted-foreground w-2/3 mx-auto"
-          style={{
-            marginBottom: spacing[8],
-            fontSize: typography.fontSize.base,
-            lineHeight: typography.lineHeight.relaxed,
-          }}
+        </Title>
+        <Body 
+          color="secondary" 
+          mode="light"
+          className="w-2/3 mx-auto"
+          style={{ marginBottom: spacing[8] }}
         >
           Poznejte náš tým odborníků, kteří vám pomohou s IT řešeními
-        </p>
+        </Body>
 
         <div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"

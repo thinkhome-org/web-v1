@@ -8,8 +8,11 @@ import {
   spacing, 
   typography, 
   animations,
-  getColor 
+  getColor,
+  getTextStyle,
+  getTextColor
 } from "@/lib/design-system";
+import { Title, Body, Small, Link } from "@/components/ui/text";
 
 export interface TeamMember {
   name: string;
@@ -113,48 +116,46 @@ export function TeamMemberCard({
         
         {/* Content */}
         <div className="text-center flex-1">
-          <h2 
-            className="text-foreground"
-            style={{
-              fontSize: typography.fontSize.xl,
-              fontWeight: typography.fontWeight.bold,
-              marginBottom: spacing[2],
-            }}
+          <Title 
+            color="title" 
+            mode="light"
+            style={{ marginBottom: spacing[2] }}
           >
             {member.name}
-          </h2>
-          <p 
-            className="font-medium"
-            style={{
-              color: getColor('chart', 'light').three, // blue-400 equivalent
-              marginBottom: spacing[2],
-            }}
+          </Title>
+          <Body 
+            color="accent" 
+            mode="light"
+            style={{ marginBottom: spacing[2] }}
           >
             {member.role}
-          </p>
-          <p 
-            className="text-muted-foreground leading-relaxed"
-            style={{
-              fontSize: typography.fontSize.sm,
-              marginBottom: spacing[3],
-            }}
+          </Body>
+          <Body 
+            color="secondary" 
+            mode="light"
+            className="leading-relaxed"
+            style={{ marginBottom: spacing[3] }}
           >
             {member.description}
-          </p>
+          </Body>
           
           {showContactInfo && (
             <div 
-              className="text-muted-foreground"
               style={{
-                fontSize: typography.fontSize.xs,
                 display: 'flex',
                 flexDirection: 'column',
                 gap: spacing[1],
               }}
             >
-              <p>{member.email}</p>
-              <p>{member.phone}</p>
-              <p style={{ fontWeight: typography.fontWeight.medium }}>{member.department}</p>
+              <Link href={`mailto:${member.email}`} color="link" mode="light">
+                {member.email}
+              </Link>
+              <Link href={`tel:${member.phone}`} color="link" mode="light">
+                {member.phone}
+              </Link>
+              <Small color="secondary" mode="light">
+                {member.department}
+              </Small>
             </div>
           )}
         </div>
