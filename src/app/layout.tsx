@@ -66,8 +66,21 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <Providers>
+          {/* Grid pattern background */}
+          <div className="fixed inset-0 pointer-events-none z-0">
+            <div 
+              className="h-full w-full opacity-20"
+              style={{
+                backgroundImage: `
+                  linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)
+                `,
+                backgroundSize: '80px 80px'
+              }}
+            />
+          </div>
           <BlurFade delay={0.1} inView>
-            <div className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
               {children}
             </div>
           </BlurFade>

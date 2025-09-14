@@ -1,7 +1,3 @@
-# Zásady používání cookies
-
-*Aktualizováno: 14. 9. 2025*
-
 ## 1. Úvod
 
 Webové stránky **ThinkHome s.r.o.** používají soubory cookies a podobné technologie, aby zajistily správné fungování, personalizaci obsahu, analýzu návštěvnosti a zlepšení vašich uživatelských zkušeností.
