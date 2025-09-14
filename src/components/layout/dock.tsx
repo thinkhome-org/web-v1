@@ -26,21 +26,21 @@ export function FloatingDockDemo() {
       icon: (
         <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/sluzby",
+      href: "/services",
     },
     {
-      title: "Kontakt",
+      title: "Contact",
       icon: (
         <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/kontakt",
+      href: "/contact",
     },
     {
-      title: "Náš tým",
+      title: "Tým",
       icon: (
         <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/tym",
+      href: "/team",
     },
     {
       title: "Podmínky a zásady",

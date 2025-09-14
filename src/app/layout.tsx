@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { FloatingDockDemo } from "./components/dock";
-import { Footer } from "./components/footer";
+import { FloatingDockDemo } from "@/components/layout/dock";
+import { Footer } from "@/components/layout/footer";
 import "@/lib/polyfills";
-import CookieBanner from "@/components/cookiebanner";
+import CookieBanner from "@/components/cookie-banner";
+import { BlurFade } from "@/components/magicui/blur-fade";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,13 +66,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <Providers>
-          <div className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-            {children}
-          </div>
-          <CookieBanner />
+          <BlurFade delay={0.1} inView>
+            <div className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+              {children}
+            </div>
+          </BlurFade>
+          <BlurFade delay={0.3} inView>
+            <CookieBanner />
+          </BlurFade>
           <Footer />
-        </Providers>
-        <FloatingDockDemo />
+          <FloatingDockDemo />
+         </Providers>
       </body>
     </html>
   );

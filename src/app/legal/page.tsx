@@ -15,7 +15,7 @@ const LegalPage = () => {
       <ul className="list-disc list-inside space-y-3 text-foreground text-lg">
         <li>
           <Link
-            href="/legal/obchodnipodminky"
+            href="/legal/terms-of-service"
             className="text-blue-600 hover:underline"
           >
             Všeobecné obchodní podmínky
@@ -23,14 +23,14 @@ const LegalPage = () => {
         </li>
         <li>
           <Link
-            href="/legal/ochranasoukromi"
+            href="/legal/privacy-policy"
             className="text-blue-600 hover:underline"
           >
             Ochrana soukromí
           </Link>
         </li>
         <li>
-          <Link href="/legal/susenky" className="text-blue-600 hover:underline">
+          <Link href="/legal/cookies" className="text-blue-600 hover:underline">
             Zásady používání cookies
           </Link>
         </li>

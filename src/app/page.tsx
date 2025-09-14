@@ -1,8 +1,5 @@
-import { IconMail, IconPhone } from "@tabler/icons-react";
-import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
-import { CopyText } from "@/components/copyText";
-import { Hero } from "@/app/components/hero";
-import { MiseCile } from "@/app/components/mise_cile";
+import { Hero } from "@/components/layout/hero";
+import { MiseCile } from "@/components/sections/mission-goals";
 export default function mainPage() {
   return (
     <>
@@ -11,4 +8,3 @@ export default function mainPage() {
     </>
   );
 }
-``
