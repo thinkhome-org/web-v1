@@ -6,6 +6,7 @@ import { FloatingDockDemo } from "@/components/layout/dock";
 import { Footer } from "@/components/layout/footer";
 import "@/lib/polyfills";
 import CookieBanner from "@/components/cookie-banner";
+import { BlurFade } from "@/components/magicui/blur-fade";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,13 +66,21 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <Providers>
-          <div className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-            {children}
-          </div>
-          <CookieBanner />
-          <Footer />
+          <BlurFade delay={0.1} inView>
+            <div className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+              {children}
+            </div>
+          </BlurFade>
+          <BlurFade delay={0.3} inView>
+            <CookieBanner />
+          </BlurFade>
+          <BlurFade delay={0.4} inView>
+            <Footer />
+          </BlurFade>
         </Providers>
-        <FloatingDockDemo />
+        <BlurFade delay={0.5} inView>
+          <FloatingDockDemo />
+        </BlurFade>
       </body>
     </html>
   );
