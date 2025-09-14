@@ -169,13 +169,13 @@ jobs:
             echo "Scanning: $workflow_file"
             
             # Check for security issues and best practices
-            python3 -c "
+            WORKFLOW_FILE="$workflow_file" python3 -c "
 import yaml
 import json
 import sys
 import os
 
-workflow_file = '$workflow_file'
+workflow_file = os.environ.get('WORKFLOW_FILE', '')
 issues = []
 
 try:
