@@ -24,15 +24,9 @@ const missions = [
 
 export function MiseCile() {
   return (
-    <section className="py-16 px-4 bg-background dark">
-      <div className="max-w-6xl w-[75%] mx-auto">
-        <div className="text-left z-20 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
-            Naše mise
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <section className="w-full">
+      <div className="w-full py-16 px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {missions.map((mission, index) => (
             <FeatureCard
               key={index}

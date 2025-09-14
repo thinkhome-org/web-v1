@@ -7,7 +7,20 @@ export const Hero = () => {
   return (
     <div className="relative">
       <div className="justify-left items-center px-4 sm:px-8 lg:pl-32 pt-24 sm:pt-32 lg:pt-48 pb-24 sm:pb-32 lg:pb-48 z-20">
-        <Image src="/logo.svg" alt="ThinkHome Logo" width={383} height={50} />
+        <Image
+          src="/logo/black.svg"
+          alt="ThinkHome Logo"
+          width={383}
+          height={50}
+          className="h-12 w-auto dark:hidden"
+        />
+        <Image
+          src="/logo/white.svg"
+          alt="ThinkHome Logo"
+          width={383}
+          height={50}
+          className="h-12 w-auto hidden dark:block"
+        />
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold pl-0 sm:pl-6 lg:pl-12 text-foreground p-3">
           Moderní IT bez starostí
         </h2>
