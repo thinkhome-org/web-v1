@@ -287,33 +287,3 @@ jobs:
             echo "📍 Report URL: ${{ steps.pages-deployment.outputs.page_url }}"
             echo "⚠️ Build failed - error report hosted instead of website"
           fi
-
-  # Notification and Cleanup
-  notify:
-    runs-on: ubuntu-latest
-    needs: [pre-build, quality-check, build, qa-report, deploy]
-    if: always()
-    steps:
-      - name: Send Notification Summary
-        run: |
-          echo "📧 Build Summary for ${{ github.repository }}"
-          echo "Build ID: ${{ env.BUILD_TIMESTAMP }}"
-          echo "Commit: ${{ github.sha }}"
-          echo "Branch: ${{ github.ref }}"
-          echo ""
-          echo "Results:"
-          echo "- TypeScript: ${{ needs.quality-check.outputs.typescript-status || 'skipped' }}"
-          echo "- ESLint: ${{ needs.quality-check.outputs.eslint-status || 'skipped' }}"
-          echo "- Tests: ${{ needs.quality-check.outputs.test-status || 'skipped' }}"
-          echo "- Build: ${{ needs.build.outputs.build-status || 'failed' }}"
-          echo "- Deploy: ${{ needs.deploy.result || 'skipped' }}"
-          echo ""
-
-          if [[ "${{ needs.build.outputs.build-status }}" == "failure" ]]; then
-            echo "🚨 CRITICAL: Build failed for ${{ github.repository }}"
-            echo "Immediate attention required!"
-          fi
-
-          if [[ "${{ needs.pre-build.outputs.force-build }}" == "true" ]]; then
-            echo "⚠️  WARNING: This was a forced build that bypassed quality checks"
-          fi
