@@ -2,6 +2,13 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
+import { 
+  borderRadius, 
+  spacing, 
+  typography, 
+  animations,
+  getColor 
+} from "@/lib/design-system";
 
 type IconName = 'clock' | 'shield' | 'cpu' | 'users';
 
@@ -56,9 +63,9 @@ export interface FeatureCardProps {
 }
 
 const iconSizes = {
-  sm: "h-4 w-4",
-  md: "h-6 w-6",
-  lg: "h-8 w-8"
+  sm: { width: spacing[4], height: spacing[4] },
+  md: { width: spacing[6], height: spacing[6] },
+  lg: { width: spacing[8], height: spacing[8] }
 };
 
 export function FeatureCard({
@@ -92,29 +99,48 @@ export function FeatureCard({
   return (
     <div
       className={cn(
-        "group p-6 rounded-lg bg-card/60 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-xl z-10 hover:scale-105 transform-gpu",
+        "group bg-card/60 border border-border hover:border-muted-foreground/20 backdrop-blur-xl z-10 hover:scale-105 transform-gpu",
         onCardClick && "cursor-pointer",
         className
       )}
+      style={{
+        padding: spacing[6],
+        borderRadius: borderRadius.lg,
+        transition: animations.transition.all,
+        transitionDuration: animations.duration[300],
+      }}
       onClick={handleCardClick}
     >
       <div className={cn(
-        "flex gap-4",
+        "flex",
         layout === "vertical" ? "flex-col items-center text-center" : "items-start"
-      )}>
+      )}
+      style={{ gap: spacing[4] }}
+      >
         {/* Icon Container */}
         <div className={cn(
-          "p-2 rounded-lg bg-muted/70 group-hover:bg-muted/60 transition-colors flex-shrink-0 backdrop-blur-lg",
+          "bg-muted/70 group-hover:bg-muted/60 transition-colors flex-shrink-0 backdrop-blur-lg",
           layout === "vertical" ? "" : "",
           iconContainerClassName
-        )}>
-          <IconComponent 
-            className={cn(
-              "text-foreground",
-              iconSizes[iconSize],
-              iconClassName
-            )} 
-          />
+        )}
+        style={{
+          padding: spacing[2],
+          borderRadius: borderRadius.lg,
+        }}
+        >
+          <div
+            style={{
+              width: iconSizes[iconSize].width,
+              height: iconSizes[iconSize].height,
+            }}
+          >
+            <IconComponent 
+              className={cn(
+                "text-foreground",
+                iconClassName
+              )}
+            />
+          </div>
         </div>
         
         {/* Content */}
@@ -123,11 +149,23 @@ export function FeatureCard({
           layout === "vertical" ? "text-center" : ""
         )}>
           {title && (
-            <h3 className="text-lg font-semibold text-foreground mb-2">
+            <h3 
+              className="text-foreground"
+              style={{
+                fontSize: typography.fontSize.lg,
+                fontWeight: typography.fontWeight.semibold,
+                marginBottom: spacing[2],
+              }}
+            >
               {title}
             </h3>
           )}
-          <p className="text-foreground leading-relaxed text-pretty">
+          <p 
+            className="text-foreground text-pretty"
+            style={{
+              lineHeight: typography.lineHeight.relaxed,
+            }}
+          >
             {description}
           </p>
         </div>

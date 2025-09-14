@@ -1,6 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { 
+  borderRadius, 
+  spacing, 
+  animations 
+} from "@/lib/design-system";
 
 import React, {
   createContext,
@@ -49,11 +54,13 @@ export const CardContainer = ({
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
         className={cn(
-          "py-20 flex items-center justify-center",
+          "flex items-center justify-center",
           containerClassName
         )}
         style={{
           perspective: "1000px",
+          paddingTop: spacing[20],
+          paddingBottom: spacing[20],
         }}
       >
         <div
@@ -62,10 +69,11 @@ export const CardContainer = ({
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           className={cn(
-            "flex items-center justify-center relative transition-all duration-200 ease-linear",
+            "flex items-center justify-center relative",
             className
           )}
           style={{
+            transition: `all ${animations.duration[200]} ${animations.easing['in-out']}`,
             transformStyle: "preserve-3d",
           }}
         >
@@ -86,9 +94,13 @@ export const CardBody = ({
   return (
     <div
       className={cn(
-        "h-96 w-96 [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]",
+        "[transform-style:preserve-3d] [&>*]:[transform-style:preserve-3d]",
         className
       )}
+      style={{
+        height: spacing[96],
+        width: spacing[96],
+      }}
     >
       {children}
     </div>
@@ -137,7 +149,10 @@ export const CardItem = ({
   return (
     <Tag
       ref={ref}
-      className={cn("w-fit transition duration-200 ease-linear", className)}
+      className={cn("w-fit", className)}
+      style={{
+        transition: `${animations.duration[200]} ${animations.easing['in-out']}`,
+      }}
       {...rest}
     >
       {children}
