@@ -92,7 +92,7 @@ export function FeatureCard({
   return (
     <div
       className={cn(
-        "group p-6 rounded-lg bg-card/60 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-xl z-10",
+        "group p-6 rounded-lg bg-card/60 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-xl z-10 hover:scale-105 transform-gpu",
         onCardClick && "cursor-pointer",
         className
       )}
