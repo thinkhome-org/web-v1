@@ -9,6 +9,7 @@ import {
   MotionProps,
 } from "motion/react";
 import { useRef } from "react";
+import { animations } from "@/lib/design-system";
 
 type MarginType = UseInViewOptions["margin"];
 
@@ -69,7 +70,7 @@ export function BlurFade({
         transition={{
           delay: 0.04 + delay,
           duration,
-          ease: "easeOut",
+          ease: animations.easing.out,
         }}
         className={className}
         {...props}

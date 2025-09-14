@@ -3,6 +3,10 @@
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import { TeamMemberCard, type TeamMember } from "@/components/ui/team-member-card";
 import { useState, useEffect } from 'react';
+import { 
+  spacing, 
+  typography 
+} from "@/lib/design-system";
 
 
 
@@ -76,22 +80,49 @@ export default function TeamPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-foreground text-xl">Loading team data...</div>
+        <div 
+          className="text-foreground"
+          style={{
+            fontSize: typography.fontSize.xl,
+          }}
+        >
+          Loading team data...
+        </div>
       </div>
     );
   }
   
   return (
     <main className="relative min-h-screen flex flex-col bg-background">
-      <div className="p-8 text-center">
-        <h1 className="text-4xl font-bold text-foreground mb-4">
+      <div 
+        className="text-center"
+        style={{ padding: spacing[8] }}
+      >
+        <h1 
+          className="text-foreground"
+          style={{
+            fontSize: typography.fontSize['4xl'],
+            fontWeight: typography.fontWeight.bold,
+            marginBottom: spacing[4],
+          }}
+        >
           Členové týmu
         </h1>
-        <p className="text-muted-foreground mb-8 w-2/3 mx-auto">
+        <p 
+          className="text-muted-foreground w-2/3 mx-auto"
+          style={{
+            marginBottom: spacing[8],
+            fontSize: typography.fontSize.base,
+            lineHeight: typography.lineHeight.relaxed,
+          }}
+        >
           Poznejte náš tým odborníků, kteří vám pomohou s IT řešeními
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
+          style={{ gap: spacing[6] }}
+        >
           {teamMembers.map((member: TeamMember, index: number) => (
             <TeamMemberCard
               key={`${member.name}-${index}`}

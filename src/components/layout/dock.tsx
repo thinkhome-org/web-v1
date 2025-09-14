@@ -10,6 +10,7 @@ import {
   IconTerminal2,
   IconSectionSign,
 } from "@tabler/icons-react";
+import { spacing, zIndex } from "@/lib/design-system";
 
 export function FloatingDockDemo() {
   const links = [
@@ -58,7 +59,13 @@ export function FloatingDockDemo() {
     },
   ];
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
+    <div 
+      className="fixed left-1/2 transform -translate-x-1/2"
+      style={{
+        bottom: spacing[4],
+        zIndex: zIndex.tooltip,
+      }}
+    >
       <FloatingDock items={links} />
     </div>
   );

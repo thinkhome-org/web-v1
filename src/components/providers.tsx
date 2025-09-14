@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from "next-themes";
 import { ReactNode } from "react";
+import { animations } from "@/lib/design-system";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -13,9 +14,15 @@ export function Providers({ children }: ProvidersProps) {
       attribute="class"
       defaultTheme="system"
       enableSystem
-      disableTransitionOnChange
+      disableTransitionOnChange={false}
     >
-      {children}
+      <div 
+        style={{
+          transition: `background-color ${animations.duration[300]} ${animations.easing.out}, color ${animations.duration[300]} ${animations.easing.out}`,
+        }}
+      >
+        {children}
+      </div>
     </ThemeProvider>
   );
 }

@@ -2,6 +2,11 @@
 
 import { useState } from "react";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+import { 
+  spacing, 
+  typography, 
+  animations 
+} from "@/lib/design-system";
 
 interface ServiceProps {
   title: string;
@@ -17,16 +22,38 @@ function Service({ title, children }: ServiceProps) {
         type="button"
         className="w-full text-left flex justify-between items-center group"
         onClick={() => setOpen((o) => !o)}
+        style={{
+          transition: `color ${animations.duration[200]} ${animations.easing.out}`,
+        }}
       >
-        <h2 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
+        <h2 
+          className="text-foreground group-hover:text-primary"
+          style={{
+            fontSize: typography.fontSize['2xl'],
+            fontWeight: typography.fontWeight.semibold,
+          }}
+        >
           {title}
         </h2>
-        <span className="ml-4 text-xl text-muted-foreground">
+        <span 
+          className="text-muted-foreground"
+          style={{
+            marginLeft: spacing[4],
+            fontSize: typography.fontSize.xl,
+          }}
+        >
           {open ? "−" : "+"}
         </span>
       </button>
       {open && (
-        <div className="mt-3 text-muted-foreground text-lg leading-relaxed">
+        <div 
+          className="text-muted-foreground"
+          style={{
+            marginTop: spacing[3],
+            fontSize: typography.fontSize.lg,
+            lineHeight: typography.lineHeight.relaxed,
+          }}
+        >
           {children}
         </div>
       )}
@@ -37,12 +64,30 @@ function Service({ title, children }: ServiceProps) {
 export default function ContactPage() {
   return (
     <main className="">
-      <div className="relative max-w-4xl mx-auto px-6 py-12">
-        <h1 className="text-5xl font-extrabold mb-10 text-foreground drop-shadow-lg">
+      <div 
+        className="relative max-w-4xl mx-auto relative z-10"
+        style={{
+          paddingLeft: spacing[6],
+          paddingRight: spacing[6],
+          paddingTop: spacing[12],
+          paddingBottom: spacing[12],
+        }}
+      >
+        <h1 
+          className="text-foreground drop-shadow-lg"
+          style={{
+            fontSize: typography.fontSize['5xl'],
+            fontWeight: typography.fontWeight.extrabold,
+            marginBottom: spacing[10],
+          }}
+        >
           Naše služby
         </h1>
 
-        <div className="space-y-6 relative z-10">
+        <div 
+          className="relative z-10"
+          style={{ display: 'flex', flexDirection: 'column', gap: spacing[6] }}
+        >
           <Service title="Turn-key IT management a Vzdálená správa">
             Kompletní péče o vaše IT prostředí včetně vzdáleného dohledu a
             podpory. Minimalizujeme výpadky, řešíme i drobnosti na dálku.
