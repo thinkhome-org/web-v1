@@ -75,8 +75,8 @@ export default function RootLayout({
             <CookieBanner />
           </BlurFade>
           <Footer />
+          <FloatingDockDemo />
          </Providers>
-         <FloatingDockDemo />
       </body>
     </html>
   );
