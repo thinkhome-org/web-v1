@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         },
     },
     icons: {
-        icon: '/favicon.ico'
+        icon: '/logo/favicon.ico'
     },
     manifest: '/site.webmanifest',
 };
