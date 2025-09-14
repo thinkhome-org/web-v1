@@ -75,13 +75,21 @@ jobs:
       - name: Detect Package Manager
         id: detect-pm
         run: |
-          if [ -f "yarn.lock" ]; then
+          if [ -f "package-lock.json" ]; then
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+          elif [ -f "yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
+          elif [ -f "pnpm-lock.yaml" ]; then
+            echo "manager=pnpm" >> $GITHUB_OUTPUT
+            echo "command=install --frozen-lockfile" >> $GITHUB_OUTPUT
+            echo "runner=pnpm" >> $GITHUB_OUTPUT
           elif [ -f "package.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
           else
             echo "❌ Unable to determine package manager"
@@ -105,10 +113,112 @@ jobs:
           path: build-reports/
           retention-days: 30
 
+  # Lock File Management
+  lock-file-management:
+    runs-on: ubuntu-latest
+    needs: pre-build
+    outputs:
+      lock-files-updated: ${{ steps.check-locks.outputs.updated }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          
+      - name: Check and Validate Lock Files
+        id: check-locks
+        run: |
+          echo "🔍 Checking lock file status..."
+          
+          # Check if package.json exists
+          if [ ! -f "package.json" ]; then
+            echo "❌ package.json not found"
+            exit 1
+          fi
+          
+          UPDATED=false
+          
+          # Function to check if lock file is outdated
+          check_outdated() {
+            local manager=$1
+            local lock_file=$2
+            
+            if [ ! -f "$lock_file" ]; then
+              echo "⚠️ $lock_file missing"
+              return 0  # needs update
+            fi
+            
+            # Check if package.json is newer than lock file
+            if [ "package.json" -nt "$lock_file" ]; then
+              echo "⚠️ $lock_file is outdated (package.json is newer)"
+              return 0  # needs update
+            fi
+            
+            echo "✅ $lock_file is up to date"
+            return 1  # no update needed
+          }
+          
+          # Check npm lock file
+          if check_outdated "npm" "package-lock.json"; then
+            echo "🔄 Generating/updating package-lock.json..."
+            npm install --package-lock-only
+            UPDATED=true
+          fi
+          
+          # Check yarn lock file
+          if check_outdated "yarn" "yarn.lock"; then
+            echo "🔄 Generating/updating yarn.lock..."
+            if ! command -v yarn &> /dev/null; then
+              npm install -g yarn
+            fi
+            yarn install --mode update-lockfile
+            UPDATED=true
+          fi
+          
+          # Check pnpm lock file
+          if check_outdated "pnpm" "pnpm-lock.yaml"; then
+            echo "🔄 Generating/updating pnpm-lock.yaml..."
+            if ! command -v pnpm &> /dev/null; then
+              npm install -g pnpm
+            fi
+            pnpm install --lockfile-only
+            UPDATED=true
+          fi
+          
+          echo "updated=$UPDATED" >> $GITHUB_OUTPUT
+          
+          if [ "$UPDATED" = "true" ]; then
+            echo "📝 Lock files have been updated"
+          else
+            echo "✅ All lock files are up to date"
+          fi
+          
+      - name: Commit Updated Lock Files
+        if: steps.check-locks.outputs.updated == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Add only lock files
+          git add package-lock.json yarn.lock pnpm-lock.yaml 2>/dev/null || true
+          
+          if git diff --staged --quiet; then
+            echo "No lock file changes to commit"
+          else
+            git commit -m "chore: update lock files [skip ci]"
+            git push
+            echo "📤 Lock files committed and pushed"
+          fi
+
   # Code Quality and Testing
   quality-check:
     runs-on: ubuntu-latest
-    needs: pre-build
+    needs: [pre-build, lock-file-management]
     continue-on-error: true
     outputs:
       eslint-status: ${{ steps.eslint.outcome }}
@@ -123,6 +233,11 @@ jobs:
         with:
           node-version: "20"
           cache: ${{ needs.pre-build.outputs.package-manager }}
+          cache-dependency-path: |
+            package.json
+            package-lock.json
+            yarn.lock
+            pnpm-lock.yaml
           
       - name: Install Dependencies
         run: ${{ needs.pre-build.outputs.package-manager }} ${{ needs.pre-build.outputs.install-command }}
@@ -194,7 +309,7 @@ jobs:
   # Main Build Process
   build:
     runs-on: ubuntu-latest
-    needs: [pre-build, quality-check]
+    needs: [pre-build, lock-file-management, quality-check]
     # Always run build, even if quality checks fail
     if: always()
     outputs:
@@ -336,12 +451,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         
-      - name: Download All Reports
-        uses: actions/download-artifact@v4
-        with:
-          name: build-reports-final
-          path: build-reports/
-        continue-on-error: true
+      - name: Download Build Reports
+         uses: actions/download-artifact@v4
+         with:
+           name: build-reports-final
+           path: build-reports/
+         continue-on-error: true
         
       - name: Generate QA Report
         run: |

@@ -10,11 +10,7 @@
 !.yarn/releases
 !.yarn/versions
 
-# lock files (auto-generated, should not be committed)
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
-bun.lockb
+# lock files are now tracked for reproducible builds
 
 # testing
 /coverage
