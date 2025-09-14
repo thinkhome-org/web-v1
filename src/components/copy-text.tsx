@@ -4,10 +4,9 @@ import { useState } from "react";
 interface CopyTextProps {
   text: string;
   className?: string;
-  style?: React.CSSProperties;
 }
 
-export function CopyText({ text, className, style }: CopyTextProps) {
+export function CopyText({ text, className }: CopyTextProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -45,7 +44,6 @@ export function CopyText({ text, className, style }: CopyTextProps) {
       onClick={handleCopy}
       onKeyDown={(e) => e.key === "Enter" && handleCopy()}
       className={`cursor-pointer hover:underline ${className}`}
-      style={style}
       title={copied ? "Zkopírováno!" : "Klikněte pro zkopírování"}
     >
       {copied ? "Zkopírováno!" : text}

@@ -2,16 +2,6 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { 
-  borderRadius, 
-  spacing, 
-  typography, 
-  animations,
-  getColor,
-  getTextStyle,
-  getTextColor
-} from "@/lib/design-system";
-import { Section, Body } from "@/components/ui/text";
 
 type IconName = 'clock' | 'shield' | 'cpu' | 'users';
 
@@ -66,9 +56,9 @@ export interface FeatureCardProps {
 }
 
 const iconSizes = {
-  sm: { width: spacing[4], height: spacing[4] },
-  md: { width: spacing[6], height: spacing[6] },
-  lg: { width: spacing[8], height: spacing[8] }
+  sm: "h-4 w-4",
+  md: "h-6 w-6",
+  lg: "h-8 w-8"
 };
 
 export function FeatureCard({
@@ -102,48 +92,29 @@ export function FeatureCard({
   return (
     <div
       className={cn(
-        "group bg-card/60 border border-border hover:border-muted-foreground/20 backdrop-blur-xl z-10 hover:scale-105 transform-gpu",
+        "group p-6 rounded-lg bg-card/60 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-xl z-10 hover:scale-105 transform-gpu",
         onCardClick && "cursor-pointer",
         className
       )}
-      style={{
-        padding: spacing[6],
-        borderRadius: borderRadius.lg,
-        transition: animations.transition.all,
-        transitionDuration: animations.duration[300],
-      }}
       onClick={handleCardClick}
     >
       <div className={cn(
-        "flex",
+        "flex gap-4",
         layout === "vertical" ? "flex-col items-center text-center" : "items-start"
-      )}
-      style={{ gap: spacing[4] }}
-      >
+      )}>
         {/* Icon Container */}
         <div className={cn(
-          "bg-muted/70 group-hover:bg-muted/60 transition-colors flex-shrink-0 backdrop-blur-lg",
+          "p-2 rounded-lg bg-muted/70 group-hover:bg-muted/60 transition-colors flex-shrink-0 backdrop-blur-lg",
           layout === "vertical" ? "" : "",
           iconContainerClassName
-        )}
-        style={{
-          padding: spacing[2],
-          borderRadius: borderRadius.lg,
-        }}
-        >
-          <div
-            style={{
-              width: iconSizes[iconSize].width,
-              height: iconSizes[iconSize].height,
-            }}
-          >
-            <IconComponent 
-              className={cn(
-                "text-foreground",
-                iconClassName
-              )}
-            />
-          </div>
+        )}>
+          <IconComponent 
+            className={cn(
+              "text-foreground",
+              iconSizes[iconSize],
+              iconClassName
+            )} 
+          />
         </div>
         
         {/* Content */}
@@ -152,21 +123,13 @@ export function FeatureCard({
           layout === "vertical" ? "text-center" : ""
         )}>
           {title && (
-            <Section 
-              color="title" 
-              mode="light"
-              style={{ marginBottom: spacing[2] }}
-            >
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               {title}
-            </Section>
+            </h3>
           )}
-          <Body 
-            color="body" 
-            mode="light"
-            className="text-pretty"
-          >
+          <p className="text-foreground leading-relaxed text-pretty">
             {description}
-          </Body>
+          </p>
         </div>
       </div>
     </div>

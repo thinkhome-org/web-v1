@@ -9,7 +9,6 @@ import {
   MotionProps,
 } from "motion/react";
 import { useRef } from "react";
-import { animations } from "@/lib/design-system";
 
 type MarginType = UseInViewOptions["margin"];
 

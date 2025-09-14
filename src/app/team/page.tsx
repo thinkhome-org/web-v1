@@ -3,11 +3,6 @@
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import { TeamMemberCard, type TeamMember } from "@/components/ui/team-member-card";
 import { useState, useEffect } from 'react';
-import { 
-  spacing, 
-  typography 
-} from "@/lib/design-system";
-import { Title, Body } from "@/components/ui/text";
 
 
 
@@ -81,39 +76,22 @@ export default function TeamPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <Body color="body" mode="light">
-          Loading team data...
-        </Body>
+        <div className="text-foreground text-xl">Loading team data...</div>
       </div>
     );
   }
   
   return (
     <main className="relative min-h-screen flex flex-col bg-background">
-      <div 
-        className="text-center"
-        style={{ padding: spacing[8] }}
-      >
-        <Title 
-          color="title" 
-          mode="light"
-          style={{ marginBottom: spacing[4] }}
-        >
+      <div className="p-8 text-center">
+        <h1 className="text-4xl font-bold text-foreground mb-4">
           Členové týmu
-        </Title>
-        <Body 
-          color="secondary" 
-          mode="light"
-          className="w-2/3 mx-auto"
-          style={{ marginBottom: spacing[8] }}
-        >
+        </h1>
+        <p className="text-muted-foreground mb-8 w-2/3 mx-auto">
           Poznejte náš tým odborníků, kteří vám pomohou s IT řešeními
-        </Body>
+        </p>
 
-        <div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
-          style={{ gap: spacing[6] }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {teamMembers.map((member: TeamMember, index: number) => (
             <TeamMemberCard
               key={`${member.name}-${index}`}

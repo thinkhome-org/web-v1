@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
-import { animations, zIndex } from "@/lib/design-system";
 
 interface InteractiveGridPatternProps extends React.SVGProps<SVGSVGElement> {
   width?: number; // width of each square
@@ -47,12 +46,9 @@ export function InteractiveGridPattern({
       height={viewport.h}
 
       className={cn(
-        "fixed top-0 left-0 w-screen h-screen pointer-events-auto",
+        "fixed top-0 left-0 w-screen h-screen pointer-events-auto z-0",
         className
       )}
-      style={{
-        zIndex: zIndex.base,
-      }}
       {...props}
     >
       {Array.from({ length: totalSquares }).map((_, index) => {
@@ -70,13 +66,10 @@ export function InteractiveGridPattern({
             width={width}
             height={height}
             className={cn(
-              "stroke-gray-400/30",
+              "stroke-gray-400/30 transition-all duration-100 ease-in-out",
               hoveredSquare === index ? "fill-gray-300/30" : "fill-transparent",
               squaresClassName
             )}
-            style={{
-              transition: `all ${animations.duration[100]} ${animations.easing['in-out']}`,
-            }}
             onMouseEnter={() => setHoveredSquare(index)}
             onMouseLeave={() => setHoveredSquare(null)}
           />

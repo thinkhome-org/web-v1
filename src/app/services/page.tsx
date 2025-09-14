@@ -2,12 +2,6 @@
 
 import { useState } from "react";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
-import { 
-  spacing, 
-  typography, 
-  animations 
-} from "@/lib/design-system";
-import { Title, Subtitle, Section, Body } from "@/components/ui/text";
 
 interface ServiceProps {
   title: string;
@@ -23,35 +17,18 @@ function Service({ title, children }: ServiceProps) {
         type="button"
         className="w-full text-left flex justify-between items-center group"
         onClick={() => setOpen((o) => !o)}
-        style={{
-          transition: `color ${animations.duration[200]} ${animations.easing.out}`,
-        }}
       >
-        <Section 
-          color="title" 
-          mode="light"
-          className="group-hover:text-primary"
-        >
+        <h2 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
           {title}
-        </Section>
-        <span 
-          className="text-muted-foreground"
-          style={{
-            marginLeft: spacing[4],
-            fontSize: typography.fontSize.xl,
-          }}
-        >
+        </h2>
+        <span className="ml-4 text-xl text-muted-foreground">
           {open ? "−" : "+"}
         </span>
       </button>
       {open && (
-        <Body 
-          color="secondary" 
-          mode="light"
-          style={{ marginTop: spacing[3] }}
-        >
+        <div className="mt-3 text-muted-foreground text-lg leading-relaxed">
           {children}
-        </Body>
+        </div>
       )}
     </div>
   );
@@ -60,28 +37,12 @@ function Service({ title, children }: ServiceProps) {
 export default function ContactPage() {
   return (
     <main className="">
-      <div 
-        className="relative max-w-4xl mx-auto relative z-10"
-        style={{
-          paddingLeft: spacing[6],
-          paddingRight: spacing[6],
-          paddingTop: spacing[12],
-          paddingBottom: spacing[12],
-        }}
-      >
-        <Title 
-          color="title" 
-          mode="light"
-          className="drop-shadow-lg"
-          style={{ marginBottom: spacing[10] }}
-        >
+      <div className="relative max-w-4xl mx-auto px-6 py-12">
+        <h1 className="text-5xl font-extrabold mb-10 text-foreground drop-shadow-lg">
           Naše služby
-        </Title>
+        </h1>
 
-        <div 
-          className="relative z-10"
-          style={{ display: 'flex', flexDirection: 'column', gap: spacing[6] }}
-        >
+        <div className="space-y-6 relative z-10">
           <Service title="Turn-key IT management a Vzdálená správa">
             Kompletní péče o vaše IT prostředí včetně vzdáleného dohledu a
             podpory. Minimalizujeme výpadky, řešíme i drobnosti na dálku.
