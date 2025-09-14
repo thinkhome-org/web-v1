@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tests-passed: ${{ steps.test-results.outputs.passed }}
+      overall-passed: ${{ steps.final-results.outputs.overall-passed }}
       lock-files-updated: ${{ steps.lock-check.outputs.updated }}
     
     steps:
@@ -154,6 +155,183 @@ jobs:
           # Clean up temp config
           rm -f .eslintrc.temp.js
 
+      - name: Scan GitHub Actions workflows
+        id: actions-scan
+        run: |
+          echo "Scanning GitHub Actions workflows for security and best practices..."
+          ACTIONS_ISSUES_FOUND=false
+          
+          # Create GitHub Actions scan results file
+          echo '[]' > github-actions-scan.json
+          
+          # Find all workflow files
+          find .github/workflows -name "*.yml" -o -name "*.yaml" | while read -r workflow_file; do
+            echo "Scanning: $workflow_file"
+            
+            # Check for security issues and best practices
+            python3 -c "
+import yaml
+import json
+import sys
+import os
+
+workflow_file = '$workflow_file'
+issues = []
+
+try:
+    with open(workflow_file, 'r') as f:
+        workflow = yaml.safe_load(f)
+    
+    # Check for security issues
+    def check_workflow(data, path=''):
+        if isinstance(data, dict):
+            for key, value in data.items():
+                current_path = f'{path}.{key}' if path else key
+                
+                # Check for hardcoded secrets
+                if isinstance(value, str):
+                    if any(secret in value.lower() for secret in ['password', 'token', 'key', 'secret']):
+                        if not ('secrets.' in value or 'env.' in value):
+                            issues.append({
+                                'file': workflow_file,
+                                'type': 'security',
+                                'severity': 'high',
+                                'rule': 'hardcoded-secrets',
+                                'message': f'Potential hardcoded secret in {current_path}: {value[:50]}...',
+                                'line': 0
+                            })
+                
+                # Check for pinned action versions
+                if key == 'uses' and isinstance(value, str):
+                    if '@' not in value or value.endswith('@main') or value.endswith('@master'):
+                        issues.append({
+                            'file': workflow_file,
+                            'type': 'security',
+                            'severity': 'medium',
+                            'rule': 'unpinned-action',
+                            'message': f'Action not pinned to specific version: {value}',
+                            'line': 0
+                        })
+                
+                # Check for overly broad permissions
+                if key == 'permissions' and isinstance(value, dict):
+                    if 'contents' in value and value['contents'] == 'write':
+                        if 'pages' not in value:
+                            issues.append({
+                                'file': workflow_file,
+                                'type': 'security',
+                                'severity': 'medium',
+                                'rule': 'broad-permissions',
+                                'message': 'Broad write permissions granted without specific need',
+                                'line': 0
+                            })
+                
+                # Check for shell injection risks
+                if key == 'run' and isinstance(value, str):
+                    if '\${{' in value and ('github.event' in value or 'github.head_ref' in value):
+                        issues.append({
+                            'file': workflow_file,
+                            'type': 'security',
+                            'severity': 'high',
+                            'rule': 'shell-injection',
+                            'message': 'Potential shell injection vulnerability in run command',
+                            'line': 0
+                        })
+                
+                check_workflow(value, current_path)
+            
+        elif isinstance(data, list):
+            for i, item in enumerate(data):
+                check_workflow(item, f'{path}[{i}]')
+    
+    check_workflow(workflow)
+    
+    # Load existing results and append
+    try:
+        with open('github-actions-scan.json', 'r') as f:
+            existing_results = json.load(f)
+    except:
+        existing_results = []
+    
+    existing_results.extend(issues)
+    
+    with open('github-actions-scan.json', 'w') as f:
+        json.dump(existing_results, f, indent=2)
+    
+    if issues:
+        print(f'Found {len(issues)} issues in {workflow_file}')
+        sys.exit(1)
+    else:
+        print(f'No issues found in {workflow_file}')
+        
+except Exception as e:
+    print(f'Error scanning {workflow_file}: {e}')
+    sys.exit(1)
+" || ACTIONS_ISSUES_FOUND=true
+          done
+          
+          # Install actionlint for additional checks
+          echo "Installing actionlint..."
+          curl -s https://raw.githubusercontent.com/rhymond/actionlint/main/scripts/download-actionlint.bash | bash
+          
+          # Run actionlint on all workflows
+          echo "Running actionlint..."
+          ./actionlint -format json .github/workflows/*.yml .github/workflows/*.yaml > actionlint-results.json 2>/dev/null || ACTIONS_ISSUES_FOUND=true
+          
+          # Merge actionlint results with our custom scan
+          python3 -c "
+import json
+
+try:
+    with open('actionlint-results.json', 'r') as f:
+        actionlint_results = json.load(f)
+except:
+    actionlint_results = []
+
+try:
+    with open('github-actions-scan.json', 'r') as f:
+        custom_results = json.load(f)
+except:
+    custom_results = []
+
+# Convert actionlint format to our format
+for issue in actionlint_results:
+    custom_results.append({
+        'file': issue.get('filepath', 'unknown'),
+        'type': 'actionlint',
+        'severity': 'medium',
+        'rule': issue.get('kind', 'unknown'),
+        'message': issue.get('message', 'Unknown issue'),
+        'line': issue.get('line', 0)
+    })
+
+with open('github-actions-scan.json', 'w') as f:
+    json.dump(custom_results, f, indent=2)
+
+print(f'Total GitHub Actions issues found: {len(custom_results)}')
+"
+          
+          echo "actions-issues-found=$ACTIONS_ISSUES_FOUND" >> $GITHUB_OUTPUT
+
+      - name: Combine all test results
+        if: always()
+        run: |
+          echo "Combining all test results..."
+          OVERALL_PASSED=true
+          
+          # Check if any tests failed
+          if [ "${{ steps.test-results.outputs.passed }}" = "false" ]; then
+            OVERALL_PASSED=false
+          fi
+          
+          # Check if GitHub Actions scan found issues
+          if [ "${{ steps.actions-scan.outputs.actions-issues-found }}" = "true" ]; then
+            OVERALL_PASSED=false
+          fi
+          
+          echo "overall-passed=$OVERALL_PASSED" >> $GITHUB_OUTPUT
+        id: final-results
+
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -161,18 +339,20 @@ jobs:
           name: test-results
           path: |
             eslint-results.json
+            github-actions-scan.json
+            actionlint-results.json
             .next/
           retention-days: 7
 
   deploy-on-success:
     needs: test-and-validate
-    if: needs.test-and-validate.outputs.tests-passed == 'true'
+    if: needs.test-and-validate.outputs.overall-passed == 'true'
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
 
   generate-report-on-failure:
     needs: test-and-validate
-    if: needs.test-and-validate.outputs.tests-passed == 'false'
+    if: needs.test-and-validate.outputs.overall-passed == 'false'
     runs-on: ubuntu-latest
     
     steps:
@@ -225,6 +405,34 @@ jobs:
             " >> reports/test-failures.csv
           fi
           
+          # Process GitHub Actions scan results if available
+          if [ -f "test-results/github-actions-scan.json" ]; then
+            echo "Processing GitHub Actions scan results..."
+            node -e "
+              const fs = require('fs');
+              try {
+                const results = JSON.parse(fs.readFileSync('test-results/github-actions-scan.json', 'utf8'));
+                const timestamp = new Date().toISOString();
+                
+                results.forEach(issue => {
+                  const row = [
+                    timestamp,
+                    'GitHub Actions',
+                    issue.file.replace(process.cwd() + '/', ''),
+                    issue.line || 0,
+                    0,
+                    issue.severity || 'warning',
+                    issue.rule || 'unknown',
+                    '\"' + (issue.message || '').replace(/\"/g, '\"\"') + '\"'
+                  ];
+                  console.log(row.join(','));
+                });
+              } catch (e) {
+                console.error('Error processing GitHub Actions scan results:', e.message);
+              }
+            " >> reports/test-failures.csv
+          fi
+          
           # Add build failures if any
           echo "$(date -Iseconds),Build,N/A,0,0,error,build-failure,\"Build process failed\"" >> reports/test-failures.csv
           
@@ -273,11 +481,13 @@ jobs:
           # Add summary statistics
           TOTAL_ISSUES=$(tail -n +2 reports/test-failures.csv | wc -l)
           ESLINT_ISSUES=$(grep "ESLint" reports/test-failures.csv | wc -l)
+          ACTIONS_ISSUES=$(grep "GitHub Actions" reports/test-failures.csv | wc -l)
           BUILD_ISSUES=$(grep "Build" reports/test-failures.csv | wc -l)
           
           cat >> docs/src/report.md << EOF
           - **Total Issues**: $TOTAL_ISSUES
-          - **ESLint Issues**: $ESLINT_ISSUES  
+          - **ESLint Issues**: $ESLINT_ISSUES
+          - **GitHub Actions Issues**: $ACTIONS_ISSUES
           - **Build Issues**: $BUILD_ISSUES
           - **Generated**: $(date)
           
