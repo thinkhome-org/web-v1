@@ -10,6 +10,10 @@
 !.yarn/releases
 !.yarn/versions
 
+# lock files (keep only yarn.lock)
+package-lock.json
+pnpm-lock.yaml
+
 # testing
 /coverage
 
@@ -23,6 +27,30 @@
 # misc
 .DS_Store
 *.pem
+
+# temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.orig
+*.rej
+*~
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+
+# Cache directories
+.cache/
+.turbo/
+.parcel-cache/
 
 # debug
 npm-debug.log*
@@ -38,4 +66,4 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
+# next-env.d.ts should be committed, not ignored
