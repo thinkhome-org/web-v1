@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { FloatingDockDemo } from "./components/dock";
-import { Footer } from "./components/footer";
+import { FloatingDockDemo } from "@/components/layout/dock";
+import { Footer } from "@/components/layout/footer";
 import "@/lib/polyfills";
 
 const geistSans = Geist({
