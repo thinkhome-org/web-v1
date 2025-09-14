@@ -1,121 +1,108 @@
+"use client";
+
+import { useState } from "react";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+
+interface ServiceProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+function Service({ title, children }: ServiceProps) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="border-b border-border pb-4">
+      <button
+        type="button"
+        className="w-full text-left flex justify-between items-center group"
+        onClick={() => setOpen((o) => !o)}
+      >
+        <h2 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
+          {title}
+        </h2>
+        <span className="ml-4 text-xl text-muted-foreground">
+          {open ? "−" : "+"}
+        </span>
+      </button>
+      {open && (
+        <div className="mt-3 text-muted-foreground text-lg leading-relaxed">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function ContactPage() {
   return (
-    <main className="flex flex-col items-center justify-start p-8 text-center bg-background relative">
-      {/* Page heading */}
-      <h1 className="text-5xl font-extrabold mb-10 text-foreground drop-shadow-lg">
-        Naše služby
-      </h1>
-      <div className="max-w-4xl w-full text-left space-y-10">
-        {/* Service group */}
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            Turn-key IT management a Vzdálená správa
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+    <main className="">
+      <div className="relative max-w-4xl mx-auto px-6 py-12">
+        <h1 className="text-5xl font-extrabold mb-10 text-foreground drop-shadow-lg">
+          Naše služby
+        </h1>
+
+        <div className="space-y-6 relative z-10">
+          <Service title="Turn-key IT management a Vzdálená správa">
             Kompletní péče o vaše IT prostředí včetně vzdáleného dohledu a
             podpory. Minimalizujeme výpadky, řešíme i drobnosti na dálku.
-          </p>
-        </div>
+          </Service>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            Repasování PC a notebooků
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <Service title="Repasování PC a notebooků">
             Výkup, repas a instalace spolehlivé techniky. Ekologické řešení pro
             každou firmu.
-          </p>
-        </div>
+          </Service>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            Webové systémy
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed mb-2">
-            Kompletní tvorba webů včetně textů, grafiky i správy. Nabízíme dvě
-            varianty podle potřeb klienta:
-          </p>
-          <ul className="list-disc list-inside text-muted-foreground text-lg space-y-1">
-            <li>
-              <strong>Next.js – ADVANCED:</strong> Moderní pokročilá webová
-              řešení, vysoká rychlost, bezpečnost, škálovatelnost.
-            </li>
-            <li>
-              <strong>WordPress/BrakeDance – STANDARD:</strong> Rychlé a
-              flexibilní nasazení webu, snadná editace obsahu, vhodné pro menší
-              i střední projekty.
-            </li>
-          </ul>
-        </div>
+          <Service title="Webové systémy">
+            <p>
+              Kompletní tvorba webů včetně textů, grafiky i správy. Nabízíme dvě
+              varianty podle potřeb klienta:
+            </p>
+            <ul className="list-disc list-inside mt-2 space-y-1">
+              <li>
+                <strong>Next.js – ADVANCED:</strong> Moderní pokročilá webová
+                řešení, vysoká rychlost, bezpečnost, škálovatelnost.
+              </li>
+              <li>
+                <strong>WordPress/BrakeDance – STANDARD:</strong> Rychlé a
+                flexibilní nasazení webu, snadná editace obsahu, vhodné pro
+                menší i střední projekty.
+              </li>
+            </ul>
+          </Service>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            Backup, emaily, privátní cloud/server
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <Service title="Backup, emaily, privátní cloud/server">
             Pravidelné zálohování, firemní e-maily, privátní cloud nebo vlastní
             server podle vašich potřeb.
-          </p>
-        </div>
+          </Service>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            Podpora Google Workspace, Microsoft 365, ZoHo
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <Service title="Podpora Google Workspace, Microsoft 365, ZoHo">
             Správa, nastavení i školení pro nejpoužívanější firemní platformy.
-          </p>
-        </div>
+          </Service>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            Kamerové systémy, tiskárny, sítě a WiFi (Unifi), private NAS
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <Service title="Kamerové systémy, tiskárny, sítě a WiFi (Unifi), private NAS">
             Komplexní instalace a správa firemní infrastruktury – od sítí a WiFi
             přes tiskárny a kamery až po privátní síťové úložiště (NAS).
-          </p>
-        </div>
+          </Service>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            Licenční systémy, poradenství
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <Service title="Licenční systémy, poradenství">
             Pomůžeme s výběrem i správou všech potřebných licencí.
-          </p>
-        </div>
+          </Service>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            Školení zaměstnanců (vč. bezpečnosti)
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <Service title="Školení zaměstnanců (vč. bezpečnosti)">
             Školíme v oblasti efektivity práce s IT i kybernetické bezpečnosti,
             práce s e-mailem a vnitrofiremní ochraně dat.
-          </p>
-        </div>
+          </Service>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            Bezpečnostní audit a penetrační testy
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <Service title="Bezpečnostní audit a penetrační testy">
             Prověříme bezpečnost vašeho IT, odhalíme slabá místa a připravíme
             nápravná opatření.
-          </p>
-        </div>
+          </Service>
 
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            AI & Chatboti na míru
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <Service title="AI & Chatboti na míru">
             Vytváříme firemní AI řešení, postupnou automatizaci i inteligentní
             chatboty přesně dle požadavků.
-          </p>
+          </Service>
         </div>
       </div>
       <InteractiveGridPattern className="absolute inset-0 z-0 opacity-10" />
