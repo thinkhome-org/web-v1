@@ -50,28 +50,28 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
+
       - name: Configure Build Parameters
         id: config
         run: |
           FORCE_BUILD="${{ github.event.inputs.force_build || 'false' }}"
           DISABLE_ESLINT="${{ github.event.inputs.disable_eslint || 'false' }}"
-          
+
           # Auto-enable force build on main branch pushes
           if [[ "${{ github.ref }}" == "refs/heads/main" && "${{ github.event_name }}" == "push" ]]; then
             FORCE_BUILD="true"
             DISABLE_ESLINT="true"
           fi
-          
+
           echo "force-build=$FORCE_BUILD" >> $GITHUB_OUTPUT
           echo "disable-eslint=$DISABLE_ESLINT" >> $GITHUB_OUTPUT
-          
+
           echo "🔧 Build Configuration:"
           echo "  - Force Build: $FORCE_BUILD"
           echo "  - Disable ESLint: $DISABLE_ESLINT"
           echo "  - Event: ${{ github.event_name }}"
           echo "  - Branch: ${{ github.ref }}"
-        
+
       - name: Detect Package Manager
         id: detect-pm
         run: |
@@ -95,7 +95,7 @@ jobs:
             echo "❌ Unable to determine package manager"
             exit 1
           fi
-          
+
       - name: Initialize Error Tracking
         run: |
           mkdir -p build-reports
@@ -105,7 +105,7 @@ jobs:
           echo "Commit: ${{ github.sha }}" >> build-reports/${{ env.ERROR_LOG_FILE }}
           echo "Branch: ${{ github.ref }}" >> build-reports/${{ env.ERROR_LOG_FILE }}
           echo "" >> build-reports/${{ env.ERROR_LOG_FILE }}
-          
+
       - name: Upload Initial Reports
         uses: actions/upload-artifact@v4
         with:
@@ -124,52 +124,52 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          
+
       - name: Check and Validate Lock Files
         id: check-locks
         run: |
           echo "🔍 Checking lock file status..."
-          
+
           # Check if package.json exists
           if [ ! -f "package.json" ]; then
             echo "❌ package.json not found"
             exit 1
           fi
-          
+
           UPDATED=false
-          
+
           # Function to check if lock file is outdated
           check_outdated() {
             local manager=$1
             local lock_file=$2
-            
+
             if [ ! -f "$lock_file" ]; then
               echo "⚠️ $lock_file missing"
               return 0  # needs update
             fi
-            
+
             # Check if package.json is newer than lock file
             if [ "package.json" -nt "$lock_file" ]; then
               echo "⚠️ $lock_file is outdated (package.json is newer)"
               return 0  # needs update
             fi
-            
+
             echo "✅ $lock_file is up to date"
             return 1  # no update needed
           }
-          
+
           # Check npm lock file
           if check_outdated "npm" "package-lock.json"; then
             echo "🔄 Generating/updating package-lock.json..."
             npm install --package-lock-only
             UPDATED=true
           fi
-          
+
           # Check yarn lock file
           if check_outdated "yarn" "yarn.lock"; then
             echo "🔄 Generating/updating yarn.lock..."
@@ -179,7 +179,7 @@ jobs:
             yarn install --mode update-lockfile
             UPDATED=true
           fi
-          
+
           # Check pnpm lock file
           if check_outdated "pnpm" "pnpm-lock.yaml"; then
             echo "🔄 Generating/updating pnpm-lock.yaml..."
@@ -189,24 +189,24 @@ jobs:
             pnpm install --lockfile-only
             UPDATED=true
           fi
-          
+
           echo "updated=$UPDATED" >> $GITHUB_OUTPUT
-          
+
           if [ "$UPDATED" = "true" ]; then
             echo "📝 Lock files have been updated"
           else
             echo "✅ All lock files are up to date"
           fi
-          
+
       - name: Commit Updated Lock Files
         if: steps.check-locks.outputs.updated == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          
+
           # Add only lock files
           git add package-lock.json yarn.lock pnpm-lock.yaml 2>/dev/null || true
-          
+
           if git diff --staged --quiet; then
             echo "No lock file changes to commit"
           else
@@ -227,7 +227,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -238,16 +238,16 @@ jobs:
             package-lock.json
             yarn.lock
             pnpm-lock.yaml
-          
+
       - name: Install Dependencies
         run: ${{ needs.pre-build.outputs.package-manager }} ${{ needs.pre-build.outputs.install-command }}
-        
+
       - name: Download Error Log
         uses: actions/download-artifact@v4
         with:
           name: build-reports-init
           path: build-reports/
-          
+
       - name: TypeScript Type Checking
         id: typescript
         continue-on-error: true
@@ -261,7 +261,7 @@ jobs:
           else
             echo "✅ TypeScript check passed" >> build-reports/${{ env.ERROR_LOG_FILE }}
           fi
-          
+
       - name: ESLint Analysis
         id: eslint
         continue-on-error: true
@@ -280,7 +280,7 @@ jobs:
               echo "✅ ESLint check passed" >> build-reports/${{ env.ERROR_LOG_FILE }}
             fi
           fi
-          
+
       - name: Run Tests
         id: tests
         continue-on-error: true
@@ -298,7 +298,7 @@ jobs:
            else
              echo "ℹ️  No tests configured" >> build-reports/${{ env.ERROR_LOG_FILE }}
            fi
-          
+
       - name: Upload Quality Reports
         uses: actions/upload-artifact@v4
         with:
@@ -318,18 +318,18 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: ${{ needs.pre-build.outputs.package-manager }}
-          
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
-          
+
       - name: Restore Next.js Cache
         uses: actions/cache@v4
         with:
@@ -338,33 +338,33 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-            
+
       - name: Download Previous Reports
         uses: actions/download-artifact@v4
         with:
           name: build-reports-quality
           path: build-reports/
         continue-on-error: true
-        
+
       - name: Install Dependencies
         run: |
           echo "📦 Installing dependencies..."
           ${{ needs.pre-build.outputs.package-manager }} ${{ needs.pre-build.outputs.install-command }}
-          
+
       - name: Configure Build Environment
         run: |
           echo "🔧 Configuring build environment..."
-          
+
           # Create or modify eslint config if ESLint should be disabled
           if [[ "${{ needs.pre-build.outputs.disable-eslint }}" == "true" ]]; then
             echo "⚠️  WARNING: ESLint rules are being disabled for this build!" | tee -a build-reports/${{ env.ERROR_LOG_FILE }}
             echo "This is not recommended for production deployments." | tee -a build-reports/${{ env.ERROR_LOG_FILE }}
-            
+
             # Backup original eslint config
             if [ -f "eslint.config.mjs" ]; then
               cp eslint.config.mjs eslint.config.mjs.backup
             fi
-            
+
             # Create minimal eslint config that disables all rules
             cat > eslint.config.mjs << 'EOF'
           export default [
@@ -373,19 +373,19 @@ jobs:
             },
           ];
           EOF
-            
+
             echo "ESLint configuration temporarily disabled" >> build-reports/${{ env.ERROR_LOG_FILE }}
           fi
-          
+
       - name: Build Application
         id: build
         continue-on-error: ${{ needs.pre-build.outputs.force-build == 'true' }}
         run: |
           echo "🏗️  Building Next.js application..."
-          
+
           BUILD_START=$(date)
           echo "Build started at: $BUILD_START" >> build-reports/${{ env.ERROR_LOG_FILE }}
-          
+
           if ${{ needs.pre-build.outputs.runner-command }} next build; then
             BUILD_END=$(date)
             echo "✅ Build completed successfully at: $BUILD_END" >> build-reports/${{ env.ERROR_LOG_FILE }}
@@ -393,11 +393,11 @@ jobs:
           else
             BUILD_END=$(date)
             echo "❌ Build failed at: $BUILD_END" >> build-reports/${{ env.ERROR_LOG_FILE }}
-            
+
             if [[ "${{ needs.pre-build.outputs.force-build }}" == "true" ]]; then
               echo "⚠️  Continuing with forced build despite errors" >> build-reports/${{ env.ERROR_LOG_FILE }}
               echo "BUILD_SUCCESS=false" >> $GITHUB_ENV
-              
+
               # Try to create a minimal build output
               mkdir -p out
               echo "<html><body><h1>Build Failed - Forced Deployment</h1><p>This deployment was forced despite build errors.</p></body></html>" > out/index.html
@@ -406,7 +406,7 @@ jobs:
               exit 1
             fi
           fi
-          
+
       - name: Restore ESLint Configuration
         if: needs.pre-build.outputs.disable-eslint == 'true'
         run: |
@@ -414,27 +414,27 @@ jobs:
             mv eslint.config.mjs.backup eslint.config.mjs
             echo "ESLint configuration restored" >> build-reports/${{ env.ERROR_LOG_FILE }}
           fi
-          
+
       - name: Generate Build Artifacts Info
         run: |
           echo "📊 Generating build artifacts information..."
-          
+
           if [ -d "out" ]; then
             echo "Build artifacts generated:" >> build-reports/${{ env.ERROR_LOG_FILE }}
             find out -type f -name "*.html" -o -name "*.js" -o -name "*.css" | head -20 >> build-reports/${{ env.ERROR_LOG_FILE }}
-            
+
             TOTAL_SIZE=$(du -sh out | cut -f1)
             echo "Total build size: $TOTAL_SIZE" >> build-reports/${{ env.ERROR_LOG_FILE }}
           else
             echo "❌ No build artifacts found" >> build-reports/${{ env.ERROR_LOG_FILE }}
           fi
-          
+
       - name: Upload Build Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
         continue-on-error: true
-        
+
       - name: Upload Build Reports
         uses: actions/upload-artifact@v4
         with:
@@ -450,47 +450,47 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
+
       - name: Download Build Reports
-         uses: actions/download-artifact@v4
-         with:
-           name: build-reports-final
-           path: build-reports/
-         continue-on-error: true
-        
+        uses: actions/download-artifact@v4
+        with:
+          name: build-reports-final
+          path: build-reports/
+        continue-on-error: true
+
       - name: Generate QA Report
         run: |
           echo "📋 Generating comprehensive QA report..."
-          
+
           cat > build-reports/${{ env.QA_REPORT_FILE }} << EOF
           # Quality Assurance Report
-          
-          **Build ID:** ${{ env.BUILD_TIMESTAMP }}  
-          **Repository:** ${{ github.repository }}  
-          **Commit:** ${{ github.sha }}  
-          **Branch:** ${{ github.ref }}  
-          **Triggered by:** ${{ github.event_name }}  
-          **Build Date:** $(date)  
-          
+
+          **Build ID:** ${{ env.BUILD_TIMESTAMP }}
+          **Repository:** ${{ github.repository }}
+          **Commit:** ${{ github.sha }}
+          **Branch:** ${{ github.ref }}
+          **Triggered by:** ${{ github.event_name }}
+          **Build Date:** $(date)
+
           ## Configuration
-          
+
           - **Force Build:** ${{ needs.pre-build.outputs.force-build }}
           - **ESLint Disabled:** ${{ needs.pre-build.outputs.disable-eslint }}
           - **Package Manager:** ${{ needs.pre-build.outputs.package-manager }}
-          
+
           ## Quality Check Results
-          
+
           | Check | Status | Notes |
           |-------|--------|-------|
           | TypeScript | ${{ needs.quality-check.outputs.typescript-status || 'skipped' }} | Type checking |
           | ESLint | ${{ needs.quality-check.outputs.eslint-status || 'skipped' }} | Code linting |
           | Tests | ${{ needs.quality-check.outputs.test-status || 'skipped' }} | Unit/integration tests |
           | Build | ${{ needs.build.outputs.build-status || 'failed' }} | Application build |
-          
+
           ## Issues Summary
-          
+
           EOF
-          
+
           # Add error details if they exist
           if [ -f "build-reports/${{ env.ERROR_LOG_FILE }}" ]; then
             echo "### Detailed Error Log" >> build-reports/${{ env.QA_REPORT_FILE }}
@@ -498,37 +498,37 @@ jobs:
             cat build-reports/${{ env.ERROR_LOG_FILE }} >> build-reports/${{ env.QA_REPORT_FILE }}
             echo "\`\`\`" >> build-reports/${{ env.QA_REPORT_FILE }}
           fi
-          
+
           # Add recommendations
           cat >> build-reports/${{ env.QA_REPORT_FILE }} << EOF
-          
+
           ## Recommendations
-          
+
           EOF
-          
+
           if [[ "${{ needs.pre-build.outputs.disable-eslint }}" == "true" ]]; then
             echo "- ⚠️  **Re-enable ESLint:** ESLint was disabled for this build. Consider fixing linting issues and re-enabling." >> build-reports/${{ env.QA_REPORT_FILE }}
           fi
-          
+
           if [[ "${{ needs.quality-check.outputs.typescript-status }}" == "failure" ]]; then
             echo "- 🔧 **Fix TypeScript Issues:** Address type checking errors for better code quality." >> build-reports/${{ env.QA_REPORT_FILE }}
           fi
-          
+
           if [[ "${{ needs.quality-check.outputs.test-status }}" == "failure" ]]; then
             echo "- 🧪 **Fix Test Failures:** Ensure all tests pass before deployment." >> build-reports/${{ env.QA_REPORT_FILE }}
           fi
-          
+
           if [[ "${{ needs.build.outputs.build-status }}" == "failure" && "${{ needs.pre-build.outputs.force-build }}" == "true" ]]; then
             echo "- 🚨 **Critical:** This deployment was forced despite build failures. Immediate attention required." >> build-reports/${{ env.QA_REPORT_FILE }}
           fi
-          
+
       - name: Upload QA Report
         uses: actions/upload-artifact@v4
         with:
           name: qa-report-${{ env.BUILD_TIMESTAMP }}
           path: build-reports/${{ env.QA_REPORT_FILE }}
           retention-days: 90
-          
+
       - name: Comment QA Report on PR
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
@@ -536,10 +536,10 @@ jobs:
           script: |
             const fs = require('fs');
             const reportPath = 'build-reports/${{ env.QA_REPORT_FILE }}';
-            
+
             if (fs.existsSync(reportPath)) {
               const report = fs.readFileSync(reportPath, 'utf8');
-              
+
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
@@ -560,7 +560,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
+
       - name: Notify Deployment Status
         run: |
           if [[ "${{ needs.build.outputs.build-status }}" == "success" ]]; then
@@ -592,12 +592,12 @@ jobs:
           echo "- Build: ${{ needs.build.outputs.build-status || 'failed' }}"
           echo "- Deploy: ${{ needs.deploy.result || 'skipped' }}"
           echo ""
-          
+
           if [[ "${{ needs.build.outputs.build-status }}" == "failure" ]]; then
             echo "🚨 CRITICAL: Build failed for ${{ github.repository }}"
             echo "Immediate attention required!"
           fi
-          
+
           if [[ "${{ needs.pre-build.outputs.force-build }}" == "true" ]]; then
             echo "⚠️  WARNING: This was a forced build that bypassed quality checks"
           fi
