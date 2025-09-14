@@ -25,7 +25,7 @@ const CookieBanner = () => {
         <p className="text-sm text-muted-foreground">
           Tento web používá soubory cookie, aby vám zajistil co nejlepší
           zážitek. Podrobnosti najdete v{" "}
-          <a href="/legal/susenky" className="text-primary hover:underline">
+          <a href="/legal/cookies" className="text-primary hover:underline">
             zásadách používání souborů cookie
           </a>
           .

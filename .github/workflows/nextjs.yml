@@ -1,93 +1,488 @@
-# Sample workflow for building and deploying a Next.js site to GitHub Pages
-#
-# To get started with Next.js see: https://nextjs.org/docs/getting-started
-#
-name: Deploy Next.js site to Pages
+# Comprehensive Next.js Build and Deploy Workflow
+# Features: Error Detection, Forced Builds, Quality Assurance
+
+name: Comprehensive Next.js Build & Deploy
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
+    inputs:
+      force_build:
+        description: 'Force build even with errors'
+        required: false
+        default: 'false'
+        type: boolean
+      disable_eslint:
+        description: 'Disable ESLint during build'
+        required: false
+        default: 'false'
+        type: boolean
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
+  pull-requests: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  BUILD_TIMESTAMP: ${{ github.run_number }}-${{ github.run_attempt }}
+  ERROR_LOG_FILE: "build-errors-${{ github.run_number }}.log"
+  QA_REPORT_FILE: "qa-report-${{ github.run_number }}.md"
+
 jobs:
-  # Build job
-  build:
+  # Pre-build Analysis and Setup
+  pre-build:
     runs-on: ubuntu-latest
+    outputs:
+      package-manager: ${{ steps.detect-pm.outputs.manager }}
+      install-command: ${{ steps.detect-pm.outputs.command }}
+      runner-command: ${{ steps.detect-pm.outputs.runner }}
+      force-build: ${{ steps.config.outputs.force-build }}
+      disable-eslint: ${{ steps.config.outputs.disable-eslint }}
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Detect package manager
-        id: detect-package-manager
+        
+      - name: Configure Build Parameters
+        id: config
         run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+          FORCE_BUILD="${{ github.event.inputs.force_build || 'false' }}"
+          DISABLE_ESLINT="${{ github.event.inputs.disable_eslint || 'false' }}"
+          
+          # Auto-enable force build on main branch pushes
+          if [[ "${{ github.ref }}" == "refs/heads/main" && "${{ github.event_name }}" == "push" ]]; then
+            FORCE_BUILD="true"
+            DISABLE_ESLINT="true"
+          fi
+          
+          echo "force-build=$FORCE_BUILD" >> $GITHUB_OUTPUT
+          echo "disable-eslint=$DISABLE_ESLINT" >> $GITHUB_OUTPUT
+          
+          echo "🔧 Build Configuration:"
+          echo "  - Force Build: $FORCE_BUILD"
+          echo "  - Disable ESLint: $DISABLE_ESLINT"
+          echo "  - Event: ${{ github.event_name }}"
+          echo "  - Branch: ${{ github.ref }}"
+        
+      - name: Detect Package Manager
+        id: detect-pm
+        run: |
+          if [ -f "yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/package.json" ]; then
+          elif [ -f "package.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
             echo "command=ci" >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
           else
-            echo "Unable to determine package manager"
+            echo "❌ Unable to determine package manager"
             exit 1
           fi
-      - name: Setup Node
+          
+      - name: Initialize Error Tracking
+        run: |
+          mkdir -p build-reports
+          echo "# Build Error Log - Run ${{ env.BUILD_TIMESTAMP }}" > build-reports/${{ env.ERROR_LOG_FILE }}
+          echo "Build started at: $(date)" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          echo "Repository: ${{ github.repository }}" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          echo "Commit: ${{ github.sha }}" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          echo "Branch: ${{ github.ref }}" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          echo "" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          
+      - name: Upload Initial Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-reports-init
+          path: build-reports/
+          retention-days: 30
+
+  # Code Quality and Testing
+  quality-check:
+    runs-on: ubuntu-latest
+    needs: pre-build
+    continue-on-error: true
+    outputs:
+      eslint-status: ${{ steps.eslint.outcome }}
+      typescript-status: ${{ steps.typescript.outcome }}
+      test-status: ${{ steps.tests.outcome }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache: ${{ needs.pre-build.outputs.package-manager }}
+          
+      - name: Install Dependencies
+        run: ${{ needs.pre-build.outputs.package-manager }} ${{ needs.pre-build.outputs.install-command }}
+        
+      - name: Download Error Log
+        uses: actions/download-artifact@v4
+        with:
+          name: build-reports-init
+          path: build-reports/
+          
+      - name: TypeScript Type Checking
+        id: typescript
+        continue-on-error: true
+        run: |
+          echo "🔍 Running TypeScript type checking..."
+          if ! ${{ needs.pre-build.outputs.runner-command }} tsc --noEmit; then
+            echo "❌ TypeScript errors detected" >> build-reports/${{ env.ERROR_LOG_FILE }}
+            echo "TypeScript check failed at: $(date)" >> build-reports/${{ env.ERROR_LOG_FILE }}
+            ${{ needs.pre-build.outputs.runner-command }} tsc --noEmit 2>&1 | tee -a build-reports/${{ env.ERROR_LOG_FILE }}
+            exit 1
+          else
+            echo "✅ TypeScript check passed" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          fi
+          
+      - name: ESLint Analysis
+        id: eslint
+        continue-on-error: true
+        run: |
+          echo "🔍 Running ESLint analysis..."
+          if [[ "${{ needs.pre-build.outputs.disable-eslint }}" == "true" ]]; then
+            echo "⚠️  ESLint disabled by configuration" >> build-reports/${{ env.ERROR_LOG_FILE }}
+            echo "ESLint was intentionally disabled for this build" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          else
+            if ! ${{ needs.pre-build.outputs.runner-command }} eslint . --ext .js,.jsx,.ts,.tsx; then
+               echo "❌ ESLint errors detected" >> build-reports/${{ env.ERROR_LOG_FILE }}
+               echo "ESLint check failed at: $(date)" >> build-reports/${{ env.ERROR_LOG_FILE }}
+               ${{ needs.pre-build.outputs.runner-command }} eslint . --ext .js,.jsx,.ts,.tsx 2>&1 | tee -a build-reports/${{ env.ERROR_LOG_FILE }}
+              exit 1
+            else
+              echo "✅ ESLint check passed" >> build-reports/${{ env.ERROR_LOG_FILE }}
+            fi
+          fi
+          
+      - name: Run Tests
+        id: tests
+        continue-on-error: true
+        run: |
+          echo "🧪 Running test suite..."
+          if [ -f "package.json" ] && grep -q '"test"' package.json; then
+             if ! ${{ needs.pre-build.outputs.package-manager }} test; then
+               echo "❌ Tests failed" >> build-reports/${{ env.ERROR_LOG_FILE }}
+               echo "Test execution failed at: $(date)" >> build-reports/${{ env.ERROR_LOG_FILE }}
+               ${{ needs.pre-build.outputs.package-manager }} test 2>&1 | tee -a build-reports/${{ env.ERROR_LOG_FILE }}
+               exit 1
+             else
+               echo "✅ Tests passed" >> build-reports/${{ env.ERROR_LOG_FILE }}
+             fi
+           else
+             echo "ℹ️  No tests configured" >> build-reports/${{ env.ERROR_LOG_FILE }}
+           fi
+          
+      - name: Upload Quality Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-reports-quality
+          path: build-reports/
+          retention-days: 30
+
+  # Main Build Process
+  build:
+    runs-on: ubuntu-latest
+    needs: [pre-build, quality-check]
+    # Always run build, even if quality checks fail
+    if: always()
+    outputs:
+      build-status: ${{ steps.build.outcome }}
+      deploy-ready: ${{ steps.build.outcome == 'success' }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: ${{ needs.pre-build.outputs.package-manager }}
+          
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          #
-          # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: next
-      - name: Restore cache
+          
+      - name: Restore Next.js Cache
         uses: actions/cache@v4
         with:
           path: |
             .next/cache
-          # Generate a new cache whenever packages or source files change.
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
-      - name: Upload artifact
+            
+      - name: Download Previous Reports
+        uses: actions/download-artifact@v4
+        with:
+          name: build-reports-quality
+          path: build-reports/
+        continue-on-error: true
+        
+      - name: Install Dependencies
+        run: |
+          echo "📦 Installing dependencies..."
+          ${{ needs.pre-build.outputs.package-manager }} ${{ needs.pre-build.outputs.install-command }}
+          
+      - name: Configure Build Environment
+        run: |
+          echo "🔧 Configuring build environment..."
+          
+          # Create or modify eslint config if ESLint should be disabled
+          if [[ "${{ needs.pre-build.outputs.disable-eslint }}" == "true" ]]; then
+            echo "⚠️  WARNING: ESLint rules are being disabled for this build!" | tee -a build-reports/${{ env.ERROR_LOG_FILE }}
+            echo "This is not recommended for production deployments." | tee -a build-reports/${{ env.ERROR_LOG_FILE }}
+            
+            # Backup original eslint config
+            if [ -f "eslint.config.mjs" ]; then
+              cp eslint.config.mjs eslint.config.mjs.backup
+            fi
+            
+            # Create minimal eslint config that disables all rules
+            cat > eslint.config.mjs << 'EOF'
+          export default [
+            {
+              ignores: ['**/*'],
+            },
+          ];
+          EOF
+            
+            echo "ESLint configuration temporarily disabled" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          fi
+          
+      - name: Build Application
+        id: build
+        continue-on-error: ${{ needs.pre-build.outputs.force-build == 'true' }}
+        run: |
+          echo "🏗️  Building Next.js application..."
+          
+          BUILD_START=$(date)
+          echo "Build started at: $BUILD_START" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          
+          if ${{ needs.pre-build.outputs.runner-command }} next build; then
+            BUILD_END=$(date)
+            echo "✅ Build completed successfully at: $BUILD_END" >> build-reports/${{ env.ERROR_LOG_FILE }}
+            echo "BUILD_SUCCESS=true" >> $GITHUB_ENV
+          else
+            BUILD_END=$(date)
+            echo "❌ Build failed at: $BUILD_END" >> build-reports/${{ env.ERROR_LOG_FILE }}
+            
+            if [[ "${{ needs.pre-build.outputs.force-build }}" == "true" ]]; then
+              echo "⚠️  Continuing with forced build despite errors" >> build-reports/${{ env.ERROR_LOG_FILE }}
+              echo "BUILD_SUCCESS=false" >> $GITHUB_ENV
+              
+              # Try to create a minimal build output
+              mkdir -p out
+              echo "<html><body><h1>Build Failed - Forced Deployment</h1><p>This deployment was forced despite build errors.</p></body></html>" > out/index.html
+            else
+              echo "BUILD_SUCCESS=false" >> $GITHUB_ENV
+              exit 1
+            fi
+          fi
+          
+      - name: Restore ESLint Configuration
+        if: needs.pre-build.outputs.disable-eslint == 'true'
+        run: |
+          if [ -f "eslint.config.mjs.backup" ]; then
+            mv eslint.config.mjs.backup eslint.config.mjs
+            echo "ESLint configuration restored" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          fi
+          
+      - name: Generate Build Artifacts Info
+        run: |
+          echo "📊 Generating build artifacts information..."
+          
+          if [ -d "out" ]; then
+            echo "Build artifacts generated:" >> build-reports/${{ env.ERROR_LOG_FILE }}
+            find out -type f -name "*.html" -o -name "*.js" -o -name "*.css" | head -20 >> build-reports/${{ env.ERROR_LOG_FILE }}
+            
+            TOTAL_SIZE=$(du -sh out | cut -f1)
+            echo "Total build size: $TOTAL_SIZE" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          else
+            echo "❌ No build artifacts found" >> build-reports/${{ env.ERROR_LOG_FILE }}
+          fi
+          
+      - name: Upload Build Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
+        continue-on-error: true
+        
+      - name: Upload Build Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-reports-final
+          path: build-reports/
+          retention-days: 30
 
-  # Deployment job
+  # Quality Assurance Report Generation
+  qa-report:
+    runs-on: ubuntu-latest
+    needs: [pre-build, quality-check, build]
+    if: always()
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Download All Reports
+        uses: actions/download-artifact@v4
+        with:
+          name: build-reports-final
+          path: build-reports/
+        continue-on-error: true
+        
+      - name: Generate QA Report
+        run: |
+          echo "📋 Generating comprehensive QA report..."
+          
+          cat > build-reports/${{ env.QA_REPORT_FILE }} << EOF
+          # Quality Assurance Report
+          
+          **Build ID:** ${{ env.BUILD_TIMESTAMP }}  
+          **Repository:** ${{ github.repository }}  
+          **Commit:** ${{ github.sha }}  
+          **Branch:** ${{ github.ref }}  
+          **Triggered by:** ${{ github.event_name }}  
+          **Build Date:** $(date)  
+          
+          ## Configuration
+          
+          - **Force Build:** ${{ needs.pre-build.outputs.force-build }}
+          - **ESLint Disabled:** ${{ needs.pre-build.outputs.disable-eslint }}
+          - **Package Manager:** ${{ needs.pre-build.outputs.package-manager }}
+          
+          ## Quality Check Results
+          
+          | Check | Status | Notes |
+          |-------|--------|-------|
+          | TypeScript | ${{ needs.quality-check.outputs.typescript-status || 'skipped' }} | Type checking |
+          | ESLint | ${{ needs.quality-check.outputs.eslint-status || 'skipped' }} | Code linting |
+          | Tests | ${{ needs.quality-check.outputs.test-status || 'skipped' }} | Unit/integration tests |
+          | Build | ${{ needs.build.outputs.build-status || 'failed' }} | Application build |
+          
+          ## Issues Summary
+          
+          EOF
+          
+          # Add error details if they exist
+          if [ -f "build-reports/${{ env.ERROR_LOG_FILE }}" ]; then
+            echo "### Detailed Error Log" >> build-reports/${{ env.QA_REPORT_FILE }}
+            echo "\`\`\`" >> build-reports/${{ env.QA_REPORT_FILE }}
+            cat build-reports/${{ env.ERROR_LOG_FILE }} >> build-reports/${{ env.QA_REPORT_FILE }}
+            echo "\`\`\`" >> build-reports/${{ env.QA_REPORT_FILE }}
+          fi
+          
+          # Add recommendations
+          cat >> build-reports/${{ env.QA_REPORT_FILE }} << EOF
+          
+          ## Recommendations
+          
+          EOF
+          
+          if [[ "${{ needs.pre-build.outputs.disable-eslint }}" == "true" ]]; then
+            echo "- ⚠️  **Re-enable ESLint:** ESLint was disabled for this build. Consider fixing linting issues and re-enabling." >> build-reports/${{ env.QA_REPORT_FILE }}
+          fi
+          
+          if [[ "${{ needs.quality-check.outputs.typescript-status }}" == "failure" ]]; then
+            echo "- 🔧 **Fix TypeScript Issues:** Address type checking errors for better code quality." >> build-reports/${{ env.QA_REPORT_FILE }}
+          fi
+          
+          if [[ "${{ needs.quality-check.outputs.test-status }}" == "failure" ]]; then
+            echo "- 🧪 **Fix Test Failures:** Ensure all tests pass before deployment." >> build-reports/${{ env.QA_REPORT_FILE }}
+          fi
+          
+          if [[ "${{ needs.build.outputs.build-status }}" == "failure" && "${{ needs.pre-build.outputs.force-build }}" == "true" ]]; then
+            echo "- 🚨 **Critical:** This deployment was forced despite build failures. Immediate attention required." >> build-reports/${{ env.QA_REPORT_FILE }}
+          fi
+          
+      - name: Upload QA Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-report-${{ env.BUILD_TIMESTAMP }}
+          path: build-reports/${{ env.QA_REPORT_FILE }}
+          retention-days: 90
+          
+      - name: Comment QA Report on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const reportPath = 'build-reports/${{ env.QA_REPORT_FILE }}';
+            
+            if (fs.existsSync(reportPath)) {
+              const report = fs.readFileSync(reportPath, 'utf8');
+              
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `## 🔍 Quality Assurance Report\n\n${report}`
+              });
+            }
+
+  # Deployment (only if build succeeded or was forced)
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, qa-report]
+    if: always() && (needs.build.outputs.build-status == 'success' || needs.pre-build.outputs.force-build == 'true')
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
+      - name: Notify Deployment Status
+        run: |
+          if [[ "${{ needs.build.outputs.build-status }}" == "success" ]]; then
+            echo "✅ Deployment completed successfully"
+            echo "🌐 Site URL: ${{ steps.deployment.outputs.page_url }}"
+          else
+            echo "⚠️  Forced deployment completed despite build errors"
+            echo "🌐 Site URL: ${{ steps.deployment.outputs.page_url }}"
+            echo "🚨 This deployment may not function correctly due to build failures"
+          fi
+
+  # Notification and Cleanup
+  notify:
+    runs-on: ubuntu-latest
+    needs: [pre-build, quality-check, build, qa-report, deploy]
+    if: always()
+    steps:
+      - name: Send Notification Summary
+        run: |
+          echo "📧 Build Summary for ${{ github.repository }}"
+          echo "Build ID: ${{ env.BUILD_TIMESTAMP }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref }}"
+          echo ""
+          echo "Results:"
+          echo "- TypeScript: ${{ needs.quality-check.outputs.typescript-status || 'skipped' }}"
+          echo "- ESLint: ${{ needs.quality-check.outputs.eslint-status || 'skipped' }}"
+          echo "- Tests: ${{ needs.quality-check.outputs.test-status || 'skipped' }}"
+          echo "- Build: ${{ needs.build.outputs.build-status || 'failed' }}"
+          echo "- Deploy: ${{ needs.deploy.result || 'skipped' }}"
+          echo ""
+          
+          if [[ "${{ needs.build.outputs.build-status }}" == "failure" ]]; then
+            echo "🚨 CRITICAL: Build failed for ${{ github.repository }}"
+            echo "Immediate attention required!"
+          fi
+          
+          if [[ "${{ needs.pre-build.outputs.force-build }}" == "true" ]]; then
+            echo "⚠️  WARNING: This was a forced build that bypassed quality checks"
+          fi

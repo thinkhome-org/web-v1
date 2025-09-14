@@ -2,14 +2,35 @@
 
 A modern, responsive web application built with Next.js 15, React 19, and Tailwind CSS, showcasing smart home solutions and services.
 
-## 🚀 Features
+## 🚀 Quick Start
 
-- **Modern Tech Stack**: Built with Next.js 15, React 19, and TypeScript
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **Dark/Light Theme**: Automatic theme switching with next-themes
-- **Interactive Components**: Custom UI components with smooth animations
-- **Static Site Generation**: Optimized for performance and SEO
-- **GitHub Pages Deployment**: Automated CI/CD pipeline
+### Prerequisites
+- Node.js 18+ 
+- Yarn (recommended) or npm
+- Git
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd web-v1
+
+# Install dependencies
+yarn install
+
+# Start development server
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Available Scripts
+
+- `yarn dev` - Start development server with Turbopack
+- `yarn build` - Build production application
+- `yarn start` - Start production server
+- `yarn lint` - Run ESLint for code quality
 
 ## 🛠️ Tech Stack
 
@@ -20,17 +41,11 @@ A modern, responsive web application built with Next.js 15, React 19, and Tailwi
 - **Styling**: Tailwind CSS 4.x
 - **Theme Management**: next-themes 0.4.6
 
-### UI Components & Icons
+### UI & Animations
 - **Icons**: Tabler Icons React & Lucide React
-- **Animations**: Motion (Framer Motion) 12.23.12
-- **UI Library**: Custom components with shadcn/ui architecture
+- **Animations**: Framer Motion 12.23.12
+- **UI Components**: Custom components with shadcn/ui architecture
 - **Styling Utils**: clsx, tailwind-merge, class-variance-authority
-
-### Development Tools
-- **Linting**: ESLint 9.x with Next.js config
-- **PostCSS**: Tailwind CSS processing
-- **Package Manager**: Yarn
-- **CI/CD**: GitHub Actions for automated deployment
 
 ## 📁 Project Structure
 
@@ -38,6 +53,7 @@ A modern, responsive web application built with Next.js 15, React 19, and Tailwi
 src/
 ├── app/                    # Next.js App Router
 │   ├── contact/           # Contact page
+│   ├── kontakt/           # Contact page (Czech)
 │   ├── legal/             # Legal pages (privacy, terms, cookies)
 │   ├── services/          # Services page
 │   ├── team/              # Team page
@@ -45,7 +61,6 @@ src/
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page
 ├── components/            # Reusable components
-│   ├── features/          # Feature-specific components
 │   ├── layout/            # Layout components (header, footer, hero)
 │   ├── magicui/           # Custom UI effects
 │   ├── sections/          # Page sections
@@ -58,84 +73,39 @@ src/
     └── utils.ts           # Helper functions
 ```
 
-## 🚀 Getting Started
+## 🎨 Features
 
-### Prerequisites
+- **Modern Design**: Responsive, mobile-first design with Tailwind CSS
+- **Dark/Light Theme**: Automatic theme switching with system preference detection
+- **Interactive Components**: 3D cards, animated backgrounds, and smooth transitions
+- **Static Site Generation**: Optimized for performance and SEO
+- **TypeScript**: Full type safety throughout the application
+- **Accessibility**: Built with accessibility best practices
+- **GitHub Pages Deployment**: Automated CI/CD pipeline
 
-- Node.js 18+ 
-- Yarn package manager
-- Git
+## 📱 Pages
 
-### Installation
+- **Home (`/`)**: Landing page with hero section and services overview
+- **Services (`/services`)**: Detailed service offerings
+- **Team (`/team`)**: Team member profiles with dynamic data loading
+- **Contact (`/contact` & `/kontakt`)**: Contact information with copy-to-clipboard functionality
+- **Legal (`/legal/`)**: Privacy policy, terms of service, and cookie policy
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd web-v1
-   ```
+## 🚀 Deployment
 
-2. **Install dependencies**
-   ```bash
-   yarn install
-   ```
+### GitHub Pages (Automatic)
+The application automatically deploys to GitHub Pages when changes are pushed to the main branch.
 
-3. **Start development server**
-   ```bash
-   yarn dev
-   ```
+### Manual Deployment
+```bash
+# Build for production
+yarn build
 
-4. **Open in browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-### Available Scripts
-
-- `yarn dev` - Start development server with Turbopack
-- `yarn build` - Build production application
-- `yarn start` - Start production server
-- `yarn lint` - Run ESLint for code quality
-
-## 🎨 Styling & Theming
-
-### Tailwind CSS Configuration
-- **CSS Variables**: Custom properties for theme colors
-- **Dark Mode**: Automatic switching based on system preference
-- **Responsive Design**: Mobile-first breakpoints
-- **Custom Components**: Styled with Tailwind utilities
-
-### Theme System
-```typescript
-// Automatic theme detection
-<ThemeProvider
-  attribute="class"
-  defaultTheme="system"
-  enableSystem
-  disableTransitionOnChange
->
+# The output will be in the 'out' directory
+# Upload contents to your hosting provider
 ```
 
-## 🧩 Component Architecture
-
-### UI Components
-- **3D Card**: Interactive card with 3D effects
-- **Feature Card**: Service/feature showcase cards
-- **Team Member Card**: Team member profiles
-- **Floating Dock**: Navigation component
-- **Interactive Grid**: Animated background patterns
-
-### Layout Components
-- **Hero Section**: Landing page hero with animations
-- **Footer**: Site-wide footer with links
-- **Dock**: Floating navigation bar
-
-## 📱 Pages Overview
-
-- **Home (`/`)**: Landing page with hero, services overview
-- **Services (`/services`)**: Detailed service offerings
-- **Team (`/team`)**: Team member profiles with CSV data loading
-- **Contact (`/contact`)**: Contact information with copy-to-clipboard
-- **Legal (`/legal/`)**: Privacy policy, terms, cookie policy
-
-## 🔧 Development Guidelines
+## 🔧 Development
 
 ### Code Style
 - **TypeScript**: Strict type checking enabled
@@ -160,30 +130,24 @@ export function Component({ title, className }: ComponentProps) {
 }
 ```
 
-## 🚀 Deployment
-
-### GitHub Pages
-Automated deployment via GitHub Actions:
-- **Trigger**: Push to main branch
-- **Build**: Next.js static export
-- **Deploy**: GitHub Pages with custom domain support
-
-### Manual Deployment
-```bash
-# Build for production
-yarn build
-
-# The output will be in the 'out' directory
-# Upload contents to your hosting provider
+### Theme System
+```typescript
+// Automatic theme detection
+<ThemeProvider
+  attribute="class"
+  defaultTheme="system"
+  enableSystem
+  disableTransitionOnChange
+>
 ```
 
-## 🔍 Performance Optimizations
+## 🔍 Performance
 
 - **Static Generation**: Pre-rendered pages for faster loading
-- **Image Optimization**: Next.js automatic image optimization
-- **Code Splitting**: Automatic bundle splitting
+- **Code Splitting**: Automatic bundle splitting with Next.js
 - **Turbopack**: Fast development builds
-- **CSS Optimization**: Tailwind CSS purging
+- **CSS Optimization**: Tailwind CSS purging for smaller bundles
+- **Image Optimization**: Configured for static export
 
 ## 🐛 Troubleshooting
 
@@ -205,20 +169,31 @@ yarn build
 
 3. **Styling Issues**
    ```bash
-   # Rebuild Tailwind CSS
+   # Rebuild with fresh cache
+   rm -rf .next
    yarn build
    ```
+
+## 🤝 Contributing
+
+1. Create a feature branch from `main`
+2. Make your changes with proper TypeScript types
+3. Test thoroughly (run `yarn build` and `yarn lint`)
+4. Submit a pull request with a clear description
+
+### Commit Message Format
+```
+type(scope): description
+
+# Examples:
+feat(hero): add animated background pattern
+fix(navigation): resolve mobile menu toggle issue
+docs(readme): update installation instructions
+```
 
 ## 📄 License
 
 This project is private and proprietary.
-
-## 🤝 Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Test thoroughly
-4. Submit a pull request
 
 ## 📞 Support
 

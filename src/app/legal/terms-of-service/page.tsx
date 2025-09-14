@@ -13,9 +13,9 @@ const TermsPage = () => {
       <section>
         <h2 className="text-2xl font-bold mb-3">1. Úvod</h2>
         <p className="leading-relaxed">
-          Vítejte u <strong>ThinkHome s.r.o.</strong> („my“, „nás“, „naše“).
+          Vítejte u <strong>ThinkHome s.r.o.</strong> („my", „nás", „naše").
           Používáním našich služeb, webových stránek nebo kontaktováním nás
-          souhlasíte s těmito Všeobecnými obchodními podmínkami („Podmínky“).
+          souhlasíte s těmito Všeobecnými obchodními podmínkami („Podmínky").
           Pokud s nimi nesouhlasíte, prosím, nepokračujte v používání našich
           služeb.
         </p>

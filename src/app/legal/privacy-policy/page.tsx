@@ -11,7 +11,7 @@ const PrivacyPage = () => {
       <section>
         <h2 className="text-2xl font-bold mb-3">1. Úvod</h2>
         <p className="leading-relaxed">
-          Společnost <strong>ThinkHome s.r.o.</strong> („my“, „nás“, „naše“)
+          Společnost <strong>ThinkHome s.r.o.</strong> („my", „nás", „naše")
           respektuje vaše právo na soukromí a chrání osobní údaje, které nám
           poskytujete. Tento dokument vysvětluje, jak shromažďujeme, používáme a
           chráníme vaše informace v souladu s nařízením GDPR a dalšími
