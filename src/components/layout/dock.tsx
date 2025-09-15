@@ -8,7 +8,6 @@ import {
   IconNewSection,
   IconUser,
   IconTerminal2,
-  IconSectionSign,
 } from "@tabler/icons-react";
 
 // Smooth scroll function
@@ -58,13 +57,6 @@ export function FloatingDockDemo() {
         <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#contact",
-    },
-    {
-      title: "Podmínky a zásady",
-      icon: (
-        <IconSectionSign className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "#legal",
     },
     {
       title: "Github",

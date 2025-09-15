@@ -5,9 +5,9 @@ import { MiseCile } from "@/components/sections/mission-goals";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import { CopyText } from "@/components/copy-text";
 import { TeamMemberCard, type TeamMember } from "@/components/ui/team-member-card";
+import { ContactForm } from "@/components/ui/contact-form";
 import { useState, useEffect } from 'react';
-import { IconMail, IconPhone } from "@tabler/icons-react";
-import MarkdownRenderer from "@/components/markdown-renderer";
+import { IconMail, IconPhone, IconMapPin, IconClock, IconUsers } from "@tabler/icons-react";
 
 // Services component
 interface ServiceProps {
@@ -40,18 +40,6 @@ function Service({ title, children }: ServiceProps) {
     </div>
   );
 }
-
-// Contact ways data
-const contactWays = [
-  {
-    icon: IconMail,
-    value: "info@thinkhome.org",
-  },
-  {
-    icon: IconPhone,
-    value: "+420 910 129 289",
-  },
-];
 
 // Team data parsing function
 function parseCSV(csvContent: string): TeamMember[] {
@@ -101,11 +89,6 @@ function parseCSV(csvContent: string): TeamMember[] {
 export default function MainPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
-  const [legalContent, setLegalContent] = useState<{
-    terms: string;
-    privacy: string;
-    cookies: string;
-  }>({ terms: '', privacy: '', cookies: '' });
   
   useEffect(() => {
     async function loadData() {
@@ -115,33 +98,6 @@ export default function MainPage() {
         const csvContent = await teamResponse.text();
         const members = parseCSV(csvContent);
         setTeamMembers(members);
-
-        // Load legal content via fetch
-        try {
-          const [termsResponse, privacyResponse, cookiesResponse] = await Promise.all([
-            fetch('/legal/terms-of-service.md'),
-            fetch('/legal/privacy-policy.md'),
-            fetch('/legal/cookies.md')
-          ]);
-          
-          const termsContent = await termsResponse.text();
-          const privacyContent = await privacyResponse.text();
-          const cookiesContent = await cookiesResponse.text();
-          
-          setLegalContent({
-            terms: termsContent,
-            privacy: privacyContent,
-            cookies: cookiesContent
-          });
-        } catch (error) {
-          console.error('Error loading legal content:', error);
-          // Set fallback content
-          setLegalContent({
-            terms: '# Všeobecné obchodní podmínky\n\n*Obsah se načítá...*',
-            privacy: '# Ochrana soukromí\n\n*Obsah se načítá...*',
-            cookies: '# Zásady používání cookies\n\n*Obsah se načítá...*'
-          });
-        }
       } catch (error) {
         console.error('Error loading data:', error);
       } finally {
@@ -264,79 +220,62 @@ export default function MainPage() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="relative min-h-screen flex flex-col bg-background scroll-mt-20">
-        <div className="flex-1 p-8 text-center flex flex-col items-center">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold pl-0 sm:pl-6 lg:pl-12 text-foreground p-3">
-            Kontaktujte nás
-          </h1>
-          <p className="text-muted-foreground pl-0 sm:pl-6 lg:pl-12 w-full sm:w-5/6 lg:w-2/3 pb-3">
-            Nevíte si rady? Chcete si poztěžovat?
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl w-full">
-            {contactWays.map((way, index) => {
-              const Icon = way.icon;
-              return (
-                <div
-                  key={index}
-                  className="group p-6 rounded-lg bg-card/60 border border-border hover:border-muted-foreground/20 transition-all duration-300 backdrop-blur-xl z-10 hover:scale-105 transform-gpu"
-                >
-                  <div className="flex flex-col items-center justify-center gap-4 h-full">
-                    <div className="p-3 rounded-lg bg-muted/70 group-hover:bg-muted/60 transition-colors backdrop-blur-lg">
-                      <Icon className="h-6 w-6 text-foreground" />
-                    </div>
-                    <CopyText
-                      text={way.value}
-                      className="text-blue-400 text-lg text-center"
-                    />
-                  </div>
-                </div>
-              );
-            })}
+      <section id="contact" className="relative min-h-screen bg-background scroll-mt-20">
+        <div className="container mx-auto px-4 py-12 lg:py-20">
+          {/* Header */}
+          <div className="text-center mb-12 lg:mb-16">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Kontaktujte nás
+            </h1>
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Máte dotaz nebo potřebujete konzultaci? Rádi vám pomůžeme s vašimi IT potřebami. 
+              Jsme tu pro vás každý pracovní den.
+            </p>
           </div>
-          <InteractiveGridPattern className="z-0 opacity-10" />
+
+          {/* Why Choose Us */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 lg:mb-16">
+            <div className="text-center p-6 rounded-lg bg-card/50 border border-border hover:border-primary/20 transition-all duration-300">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+                <IconClock className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-2">Rychlá odpověď</h3>
+              <p className="text-sm text-muted-foreground">
+                Odpovídáme do 24 hodin, často i dříve
+              </p>
+            </div>
+            <div className="text-center p-6 rounded-lg bg-card/50 border border-border hover:border-primary/20 transition-all duration-300">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+                <IconUsers className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-2">Osobní přístup</h3>
+              <p className="text-sm text-muted-foreground">
+                Každý klient má svého dedikovaného specialistu
+              </p>
+            </div>
+            <div className="text-center p-6 rounded-lg bg-card/50 border border-border hover:border-primary/20 transition-all duration-300">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+                <IconMapPin className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-2">Lokální podpora</h3>
+              <p className="text-sm text-muted-foreground">
+                Působíme v celé České republice
+              </p>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <ContactForm 
+            contactInfo={{
+              email: "info@thinkhome.org",
+              phone: "+420 910 129 289",
+              address: "Praha, Česká republika"
+            }}
+          />
         </div>
+        <InteractiveGridPattern className="z-0 opacity-10" />
       </section>
 
-      {/* Legal Section */}
-      <section id="legal" className="max-w-4xl mx-auto p-8 space-y-6 scroll-mt-20">
-        <h1 className="text-4xl font-bold text-foreground mb-6">
-          Právní informace
-        </h1>
-        <p className="text-lg text-muted-foreground">
-          Zde najdete všechny naše důležité právní dokumenty týkající se služeb
-          ThinkHome s.r.o.
-        </p>
-
-        <div className="space-y-8">
-          <div>
-            <h2 className="text-2xl font-semibold text-foreground mb-4">
-              Všeobecné obchodní podmínky
-            </h2>
-            <div className="prose prose-invert max-w-none">
-              <MarkdownRenderer content={legalContent.terms} />
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold text-foreground mb-4">
-              Ochrana soukromí
-            </h2>
-            <div className="prose prose-invert max-w-none">
-              <MarkdownRenderer content={legalContent.privacy} />
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold text-foreground mb-4">
-              Zásady používání cookies
-            </h2>
-            <div className="prose prose-invert max-w-none">
-              <MarkdownRenderer content={legalContent.cookies} />
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

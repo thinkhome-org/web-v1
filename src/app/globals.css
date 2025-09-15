@@ -180,12 +180,38 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    /* Reset box-sizing for consistency */
+    box-sizing: border-box;
   }
+  
   html {
     scroll-behavior: smooth;
+    /* Ensure consistent font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Reset margins and padding */
+    margin: 0;
+    padding: 0;
   }
+  
   body {
     @apply bg-background text-foreground;
+    /* Reset margins and padding */
+    margin: 0;
+    padding: 0;
+    /* Ensure consistent background */
+    background-color: var(--background);
+    background-image: none;
+    /* Consistent line height */
+    line-height: 1.5;
+    /* Prevent horizontal scroll */
+    overflow-x: hidden;
+  }
+  
+  /* Ensure all elements use border-box */
+  *, *::before, *::after {
+    box-sizing: border-box;
   }
   
   /* Cross-platform compatibility fixes */
@@ -194,6 +220,46 @@
     -webkit-tap-highlight-color: transparent;
     -moz-appearance: none;
     appearance: none;
+    /* Reset button styles */
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+  }
+  
+  /* Reset form elements */
+  input, textarea, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    font: inherit;
+  }
+  
+  /* Ensure consistent spacing */
+  h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Reset list styles */
+  ul, ol {
+    list-style: none;
+  }
+  
+  /* Ensure consistent link styles */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  /* Consistent image rendering */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
   }
   
   /* Backdrop blur fallbacks */
@@ -360,6 +426,48 @@
     background-color: rgba(0, 0, 0, 0.95);
   }
   
+  /* WebKit/Chrome specific fixes */
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .backdrop-blur-md,
+    .backdrop-blur-sm {
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+    
+    /* Fix WebKit flexbox issues */
+    .flex {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+    }
+    
+    /* Fix WebKit transform issues */
+    .transform {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+  }
+  
+  /* Mozilla Firefox specific fixes */
+  @-moz-document url-prefix() {
+    .backdrop-blur-md,
+    .backdrop-blur-sm {
+      background-color: rgba(255, 255, 255, 0.95);
+    }
+    
+    .dark .backdrop-blur-md,
+    .dark .backdrop-blur-sm {
+      background-color: rgba(0, 0, 0, 0.95);
+    }
+    
+    /* Fix Firefox flexbox issues */
+    .flex {
+      display: -moz-box;
+      display: -moz-flex;
+      display: flex;
+    }
+  }
+  
   /* Internet Explorer specific fixes */
   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     .flex {
@@ -374,4 +482,38 @@
       -ms-transform: translateZ(0);
     }
   }
+  
+  /* Ensure consistent spacing across all browsers */
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+  
+  .space-y-6 > * + * {
+    margin-top: 1.5rem;
+  }
+  
+  .space-y-8 > * + * {
+    margin-top: 2rem;
+  }
+  
+  /* Consistent padding and margins */
+  .p-4 { padding: 1rem; }
+  .p-6 { padding: 1.5rem; }
+  .p-8 { padding: 2rem; }
+  .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+  .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+  .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+  .px-4 { padding-left: 1rem; padding-right: 1rem; }
+  .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .px-8 { padding-left: 2rem; padding-right: 2rem; }
+  
+  .m-4 { margin: 1rem; }
+  .m-6 { margin: 1.5rem; }
+  .m-8 { margin: 2rem; }
+  .my-4 { margin-top: 1rem; margin-bottom: 1rem; }
+  .my-6 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+  .my-8 { margin-top: 2rem; margin-bottom: 2rem; }
+  .mx-4 { margin-left: 1rem; margin-right: 1rem; }
+  .mx-6 { margin-left: 1.5rem; margin-right: 1.5rem; }
+  .mx-8 { margin-left: 2rem; margin-right: 2rem; }
 }
