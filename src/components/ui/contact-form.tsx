@@ -68,7 +68,29 @@ ${formData.message}
 
   const copyToClipboard = async (text: string, type: 'email' | 'phone') => {
     try {
-      await navigator.clipboard.writeText(text);
+      // Check if clipboard API is available (Safari compatibility)
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        // Fallback for Safari and older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          console.error('Fallback copy failed: ', err);
+        }
+        
+        document.body.removeChild(textArea);
+      }
+      
       setCopied(prev => ({ ...prev, [type]: true }));
       setTimeout(() => {
         setCopied(prev => ({ ...prev, [type]: false }));

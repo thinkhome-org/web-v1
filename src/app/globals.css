@@ -186,6 +186,8 @@
   
   html {
     scroll-behavior: smooth;
+    /* Safari-specific scroll fixes */
+    -webkit-overflow-scrolling: touch;
     /* Ensure consistent font rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -193,6 +195,20 @@
     /* Reset margins and padding */
     margin: 0;
     padding: 0;
+  }
+  
+  /* Safari smooth scroll fallback */
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Fallback for older Safari versions */
+    @supports not (scroll-behavior: smooth) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
   }
   
   body {
@@ -426,7 +442,7 @@
     background-color: rgba(0, 0, 0, 0.95);
   }
   
-  /* WebKit/Chrome specific fixes */
+  /* Safari specific fixes */
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
     .backdrop-blur-md,
     .backdrop-blur-sm {
@@ -434,17 +450,134 @@
       backdrop-filter: blur(12px);
     }
     
-    /* Fix WebKit flexbox issues */
+    /* Fix Safari flexbox issues */
     .flex {
       display: -webkit-box;
       display: -webkit-flex;
       display: flex;
     }
     
-    /* Fix WebKit transform issues */
+    /* Fix Safari transform issues */
     .transform {
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
+    }
+    
+    /* Fix Safari backdrop-filter fallback */
+    .backdrop-blur-md,
+    .backdrop-blur-sm {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .dark .backdrop-blur-md,
+    .dark .backdrop-blur-sm {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Fix Safari button appearance */
+    button {
+      -webkit-appearance: none;
+      -webkit-border-radius: 0;
+      border-radius: 0;
+    }
+    
+    /* Fix Safari input appearance */
+    input, textarea, select {
+      -webkit-appearance: none;
+      -webkit-border-radius: 0;
+      border-radius: 0;
+    }
+    
+    /* Fix Safari scroll behavior */
+    html {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix Safari text rendering */
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    
+    /* Fix Safari grid issues */
+    .grid {
+      display: -webkit-grid;
+      display: grid;
+    }
+    
+    /* Fix Safari gap property fallback */
+    .gap-4 {
+      gap: 1rem;
+      -webkit-gap: 1rem;
+    }
+    
+    .gap-6 {
+      gap: 1.5rem;
+      -webkit-gap: 1.5rem;
+    }
+    
+    .gap-8 {
+      gap: 2rem;
+      -webkit-gap: 2rem;
+    }
+    
+    /* Fix Safari sticky positioning */
+    .sticky {
+      position: -webkit-sticky;
+      position: sticky;
+    }
+    
+    /* Fix Safari backdrop-filter support detection */
+    @supports not (backdrop-filter: blur(12px)) {
+      .backdrop-blur-md,
+      .backdrop-blur-sm {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+      
+      .dark .backdrop-blur-md,
+      .dark .backdrop-blur-sm {
+        background-color: rgba(0, 0, 0, 0.9);
+      }
+    }
+    
+    /* Fix Safari focus styles */
+    *:focus {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+    
+    /* Fix Safari button focus */
+    button:focus {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+    
+    /* Fix Safari input focus */
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+    
+    /* Fix Safari animation performance */
+    .transform-gpu {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    
+    /* Fix Safari text selection */
+    ::selection {
+      background-color: #3b82f6;
+      color: white;
+    }
+    
+    ::-moz-selection {
+      background-color: #3b82f6;
+      color: white;
     }
   }
   

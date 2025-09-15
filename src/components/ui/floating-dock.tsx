@@ -206,10 +206,20 @@ const FloatingDockDesktop = ({
                 if (item.href.startsWith('#')) {
                   const element = document.getElementById(item.href.substring(1));
                   if (element) {
-                    element.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'start',
-                    });
+                    // Safari-compatible smooth scroll
+                    if ('scrollBehavior' in document.documentElement.style) {
+                      element.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                      });
+                    } else {
+                      // Fallback for Safari
+                      const targetPosition = element.offsetTop - 80; // Account for fixed header
+                      window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                      });
+                    }
                   }
                 } else {
                   window.open(item.href, '_blank');
@@ -284,10 +294,20 @@ const IconContainer = ({
         if (href.startsWith('#')) {
           const element = document.getElementById(href.substring(1));
           if (element) {
-            element.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            });
+            // Safari-compatible smooth scroll
+            if ('scrollBehavior' in document.documentElement.style) {
+              element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            } else {
+              // Fallback for Safari
+              const targetPosition = element.offsetTop - 80; // Account for fixed header
+              window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+              });
+            }
           }
         } else {
           window.open(href, '_blank');
