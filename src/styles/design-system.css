@@ -1,0 +1,525 @@
+/* ========================================================================== */
+/*                            THINKHOME DESIGN SYSTEM                        */
+/* ========================================================================== */
+
+/* Design tokens pro centralizovanou správu všech stylových prvků */
+
+/* ========================================================================== */
+/*                                 BARVY                                     */
+/* ========================================================================== */
+
+:root {
+  /* === PRIMÁRNÍ BARVY === */
+  --th-primary-50: #fafafa;
+  --th-primary-100: #f5f5f5;
+  --th-primary-200: #e5e5e5;
+  --th-primary-300: #d4d4d4;
+  --th-primary-400: #a3a3a3;
+  --th-primary-500: #737373;
+  --th-primary-600: #525252;
+  --th-primary-700: #404040;
+  --th-primary-800: #262626;
+  --th-primary-900: #171717;
+  --th-primary-950: #0a0a0a;
+
+  /* === AKCENTOVÉ BARVY === */
+  --th-accent-red: #ef4444;
+  --th-accent-red-light: #fca5a5;
+  --th-accent-red-dark: #dc2626;
+  
+  --th-accent-blue: #3b82f6;
+  --th-accent-blue-light: #93c5fd;
+  --th-accent-blue-dark: #2563eb;
+  
+  --th-accent-green: #10b981;
+  --th-accent-green-light: #6ee7b7;
+  --th-accent-green-dark: #059669;
+  
+  --th-accent-orange: #f59e0b;
+  --th-accent-orange-light: #fbbf24;
+  --th-accent-orange-dark: #d97706;
+
+  /* === SÉMANTICKÉ BARVY === */
+  --th-success: var(--th-accent-green);
+  --th-warning: var(--th-accent-orange);
+  --th-error: var(--th-accent-red);
+  --th-info: var(--th-accent-blue);
+
+  /* === POZADÍ A POVRCHY === */
+  --th-bg-primary: #ffffff;
+  --th-bg-secondary: #fafafa;
+  --th-bg-tertiary: #f5f5f5;
+  --th-bg-overlay: rgba(255, 255, 255, 0.8);
+  --th-bg-glass: rgba(255, 255, 255, 0.1);
+  
+  /* === TEXTY === */
+  --th-text-primary: #171717;
+  --th-text-secondary: #404040;
+  --th-text-tertiary: #737373;
+  --th-text-muted: #a3a3a3;
+  --th-text-inverse: #ffffff;
+  
+  /* === OHRANIČENÍ === */
+  --th-border-light: #f5f5f5;
+  --th-border-medium: #e5e5e5;
+  --th-border-strong: #d4d4d4;
+  --th-border-focus: var(--th-accent-blue);
+}
+
+/* === DARK MODE === */
+.dark {
+  /* === POZADÍ A POVRCHY === */
+  --th-bg-primary: #0a0a0a;
+  --th-bg-secondary: #171717;
+  --th-bg-tertiary: #262626;
+  --th-bg-overlay: rgba(0, 0, 0, 0.8);
+  --th-bg-glass: rgba(255, 255, 255, 0.1);
+  
+  /* === TEXTY === */
+  --th-text-primary: #fafafa;
+  --th-text-secondary: #e5e5e5;
+  --th-text-tertiary: #a3a3a3;
+  --th-text-muted: #737373;
+  --th-text-inverse: #171717;
+  
+  /* === OHRANIČENÍ === */
+  --th-border-light: rgba(255, 255, 255, 0.05);
+  --th-border-medium: rgba(255, 255, 255, 0.1);
+  --th-border-strong: rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================================================== */
+/*                               TYPOGRAFIE                                  */
+/* ========================================================================== */
+
+:root {
+  /* === FONT FAMILIES === */
+  --th-font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --th-font-mono: var(--font-geist-mono), ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+  
+  /* === FONT SIZES === */
+  --th-text-xs: 0.75rem;     /* 12px */
+  --th-text-sm: 0.875rem;    /* 14px */
+  --th-text-base: 1rem;      /* 16px */
+  --th-text-lg: 1.125rem;    /* 18px */
+  --th-text-xl: 1.25rem;     /* 20px */
+  --th-text-2xl: 1.5rem;     /* 24px */
+  --th-text-3xl: 1.875rem;   /* 30px */
+  --th-text-4xl: 2.25rem;    /* 36px */
+  --th-text-5xl: 3rem;       /* 48px */
+  --th-text-6xl: 3.75rem;    /* 60px */
+  
+  /* === FONT WEIGHTS === */
+  --th-font-light: 300;
+  --th-font-normal: 400;
+  --th-font-medium: 500;
+  --th-font-semibold: 600;
+  --th-font-bold: 700;
+  --th-font-extrabold: 800;
+  
+  /* === LINE HEIGHTS === */
+  --th-leading-tight: 1.25;
+  --th-leading-snug: 1.375;
+  --th-leading-normal: 1.5;
+  --th-leading-relaxed: 1.625;
+  --th-leading-loose: 2;
+}
+
+/* ========================================================================== */
+/*                                SPACING                                    */
+/* ========================================================================== */
+
+:root {
+  /* === SPACING SCALE === */
+  --th-space-0: 0;
+  --th-space-px: 1px;
+  --th-space-0-5: 0.125rem;  /* 2px */
+  --th-space-1: 0.25rem;     /* 4px */
+  --th-space-1-5: 0.375rem;  /* 6px */
+  --th-space-2: 0.5rem;      /* 8px */
+  --th-space-2-5: 0.625rem;  /* 10px */
+  --th-space-3: 0.75rem;     /* 12px */
+  --th-space-3-5: 0.875rem;  /* 14px */
+  --th-space-4: 1rem;        /* 16px */
+  --th-space-5: 1.25rem;     /* 20px */
+  --th-space-6: 1.5rem;      /* 24px */
+  --th-space-7: 1.75rem;     /* 28px */
+  --th-space-8: 2rem;        /* 32px */
+  --th-space-9: 2.25rem;     /* 36px */
+  --th-space-10: 2.5rem;     /* 40px */
+  --th-space-11: 2.75rem;    /* 44px */
+  --th-space-12: 3rem;       /* 48px */
+  --th-space-14: 3.5rem;     /* 56px */
+  --th-space-16: 4rem;       /* 64px */
+  --th-space-20: 5rem;       /* 80px */
+  --th-space-24: 6rem;       /* 96px */
+  --th-space-28: 7rem;       /* 112px */
+  --th-space-32: 8rem;       /* 128px */
+  --th-space-36: 9rem;       /* 144px */
+  --th-space-40: 10rem;      /* 160px */
+  --th-space-44: 11rem;      /* 176px */
+  --th-space-48: 12rem;      /* 192px */
+  --th-space-52: 13rem;      /* 208px */
+  --th-space-56: 14rem;      /* 224px */
+  --th-space-60: 15rem;      /* 240px */
+  --th-space-64: 16rem;      /* 256px */
+  --th-space-72: 18rem;      /* 288px */
+  --th-space-80: 20rem;      /* 320px */
+  --th-space-96: 24rem;      /* 384px */
+}
+
+/* ========================================================================== */
+/*                              BORDER RADIUS                                */
+/* ========================================================================== */
+
+:root {
+  --th-radius-none: 0;
+  --th-radius-sm: 0.125rem;   /* 2px */
+  --th-radius-base: 0.25rem;  /* 4px */
+  --th-radius-md: 0.375rem;   /* 6px */
+  --th-radius-lg: 0.5rem;     /* 8px */
+  --th-radius-xl: 0.75rem;    /* 12px */
+  --th-radius-2xl: 1rem;      /* 16px */
+  --th-radius-3xl: 1.5rem;    /* 24px */
+  --th-radius-full: 9999px;
+}
+
+/* ========================================================================== */
+/*                                SHADOWS                                    */
+/* ========================================================================== */
+
+:root {
+  --th-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --th-shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --th-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --th-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --th-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --th-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --th-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+  --th-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --th-shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --th-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --th-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --th-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  --th-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* ========================================================================== */
+/*                               TRANSITIONS                                 */
+/* ========================================================================== */
+
+:root {
+  --th-transition-fast: 150ms ease;
+  --th-transition-base: 250ms ease;
+  --th-transition-slow: 350ms ease;
+  --th-transition-slower: 500ms ease;
+  
+  --th-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --th-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --th-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================================================== */
+/*                            KOMPONENTY STYLY                               */
+/* ========================================================================== */
+
+/* === TLAČÍTKA === */
+.th-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--th-space-2);
+  padding: var(--th-space-2-5) var(--th-space-4);
+  font-family: var(--th-font-sans);
+  font-size: var(--th-text-sm);
+  font-weight: var(--th-font-medium);
+  line-height: var(--th-leading-tight);
+  border-radius: var(--th-radius-lg);
+  border: 1px solid transparent;
+  transition: all var(--th-transition-base);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+
+.th-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primární tlačítko */
+.th-btn-primary {
+  background-color: var(--th-text-primary);
+  color: var(--th-text-inverse);
+  border-color: var(--th-text-primary);
+}
+
+.th-btn-primary:hover:not(:disabled) {
+  background-color: var(--th-primary-700);
+  border-color: var(--th-primary-700);
+}
+
+/* Sekundární tlačítko */
+.th-btn-secondary {
+  background-color: var(--th-bg-secondary);
+  color: var(--th-text-primary);
+  border-color: var(--th-border-medium);
+}
+
+.th-btn-secondary:hover:not(:disabled) {
+  background-color: var(--th-bg-tertiary);
+  border-color: var(--th-border-strong);
+}
+
+/* Akcentové tlačítko */
+.th-btn-accent {
+  background-color: var(--th-accent-red);
+  color: var(--th-text-inverse);
+  border-color: var(--th-accent-red);
+}
+
+.th-btn-accent:hover:not(:disabled) {
+  background-color: var(--th-accent-red-dark);
+  border-color: var(--th-accent-red-dark);
+}
+
+/* Ghost tlačítko */
+.th-btn-ghost {
+  background-color: transparent;
+  color: var(--th-text-primary);
+  border-color: transparent;
+}
+
+.th-btn-ghost:hover:not(:disabled) {
+  background-color: var(--th-bg-secondary);
+}
+
+/* Velikosti tlačítek */
+.th-btn-sm {
+  padding: var(--th-space-1-5) var(--th-space-3);
+  font-size: var(--th-text-xs);
+}
+
+.th-btn-lg {
+  padding: var(--th-space-3) var(--th-space-6);
+  font-size: var(--th-text-base);
+}
+
+/* === KARTY === */
+.th-card {
+  background-color: var(--th-bg-primary);
+  border: 1px solid var(--th-border-medium);
+  border-radius: var(--th-radius-xl);
+  box-shadow: var(--th-shadow-sm);
+  transition: all var(--th-transition-base);
+}
+
+.th-card:hover {
+  box-shadow: var(--th-shadow-md);
+  border-color: var(--th-border-strong);
+}
+
+.th-card-header {
+  padding: var(--th-space-6);
+  border-bottom: 1px solid var(--th-border-light);
+}
+
+.th-card-body {
+  padding: var(--th-space-6);
+}
+
+.th-card-footer {
+  padding: var(--th-space-6);
+  border-top: 1px solid var(--th-border-light);
+}
+
+/* === INPUTY === */
+.th-input {
+  width: 100%;
+  padding: var(--th-space-2-5) var(--th-space-3);
+  font-family: var(--th-font-sans);
+  font-size: var(--th-text-sm);
+  line-height: var(--th-leading-tight);
+  background-color: var(--th-bg-primary);
+  border: 1px solid var(--th-border-medium);
+  border-radius: var(--th-radius-lg);
+  transition: all var(--th-transition-base);
+}
+
+.th-input:focus {
+  outline: none;
+  border-color: var(--th-border-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.th-input::placeholder {
+  color: var(--th-text-muted);
+}
+
+/* === TYPOGRAFIE UTILITY TŘÍDY === */
+.th-heading-1 {
+  font-family: var(--th-font-sans);
+  font-size: var(--th-text-4xl);
+  font-weight: var(--th-font-bold);
+  line-height: var(--th-leading-tight);
+  color: var(--th-text-primary);
+}
+
+.th-heading-2 {
+  font-family: var(--th-font-sans);
+  font-size: var(--th-text-3xl);
+  font-weight: var(--th-font-semibold);
+  line-height: var(--th-leading-tight);
+  color: var(--th-text-primary);
+}
+
+.th-heading-3 {
+  font-family: var(--th-font-sans);
+  font-size: var(--th-text-2xl);
+  font-weight: var(--th-font-semibold);
+  line-height: var(--th-leading-snug);
+  color: var(--th-text-primary);
+}
+
+.th-body-large {
+  font-family: var(--th-font-sans);
+  font-size: var(--th-text-lg);
+  font-weight: var(--th-font-normal);
+  line-height: var(--th-leading-relaxed);
+  color: var(--th-text-secondary);
+}
+
+.th-body {
+  font-family: var(--th-font-sans);
+  font-size: var(--th-text-base);
+  font-weight: var(--th-font-normal);
+  line-height: var(--th-leading-normal);
+  color: var(--th-text-secondary);
+}
+
+.th-body-small {
+  font-family: var(--th-font-sans);
+  font-size: var(--th-text-sm);
+  font-weight: var(--th-font-normal);
+  line-height: var(--th-leading-normal);
+  color: var(--th-text-tertiary);
+}
+
+.th-caption {
+  font-family: var(--th-font-sans);
+  font-size: var(--th-text-xs);
+  font-weight: var(--th-font-medium);
+  line-height: var(--th-leading-tight);
+  color: var(--th-text-muted);
+}
+
+/* === UTILITY TŘÍDY === */
+.th-glass {
+  background-color: var(--th-bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.th-overlay {
+  background-color: var(--th-bg-overlay);
+}
+
+.th-text-gradient {
+  background: linear-gradient(135deg, var(--th-accent-blue), var(--th-accent-red));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* === RESPONSIVE BREAKPOINTS === */
+@media (min-width: 640px) {
+  .th-heading-1 {
+    font-size: var(--th-text-5xl);
+  }
+  
+  .th-heading-2 {
+    font-size: var(--th-text-4xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .th-heading-1 {
+    font-size: var(--th-text-6xl);
+  }
+  
+  .th-heading-2 {
+    font-size: var(--th-text-5xl);
+  }
+}
+
+/* === ANIMACE === */
+@keyframes th-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes th-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes th-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.th-animate-fade-in {
+  animation: th-fade-in var(--th-transition-base) var(--th-ease-out);
+}
+
+.th-animate-slide-up {
+  animation: th-slide-up var(--th-transition-slow) var(--th-ease-out);
+}
+
+.th-animate-scale-in {
+  animation: th-scale-in var(--th-transition-base) var(--th-ease-out);
+}
+
+/* === FOCUS STATES === */
+.th-focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.th-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* === PRINT STYLES === */
+@media print {
+  .th-no-print {
+    display: none !important;
+  }
+  
+  .th-card {
+    box-shadow: none;
+    border: 1px solid var(--th-border-medium);
+  }
+}

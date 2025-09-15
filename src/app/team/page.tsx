@@ -1,6 +1,6 @@
 'use client';
 
-import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+
 import { TeamMemberCard, type TeamMember } from "@/components/ui/team-member-card";
 import { useState, useEffect } from 'react';
 
@@ -101,7 +101,7 @@ export default function TeamPage() {
         </div>
       </div>
 
-      <InteractiveGridPattern className="z-0 opacity-10" />
+
     </main>
   );
 }

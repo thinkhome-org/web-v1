@@ -1,5 +1,5 @@
 import { IconMail, IconPhone } from "@tabler/icons-react";
-import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+
 import { CopyText } from "@/components/copy-text";
 const contactWays = [
   {
@@ -47,7 +47,7 @@ export default function ContactPage() {
           })}
         </div>
 
-        <InteractiveGridPattern  className="z-0 opacity-10" />
+  
       </div>
     </main>
   );

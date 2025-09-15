@@ -1,6 +1,6 @@
 import React from "react";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
-import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+
 import Image from "next/image";
 
 export const Hero = () => {
@@ -31,7 +31,6 @@ export const Hero = () => {
           rychle a efektivně. Přitom nic nemusíte řešit!
         </p>
       </div>
-      <InteractiveGridPattern className="z-0 opacity-10" />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+
 
 interface ServiceProps {
   title: string;
@@ -105,7 +105,7 @@ export default function ContactPage() {
           </Service>
         </div>
       </div>
-      <InteractiveGridPattern className="absolute inset-0 z-0 opacity-10" />
+      
     </main>
   );
 }

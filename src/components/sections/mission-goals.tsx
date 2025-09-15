@@ -1,6 +1,6 @@
 "use client";
 
-import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+
 import { FeatureCard } from "@/components/ui/feature-card";
 
 const missions = [
@@ -36,7 +36,7 @@ export function MiseCile() {
             />
           ))}
         </div>
-        <InteractiveGridPattern className="z-0 opacity-10" />
+  
       </div>
     </section>
   );
