@@ -11,6 +11,17 @@ import {
   IconSectionSign,
 } from "@tabler/icons-react";
 
+// Smooth scroll function
+const smoothScrollTo = (elementId: string) => {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
+};
+
 export function FloatingDockDemo() {
   const links = [
     {
@@ -18,36 +29,48 @@ export function FloatingDockDemo() {
       icon: (
         <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/",
+      href: "#home",
+      onClick: () => smoothScrollTo("home"),
     },
-
+    {
+      title: "Mise",
+      icon: (
+        <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
+      href: "#mission",
+      onClick: () => smoothScrollTo("mission"),
+    },
     {
       title: "Naše služby",
       icon: (
         <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/services",
-    },
-    {
-      title: "Contact",
-      icon: (
-        <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "/contact",
+      href: "#services",
+      onClick: () => smoothScrollTo("services"),
     },
     {
       title: "Tým",
       icon: (
         <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/team",
+      href: "#team",
+      onClick: () => smoothScrollTo("team"),
+    },
+    {
+      title: "Contact",
+      icon: (
+        <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
+      href: "#contact",
+      onClick: () => smoothScrollTo("contact"),
     },
     {
       title: "Podmínky a zásady",
       icon: (
         <IconSectionSign className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/legal",
+      href: "#legal",
+      onClick: () => smoothScrollTo("legal"),
     },
     {
       title: "Github",

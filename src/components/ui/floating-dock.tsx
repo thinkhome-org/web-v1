@@ -36,6 +36,7 @@ type DockItem = {
   title: string;
   icon: React.ReactNode;
   href: string;
+  onClick?: () => void;
 };
 
 interface DockProps {
@@ -84,12 +85,12 @@ const FloatingDockMobile = ({
           <div className="absolute inset-x-0 bottom-full mb-2 flex flex-col gap-2">
             {items.map((item) => (
               <div key={item.title} className="opacity-100">
-                <a
-                  href={item.href}
+                <button
+                  onClick={item.onClick || (() => window.open(item.href, '_blank'))}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
-                </a>
+                </button>
               </div>
             ))}
           </div>
@@ -119,12 +120,12 @@ const FloatingDockMobile = ({
                 }}
                 transition={{ delay: (items.length - 1 - idx) * 0.05 }}
               >
-                <a
-                  href={item.href}
+                <button
+                  onClick={item.onClick || (() => window.open(item.href, '_blank'))}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
-                </a>
+                </button>
               </motion.div>
             ))}
           </motion.div>
@@ -177,9 +178,12 @@ const FloatingDockDesktop = ({
             key={item.title}
             className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 hover:bg-gray-300 dark:hover:bg-neutral-700 transition-all duration-200"
           >
-            <a href={item.href} className="flex h-8 w-8 items-center justify-center">
+            <button 
+              onClick={item.onClick || (() => window.open(item.href, '_blank'))}
+              className="flex h-8 w-8 items-center justify-center"
+            >
               {item.icon}
-            </a>
+            </button>
           </div>
         ))}
       </div>
@@ -235,33 +239,44 @@ const IconContainer = ({
   const heightIcon = useSpring(heightIconTransform, { mass: 0.1, stiffness: 150, damping: 12 });
 
   return (
-    <a href={href}>
+    <motion.div
+      ref={ref}
+      style={{ width, height }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 cursor-pointer"
+      onClick={() => {
+        if (href.startsWith('#')) {
+          const element = document.getElementById(href.substring(1));
+          if (element) {
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }
+        } else {
+          window.open(href, '_blank');
+        }
+      }}
+    >
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: 2, x: "-50%" }}
+            className="absolute -top-8 left-1/2 w-fit rounded-md border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs whitespace-pre text-neutral-700 dark:border-neutral-900 dark:bg-neutral-800 dark:text-white"
+          >
+            {title}
+          </motion.div>
+        )}
+      </AnimatePresence>
       <motion.div
-        ref={ref}
-        style={{ width, height }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800"
+        style={{ width: widthIcon, height: heightIcon }}
+        className="flex items-center justify-center"
       >
-        <AnimatePresence>
-          {hovered && (
-            <motion.div
-              initial={{ opacity: 0, y: 10, x: "-50%" }}
-              animate={{ opacity: 1, y: 0, x: "-50%" }}
-              exit={{ opacity: 0, y: 2, x: "-50%" }}
-              className="absolute -top-8 left-1/2 w-fit rounded-md border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs whitespace-pre text-neutral-700 dark:border-neutral-900 dark:bg-neutral-800 dark:text-white"
-            >
-              {title}
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <motion.div
-          style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center"
-        >
-          {icon}
-        </motion.div>
+        {icon}
       </motion.div>
-    </a>
+    </motion.div>
   );
 };
