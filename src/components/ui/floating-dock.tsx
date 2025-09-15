@@ -36,7 +36,6 @@ type DockItem = {
   title: string;
   icon: React.ReactNode;
   href: string;
-  onClick?: () => void;
 };
 
 interface DockProps {
@@ -86,7 +85,19 @@ const FloatingDockMobile = ({
             {items.map((item) => (
               <div key={item.title} className="opacity-100">
                 <button
-                  onClick={item.onClick || (() => window.open(item.href, '_blank'))}
+                  onClick={() => {
+                    if (item.href.startsWith('#')) {
+                      const element = document.getElementById(item.href.substring(1));
+                      if (element) {
+                        element.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start',
+                        });
+                      }
+                    } else {
+                      window.open(item.href, '_blank');
+                    }
+                  }}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
@@ -121,7 +132,19 @@ const FloatingDockMobile = ({
                 transition={{ delay: (items.length - 1 - idx) * 0.05 }}
               >
                 <button
-                  onClick={item.onClick || (() => window.open(item.href, '_blank'))}
+                  onClick={() => {
+                    if (item.href.startsWith('#')) {
+                      const element = document.getElementById(item.href.substring(1));
+                      if (element) {
+                        element.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start',
+                        });
+                      }
+                    } else {
+                      window.open(item.href, '_blank');
+                    }
+                  }}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
@@ -179,7 +202,19 @@ const FloatingDockDesktop = ({
             className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 hover:bg-gray-300 dark:hover:bg-neutral-700 transition-all duration-200"
           >
             <button 
-              onClick={item.onClick || (() => window.open(item.href, '_blank'))}
+              onClick={() => {
+                if (item.href.startsWith('#')) {
+                  const element = document.getElementById(item.href.substring(1));
+                  if (element) {
+                    element.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                    });
+                  }
+                } else {
+                  window.open(item.href, '_blank');
+                }
+              }}
               className="flex h-8 w-8 items-center justify-center"
             >
               {item.icon}

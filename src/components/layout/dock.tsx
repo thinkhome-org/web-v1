@@ -30,7 +30,6 @@ export function FloatingDockDemo() {
         <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#home",
-      onClick: () => smoothScrollTo("home"),
     },
     {
       title: "Mise",
@@ -38,7 +37,6 @@ export function FloatingDockDemo() {
         <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#mission",
-      onClick: () => smoothScrollTo("mission"),
     },
     {
       title: "Naše služby",
@@ -46,7 +44,6 @@ export function FloatingDockDemo() {
         <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#services",
-      onClick: () => smoothScrollTo("services"),
     },
     {
       title: "Tým",
@@ -54,7 +51,6 @@ export function FloatingDockDemo() {
         <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#team",
-      onClick: () => smoothScrollTo("team"),
     },
     {
       title: "Contact",
@@ -62,7 +58,6 @@ export function FloatingDockDemo() {
         <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#contact",
-      onClick: () => smoothScrollTo("contact"),
     },
     {
       title: "Podmínky a zásady",
@@ -70,7 +65,6 @@ export function FloatingDockDemo() {
         <IconSectionSign className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#legal",
-      onClick: () => smoothScrollTo("legal"),
     },
     {
       title: "Github",

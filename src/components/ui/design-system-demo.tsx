@@ -31,7 +31,7 @@ export function DesignSystemDemo() {
       <section>
         <h2 className="text-2xl font-semibold mb-6">Karty</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card variant="default" size="default" hover="lift">
+          <Card className="hover:scale-105 transition-transform duration-200">
             <CardHeader>
               <CardTitle>Default Card</CardTitle>
               <CardDescription>Základní karta s hover efektem</CardDescription>
@@ -41,7 +41,7 @@ export function DesignSystemDemo() {
             </CardContent>
           </Card>
 
-          <Card variant="elevated" size="lg" hover="glow">
+          <Card className="shadow-lg hover:shadow-xl transition-shadow duration-200">
             <CardHeader>
               <CardTitle>Elevated Card</CardTitle>
               <CardDescription>Karta s výrazným stínem</CardDescription>
@@ -51,7 +51,7 @@ export function DesignSystemDemo() {
             </CardContent>
           </Card>
 
-          <Card variant="glass" size="sm" hover="scale">
+          <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-200">
             <CardHeader>
               <CardTitle>Glass Card</CardTitle>
               <CardDescription>Průhledná karta</CardDescription>

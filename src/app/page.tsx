@@ -7,9 +7,7 @@ import { CopyText } from "@/components/copy-text";
 import { TeamMemberCard, type TeamMember } from "@/components/ui/team-member-card";
 import { useState, useEffect } from 'react';
 import { IconMail, IconPhone } from "@tabler/icons-react";
-import Link from "next/link";
 import MarkdownRenderer from "@/components/markdown-renderer";
-import { getMarkdownContent, getMarkdownFilename } from "@/lib/markdown";
 
 // Services component
 interface ServiceProps {
@@ -118,11 +116,17 @@ export default function MainPage() {
         const members = parseCSV(csvContent);
         setTeamMembers(members);
 
-        // Load legal content
+        // Load legal content via fetch
         try {
-          const termsContent = await getMarkdownContent(getMarkdownFilename('terms-of-service'));
-          const privacyContent = await getMarkdownContent(getMarkdownFilename('privacy-policy'));
-          const cookiesContent = await getMarkdownContent(getMarkdownFilename('cookies'));
+          const [termsResponse, privacyResponse, cookiesResponse] = await Promise.all([
+            fetch('/legal/terms-of-service.md'),
+            fetch('/legal/privacy-policy.md'),
+            fetch('/legal/cookies.md')
+          ]);
+          
+          const termsContent = await termsResponse.text();
+          const privacyContent = await privacyResponse.text();
+          const cookiesContent = await cookiesResponse.text();
           
           setLegalContent({
             terms: termsContent,
