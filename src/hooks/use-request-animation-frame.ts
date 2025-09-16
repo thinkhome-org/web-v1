@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 import { useFeatureSupport } from "./use-browser-support";
 
 export function useRequestAnimationFrame(callback: () => void) {
-  const requestRef = useRef<number>();
-  const previousTimeRef = useRef<number>();
+  const requestRef = useRef<number | undefined>(undefined);
+  const previousTimeRef = useRef<number | undefined>(undefined);
   const supportsRequestAnimationFrame = useFeatureSupport("requestAnimationFrame");
 
   const animate = (time: number) => {

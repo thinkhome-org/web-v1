@@ -620,7 +620,7 @@ export const polyfillRequestAnimationFrame = (): void => {
       callback(currentTime + timeToCall);
     }, timeToCall);
     lastTime = currentTime + timeToCall;
-    return id;
+    return id as unknown as number;
   };
   
   (window as any).cancelAnimationFrame = (id: number): void => {
@@ -649,9 +649,9 @@ export const polyfillLocalStorage = (): void => {
   
   (window as any).localStorage = {
     getItem: (key: string): string | null => storage.get(key) || null,
-    setItem: (key: string, value: string): void => storage.set(key, value),
-    removeItem: (key: string): void => storage.delete(key),
-    clear: (): void => storage.clear(),
+    setItem: (key: string, value: string): void => { storage.set(key, value); },
+    removeItem: (key: string): void => { storage.delete(key); },
+    clear: (): void => { storage.clear(); },
     get length(): number { return storage.size; },
     key: (index: number): string | null => {
       const keys = Array.from(storage.keys());
@@ -667,9 +667,9 @@ export const polyfillSessionStorage = (): void => {
   
   (window as any).sessionStorage = {
     getItem: (key: string): string | null => storage.get(key) || null,
-    setItem: (key: string, value: string): void => storage.set(key, value),
-    removeItem: (key: string): void => storage.delete(key),
-    clear: (): void => storage.clear(),
+    setItem: (key: string, value: string): void => { storage.set(key, value); },
+    removeItem: (key: string): void => { storage.delete(key); },
+    clear: (): void => { storage.clear(); },
     get length(): number { return storage.size; },
     key: (index: number): string | null => {
       const keys = Array.from(storage.keys());
@@ -748,8 +748,8 @@ export const polyfillMutationObserver = (): void => {
         this.callback([{
           type: 'childList',
           target,
-          addedNodes: [] as NodeList,
-          removedNodes: [] as NodeList,
+          addedNodes: [] as unknown as NodeList,
+          removedNodes: [] as unknown as NodeList,
           previousSibling: null,
           nextSibling: null,
           attributeName: null,
@@ -820,7 +820,7 @@ export const polyfillServiceWorker = (): void => {
         addEventListener: () => {},
         removeEventListener: () => {},
         dispatchEvent: () => false
-      } as ServiceWorkerRegistration);
+      } as unknown as ServiceWorkerRegistration);
     },
     getRegistration: (): Promise<ServiceWorkerRegistration | undefined> => {
       return Promise.resolve(undefined);
@@ -837,7 +837,7 @@ export const polyfillServiceWorker = (): void => {
       addEventListener: () => {},
       removeEventListener: () => {},
       dispatchEvent: () => false
-    } as ServiceWorkerRegistration),
+    } as unknown as ServiceWorkerRegistration),
     addEventListener: () => {},
     removeEventListener: () => {},
     dispatchEvent: () => false
@@ -845,7 +845,7 @@ export const polyfillServiceWorker = (): void => {
 };
 
 export const polyfillWebRTC = (): void => {
-  if (typeof window === 'undefined' || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) return;
+  if (typeof window === 'undefined' || (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function')) return;
   
   (navigator as any).mediaDevices = {
     getUserMedia: (): Promise<MediaStream> => {

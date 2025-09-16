@@ -9,7 +9,7 @@ interface UseResizeObserverOptions {
 
 export function useResizeObserver(options: UseResizeObserverOptions = {}) {
   const [size, setSize] = useState({ width: 0, height: 0 });
-  const elementRef = useRef<Element | null>(null);
+  const elementRef = useRef<HTMLDivElement | null>(null);
   const supportsResizeObserver = useFeatureSupport("resizeObserver");
 
   useEffect(() => {

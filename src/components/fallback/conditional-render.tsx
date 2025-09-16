@@ -1,12 +1,12 @@
 "use client";
 
 import { ReactNode } from "react";
-import { useFeatureSupport } from "@/hooks/use-browser-support";
+import { useFeatureSupport, BrowserSupport } from "@/hooks/use-browser-support";
 
 interface ConditionalRenderProps {
   children: ReactNode;
   fallback?: ReactNode;
-  feature: keyof ReturnType<typeof useFeatureSupport>;
+  feature: keyof BrowserSupport;
   invert?: boolean;
 }
 

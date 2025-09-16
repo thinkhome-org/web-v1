@@ -18,7 +18,7 @@ export function useMutationObserver(
   options: UseMutationObserverOptions = {}
 ) {
   const [mutations, setMutations] = useState<MutationRecord[]>([]);
-  const elementRef = useRef<Element | null>(null);
+  const elementRef = useRef<HTMLDivElement | null>(null);
   const supportsMutationObserver = useFeatureSupport("mutationObserver");
 
   useEffect(() => {

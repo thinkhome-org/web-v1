@@ -43,7 +43,7 @@ export function useWebAssembly() {
 
     try {
       const wasmInstance = await WebAssembly.instantiate(bytes, importObject);
-      setInstance(wasmInstance);
+      setInstance(wasmInstance.instance);
       setLoading(false);
       return wasmInstance;
     } catch (err) {
@@ -87,7 +87,7 @@ export function useWebAssembly() {
 
     try {
       const wasmInstance = await WebAssembly.instantiateStreaming(source, importObject);
-      setInstance(wasmInstance);
+      setInstance(wasmInstance.instance);
       setLoading(false);
       return wasmInstance;
     } catch (err) {

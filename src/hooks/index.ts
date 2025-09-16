@@ -10,7 +10,6 @@ export { useWebGL } from "./use-webgl";
 export { useCanvas } from "./use-canvas";
 export { useSVG } from "./use-svg";
 export { useTouch } from "./use-touch";
-export { usePointer } from "./use-pointer";
 export { useDeviceOrientation } from "./use-device-orientation";
 export { useGeolocation } from "./use-geolocation";
 export { useNotification } from "./use-notification";
