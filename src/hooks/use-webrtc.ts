@@ -31,9 +31,10 @@ export function useWebRTC() {
     }
   };
 
-  const getDisplayMedia = async (constraints?: DisplayMediaStreamConstraints) => {
+  // Oprava: Použijeme správný typ MediaStreamConstraints místo neexistujícího DisplayMediaStreamConstraints
+  const getDisplayMedia = async (constraints?: MediaStreamConstraints) => {
     if (!supportsWebRTC || typeof navigator === "undefined" || !navigator.mediaDevices) {
-      setError(new Error("WebRTC not supported"));
+      setError(new Error("WebRTC není podporováno"));
       return null;
     }
 
