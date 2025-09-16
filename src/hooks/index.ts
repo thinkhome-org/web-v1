@@ -17,3 +17,4 @@ export { useServiceWorker } from "./use-service-worker";
 export { useWebRTC } from "./use-webrtc";
 export { useWebSocket } from "./use-websocket";
 export { useWebAssembly } from "./use-webassembly";
+export { useWebKit } from "./use-webkit";

@@ -1,0 +1,106 @@
+"use client";
+
+import React from "react";
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
+import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+import Image from "next/image";
+import { WebKitFallback, MacFallback } from "./webkit-fallback";
+
+export const WebKitHero = () => {
+  return (
+    <WebKitFallback
+      fallback={
+        <div className="relative">
+          <div className="justify-left items-center px-4 sm:px-8 lg:pl-32 pt-24 sm:pt-32 lg:pt-48 pb-24 sm:pb-32 lg:pb-48 z-20">
+            <Image
+              src="/logo/black.svg"
+              alt="ThinkHome Logo"
+              width={383}
+              height={50}
+              className="h-12 w-auto dark:hidden"
+            />
+            <Image
+              src="/logo/white.svg"
+              alt="ThinkHome Logo"
+              width={383}
+              height={50}
+              className="h-12 w-auto hidden dark:block"
+            />
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold pl-0 sm:pl-6 lg:pl-12 text-foreground p-3">
+              Moderní IT bez starostí
+            </h2>
+            <p className="text-muted-foreground pl-0 sm:pl-6 lg:pl-12 w-full sm:w-5/6 lg:w-2/3 pb-3">
+              Zbavte se starostí o technologie a zaměřte se na své podnikání.
+              ThinkHome nabízí kompletní správu firemního IT – od hardware, přes
+              weby až po moderní bezpečnostní řešení. Vše vyřešíme spolehlivě,
+              rychle a efektivně. Přitom nic nemusíte řešit!
+            </p>
+          </div>
+          <InteractiveGridPattern className="z-0 opacity-10" />
+        </div>
+      }
+    >
+      <MacFallback
+        fallback={
+          <div className="relative hero-section webkit-no-bg">
+            <div className="hero-content justify-left items-center px-4 sm:px-8 lg:pl-32 pt-24 sm:pt-32 lg:pt-48 pb-24 sm:pb-32 lg:pb-48 z-20">
+              <Image
+                src="/logo/black.svg"
+                alt="ThinkHome Logo"
+                width={383}
+                height={50}
+                className="hero-logo h-12 w-auto dark:hidden"
+              />
+              <Image
+                src="/logo/white.svg"
+                alt="ThinkHome Logo"
+                width={383}
+                height={50}
+                className="hero-logo h-12 w-auto hidden dark:block"
+              />
+              <h2 className="hero-title text-2xl sm:text-3xl lg:text-4xl font-bold pl-0 sm:pl-6 lg:pl-12 text-foreground p-3">
+                Moderní IT bez starostí
+              </h2>
+              <p className="hero-subtitle text-muted-foreground pl-0 sm:pl-6 lg:pl-12 w-full sm:w-5/6 lg:w-2/3 pb-3">
+                Zbavte se starostí o technologie a zaměřte se na své podnikání.
+                ThinkHome nabízí kompletní správu firemního IT – od hardware, přes
+                weby až po moderní bezpečnostní řešení. Vše vyřešíme spolehlivě,
+                rychle a efektivně. Přitom nic nemusíte řešit!
+              </p>
+            </div>
+            <InteractiveGridPattern className="z-0 opacity-10 webkit-no-grid" />
+          </div>
+        }
+      >
+        <div className="relative hero-section webkit-no-bg">
+          <div className="hero-content justify-left items-center px-4 sm:px-8 lg:pl-32 pt-24 sm:pt-32 lg:pt-48 pb-24 sm:pb-32 lg:pb-48 z-20">
+            <Image
+              src="/logo/black.svg"
+              alt="ThinkHome Logo"
+              width={383}
+              height={50}
+              className="hero-logo h-12 w-auto dark:hidden"
+            />
+            <Image
+              src="/logo/white.svg"
+              alt="ThinkHome Logo"
+              width={383}
+              height={50}
+              className="hero-logo h-12 w-auto hidden dark:block"
+            />
+            <h2 className="hero-title text-2xl sm:text-3xl lg:text-4xl font-bold pl-0 sm:pl-6 lg:pl-12 text-foreground p-3">
+              Moderní IT bez starostí
+            </h2>
+            <p className="hero-subtitle text-muted-foreground pl-0 sm:pl-6 lg:pl-12 w-full sm:w-5/6 lg:w-2/3 pb-3">
+              Zbavte se starostí o technologie a zaměřte se na své podnikání.
+              ThinkHome nabízí kompletní správu firemního IT – od hardware, přes
+              weby až po moderní bezpečnostní řešení. Vše vyřešíme spolehlivě,
+              rychle a efektivně. Přitom nic nemusíte řešit!
+            </p>
+          </div>
+          <InteractiveGridPattern className="z-0 opacity-10 webkit-no-grid" />
+        </div>
+      </MacFallback>
+    </WebKitFallback>
+  );
+};

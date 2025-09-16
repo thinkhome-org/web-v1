@@ -213,24 +213,24 @@
     box-sizing: border-box;
   }
   
-      /* Cross-platform compatibility fixes */
-      button {
-        appearance: none;
-        /* Reset button styles */
-        border: none;
-        background: none;
-        padding: 0;
-        margin: 0;
-        font: inherit;
-        cursor: pointer;
-      }
-      
-      /* Reset form elements */
-      input, textarea, select {
-        appearance: none;
-        border-radius: 0;
-        font: inherit;
-      }
+  /* Cross-platform compatibility fixes */
+  button {
+    appearance: none;
+    /* Reset button styles */
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+  }
+  
+  /* Reset form elements */
+  input, textarea, select {
+    appearance: none;
+    border-radius: 0;
+    font: inherit;
+  }
   
   /* Ensure consistent spacing */
   h1, h2, h3, h4, h5, h6, p, ul, ol, li {
@@ -643,13 +643,13 @@
   
   /* Better border radius fallbacks */
   .no-border-radius .rounded-lg {
-    border-radius: 0;
-  }
-  
+      border-radius: 0;
+    }
+    
   .no-border-radius .rounded-full {
-    border-radius: 0;
-  }
-  
+      border-radius: 0;
+    }
+    
   .no-border-radius .rounded-md {
     border-radius: 0;
   }
@@ -753,17 +753,17 @@
   
   /* Better backdrop-filter fallbacks for older browsers */
   @supports not (backdrop-filter: blur(10px)) {
-    .backdrop-blur-md,
-    .backdrop-blur-sm {
-      background-color: rgba(255, 255, 255, 0.9);
+      .backdrop-blur-md,
+      .backdrop-blur-sm {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+      
+      .dark .backdrop-blur-md,
+      .dark .backdrop-blur-sm {
+        background-color: rgba(0, 0, 0, 0.9);
+      }
     }
     
-    .dark .backdrop-blur-md,
-    .dark .backdrop-blur-sm {
-      background-color: rgba(0, 0, 0, 0.9);
-    }
-  }
-  
   /* Better CSS Grid fallbacks for older browsers */
   @supports not (display: grid) {
     .grid {
@@ -834,19 +834,19 @@
     transform: translateZ(0);
   }
   
-  .transform-gpu {
-    -webkit-transform: translateZ(0);
+    .transform-gpu {
+      -webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -ms-backface-visibility: hidden;
     -o-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  
+      backface-visibility: hidden;
+    }
+    
   /* Transition with all vendor prefixes */
   .transition-all {
     -webkit-transition: all 0.3s ease;
@@ -1433,5 +1433,169 @@
     -ms-transform-origin: bottom right;
     -o-transform-origin: bottom right;
     transform-origin: bottom right;
+  }
+  
+  /* WebKit-specific fixes for Safari */
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    /* Remove all backgrounds for WebKit */
+    .backdrop-blur-md,
+    .backdrop-blur-sm {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    
+    .dark .backdrop-blur-md,
+    .dark .backdrop-blur-sm {
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    
+    /* WebKit-specific hero fixes for Mac */
+    @media screen and (-webkit-min-device-pixel-ratio: 0) and (min-width: 1024px) {
+      .hero-section {
+        min-height: 100vh !important;
+        padding-top: 8rem !important;
+        padding-bottom: 8rem !important;
+      }
+      
+      .hero-content {
+        padding-left: 4rem !important;
+        padding-right: 4rem !important;
+      }
+      
+      .hero-title {
+        font-size: 3.5rem !important;
+        line-height: 1.1 !important;
+        margin-bottom: 2rem !important;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.5rem !important;
+        line-height: 1.6 !important;
+        max-width: 60% !important;
+      }
+      
+      .hero-logo {
+        height: 4rem !important;
+        width: auto !important;
+        margin-bottom: 2rem !important;
+      }
+    }
+    
+    /* WebKit-specific mobile fixes */
+    @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 1023px) {
+      .hero-section {
+        min-height: 80vh !important;
+        padding-top: 4rem !important;
+        padding-bottom: 4rem !important;
+      }
+      
+      .hero-content {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+      }
+      
+      .hero-title {
+        font-size: 2.5rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 1.5rem !important;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.25rem !important;
+        line-height: 1.5 !important;
+        max-width: 90% !important;
+      }
+      
+      .hero-logo {
+        height: 3rem !important;
+        width: auto !important;
+        margin-bottom: 1.5rem !important;
+      }
+    }
+    
+    /* WebKit-specific background removal */
+    .webkit-no-bg {
+      background: none !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    
+    .webkit-no-bg * {
+      background: none !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    
+    /* WebKit-specific pattern removal */
+    .webkit-no-pattern {
+      background-image: none !important;
+    }
+    
+    .webkit-no-pattern::before,
+    .webkit-no-pattern::after {
+      display: none !important;
+    }
+    
+    /* WebKit-specific grid pattern removal */
+    .webkit-no-grid {
+      background-image: none !important;
+    }
+    
+    .webkit-no-grid::before,
+    .webkit-no-grid::after {
+      display: none !important;
+    }
+    
+    /* WebKit-specific backdrop removal */
+    .webkit-no-backdrop {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      background: none !important;
+      background-color: transparent !important;
+    }
+    
+    /* WebKit-specific shadow removal */
+    .webkit-no-shadow {
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+    }
+    
+    /* WebKit-specific border removal */
+    .webkit-no-border {
+      border: none !important;
+    }
+    
+    /* WebKit-specific outline removal */
+    .webkit-no-outline {
+      outline: none !important;
+    }
+    
+    /* WebKit-specific focus removal */
+    .webkit-no-focus:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* WebKit-specific selection removal */
+    .webkit-no-selection {
+      -webkit-user-select: none !important;
+      -moz-user-select: none !important;
+      -ms-user-select: none !important;
+      user-select: none !important;
+    }
+    
+    /* WebKit-specific text selection removal */
+    .webkit-no-selection::selection {
+      background: none !important;
+      color: inherit !important;
+    }
+    
+    .webkit-no-selection::-moz-selection {
+      background: none !important;
+      color: inherit !important;
+    }
   }
 }

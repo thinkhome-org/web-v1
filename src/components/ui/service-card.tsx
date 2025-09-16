@@ -32,7 +32,7 @@ const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
       <motion.div
         ref={ref}
         className={cn(
-          "group relative overflow-hidden rounded-xl border bg-card/60 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/10",
+          "group relative overflow-hidden rounded-xl border bg-card/60 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 webkit-no-bg webkit-no-backdrop",
           variant === "featured" 
             ? "border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10" 
             : "border-border hover:border-primary/30",
@@ -44,7 +44,7 @@ const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
         transition={{ duration: 0.2 }}
       >
         {/* Background gradient effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100 webkit-no-bg" />
         
         {/* Content */}
         <div className="relative p-6">
@@ -90,8 +90,7 @@ export const servicesData = [
   {
     title: "Turn-key IT management a Vzdálená správa",
     description: "Kompletní péče o vaše IT prostředí včetně vzdáleného dohledu a podpory. Minimalizujeme výpadky, řešíme i drobnosti na dálku.",
-    icon: IconServer,
-    variant: "featured" as const
+    icon: IconServer
   },
   {
     title: "Repasování PC a notebooků",
@@ -115,8 +114,7 @@ export const servicesData = [
         </ul>
       </div>
     ),
-    icon: IconWorld,
-    variant: "featured" as const
+    icon: IconWorld
   },
   {
     title: "Backup, emaily, privátní cloud/server",
