@@ -19,3 +19,4 @@ export { useWebSocket } from "./use-websocket";
 export { useWebAssembly } from "./use-webassembly";
 export { useWebKit } from "./use-webkit";
 export { useSafariFixes } from "./use-safari-fixes";
+export { useTeamData } from "./use-team-data";
