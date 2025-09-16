@@ -91,7 +91,7 @@ export default function MainPage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="relative scroll-mt-20 py-20">
+      <section id="services" className="relative scroll-mt-20 py-20 webkit-no-bg">
         <div className="relative max-w-7xl mx-auto px-6">
           {/* Header */}
           <div className="text-center mb-16">
@@ -111,8 +111,7 @@ export default function MainPage() {
                 title={service.title}
                 description={service.description}
                 icon={service.icon}
-                variant={service.variant}
-                className="h-full"
+                className="h-full webkit-no-bg"
               />
             ))}
           </div>
@@ -131,7 +130,7 @@ export default function MainPage() {
             </div>
           </div>
         </div>
-        <InteractiveGridPattern className="absolute inset-0 z-0 opacity-10" />
+        <InteractiveGridPattern className="absolute inset-0 z-0 opacity-10 webkit-no-grid" />
       </section>
 
       {/* Team Section */}
