@@ -1497,153 +1497,287 @@
     -webkit-backdrop-filter: none !important;
   }
   
-  /* WebKit-specific fixes for Safari */
+  /* Safari-specific fixes */
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    
-    /* WebKit-specific hero fixes for Mac */
-    @media screen and (-webkit-min-device-pixel-ratio: 0) and (min-width: 1024px) {
-      .hero-section {
-        min-height: 100vh !important;
-        padding-top: 8rem !important;
-        padding-bottom: 8rem !important;
-      }
-      
-      .hero-content {
-        padding-left: 4rem !important;
-        padding-right: 4rem !important;
-      }
-      
-      .hero-title {
-        font-size: 3.5rem !important;
-        line-height: 1.1 !important;
-        margin-bottom: 2rem !important;
-      }
-      
-      .hero-subtitle {
-        font-size: 1.5rem !important;
-        line-height: 1.6 !important;
-        max-width: 60% !important;
-      }
-      
-      .hero-logo {
-        height: 4rem !important;
-        width: auto !important;
-        margin-bottom: 2rem !important;
-      }
+    /* Fix Safari flexbox issues */
+    .flex {
+      display: -webkit-box !important;
+      display: flex !important;
     }
     
-    /* WebKit-specific mobile fixes */
-    @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 1023px) {
-      .hero-section {
-        min-height: 80vh !important;
-        padding-top: 4rem !important;
-        padding-bottom: 4rem !important;
-      }
-      
-      .hero-content {
-        padding-left: 2rem !important;
-        padding-right: 2rem !important;
-      }
-      
-      .hero-title {
-        font-size: 2.5rem !important;
-        line-height: 1.2 !important;
-        margin-bottom: 1.5rem !important;
-      }
-      
-      .hero-subtitle {
-        font-size: 1.25rem !important;
-        line-height: 1.5 !important;
-        max-width: 90% !important;
-      }
-      
-      .hero-logo {
-        height: 3rem !important;
-        width: auto !important;
-        margin-bottom: 1.5rem !important;
-      }
+    .flex-col {
+      -webkit-box-orient: vertical !important;
+      flex-direction: column !important;
     }
     
-    /* WebKit-specific background removal */
-    .webkit-no-bg {
-      background: none !important;
-      background-color: transparent !important;
-      background-image: none !important;
+    .items-center {
+      -webkit-box-align: center !important;
+      align-items: center !important;
     }
     
-    .webkit-no-bg * {
-      background: none !important;
-      background-color: transparent !important;
-      background-image: none !important;
+    .justify-center {
+      -webkit-box-pack: center !important;
+      justify-content: center !important;
     }
     
-    /* WebKit-specific pattern removal */
-    .webkit-no-pattern {
-      background-image: none !important;
+    .justify-between {
+      -webkit-box-pack: justify !important;
+      justify-content: space-between !important;
     }
     
-    .webkit-no-pattern::before,
-    .webkit-no-pattern::after {
-      display: none !important;
+    /* Fix Safari CSS Grid issues */
+    .grid {
+      display: -webkit-grid !important;
+      display: grid !important;
     }
     
-    /* WebKit-specific grid pattern removal */
-    .webkit-no-grid {
-      background-image: none !important;
+    .grid-cols-1 {
+      -webkit-grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+      grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
     }
     
-    .webkit-no-grid::before,
-    .webkit-no-grid::after {
-      display: none !important;
+    .grid-cols-2 {
+      -webkit-grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
     
-    /* WebKit-specific backdrop removal */
-    .webkit-no-backdrop {
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      background: none !important;
-      background-color: transparent !important;
+    .grid-cols-3 {
+      -webkit-grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
     
-    /* WebKit-specific shadow removal */
-    .webkit-no-shadow {
-      box-shadow: none !important;
-      -webkit-box-shadow: none !important;
+    .gap-4 {
+      -webkit-gap: 1rem !important;
+      gap: 1rem !important;
     }
     
-    /* WebKit-specific border removal */
-    .webkit-no-border {
-      border: none !important;
+    .gap-6 {
+      -webkit-gap: 1.5rem !important;
+      gap: 1.5rem !important;
     }
     
-    /* WebKit-specific outline removal */
-    .webkit-no-outline {
-      outline: none !important;
+    /* Fix Safari transform issues */
+    .transform {
+      -webkit-transform: translateZ(0) !important;
+      transform: translateZ(0) !important;
     }
     
-    /* WebKit-specific focus removal */
-    .webkit-no-focus:focus {
-      outline: none !important;
-      box-shadow: none !important;
+    .hover\:scale-105:hover {
+      -webkit-transform: scale(1.05) !important;
+      transform: scale(1.05) !important;
     }
     
-    /* WebKit-specific selection removal */
-    .webkit-no-selection {
+    .hover\:-translate-y-1:hover {
+      -webkit-transform: translateY(-0.25rem) !important;
+      transform: translateY(-0.25rem) !important;
+    }
+    
+    /* Fix Safari transition issues */
+    .transition-all {
+      -webkit-transition: all 0.3s ease !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .transition-colors {
+      -webkit-transition: color 0.3s ease, background-color 0.3s ease !important;
+      transition: color 0.3s ease, background-color 0.3s ease !important;
+    }
+    
+    .transition-transform {
+      -webkit-transition: transform 0.3s ease !important;
+      transition: transform 0.3s ease !important;
+    }
+    
+    /* Fix Safari border-radius issues */
+    .rounded {
+      -webkit-border-radius: 0.25rem !important;
+      border-radius: 0.25rem !important;
+    }
+    
+    .rounded-lg {
+      -webkit-border-radius: 0.5rem !important;
+      border-radius: 0.5rem !important;
+    }
+    
+    .rounded-xl {
+      -webkit-border-radius: 0.75rem !important;
+      border-radius: 0.75rem !important;
+    }
+    
+    .rounded-full {
+      -webkit-border-radius: 9999px !important;
+      border-radius: 9999px !important;
+    }
+    
+    /* Fix Safari box-shadow issues */
+    .shadow {
+      -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .shadow-lg {
+      -webkit-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .shadow-md {
+      -webkit-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Fix Safari text selection issues */
+    .select-none {
       -webkit-user-select: none !important;
-      -moz-user-select: none !important;
-      -ms-user-select: none !important;
       user-select: none !important;
     }
     
-    /* WebKit-specific text selection removal */
-    .webkit-no-selection::selection {
-      background: none !important;
-      color: inherit !important;
+    .select-text {
+      -webkit-user-select: text !important;
+      user-select: text !important;
     }
     
-    .webkit-no-selection::-moz-selection {
-      background: none !important;
-      color: inherit !important;
+    .select-all {
+      -webkit-user-select: all !important;
+      user-select: all !important;
+    }
+    
+    /* Fix Safari scrollbar styling */
+    .scrollbar-thin {
+      scrollbar-width: thin !important;
+    }
+    
+    .scrollbar-none {
+      scrollbar-width: none !important;
+    }
+    
+    .scrollbar-none::-webkit-scrollbar {
+      display: none !important;
+    }
+    
+    /* Fix Safari focus visible */
+    .focus\:outline-none:focus {
+      outline: none !important;
+    }
+    
+    .focus\:ring-2:focus {
+      -webkit-box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5) !important;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5) !important;
+    }
+    
+    /* Fix Safari animation issues */
+    .animate-spin {
+      -webkit-animation: spin 1s linear infinite !important;
+      animation: spin 1s linear infinite !important;
+    }
+    
+    .animate-pulse {
+      -webkit-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+    }
+    
+    .animate-bounce {
+      -webkit-animation: bounce 1s infinite !important;
+      animation: bounce 1s infinite !important;
+    }
+    
+    @-webkit-keyframes spin {
+      to { -webkit-transform: rotate(360deg); }
+    }
+    
+    @-webkit-keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    @-webkit-keyframes bounce {
+      0%, 100% { -webkit-transform: translateY(-25%); }
+      50% { -webkit-transform: translateY(0); }
+    }
+    
+    /* Fix Safari gradient issues */
+    .bg-gradient-to-r {
+      background: linear-gradient(to right, var(--tw-gradient-stops)) !important;
+    }
+    
+    .bg-gradient-to-br {
+      background: linear-gradient(to bottom right, var(--tw-gradient-stops)) !important;
+    }
+    
+    .bg-gradient-to-t {
+      background: linear-gradient(to top, var(--tw-gradient-stops)) !important;
+    }
+    
+    /* Fix Safari filter issues */
+    .blur-sm {
+      -webkit-filter: blur(4px) !important;
+      filter: blur(4px) !important;
+    }
+    
+    .blur-md {
+      -webkit-filter: blur(8px) !important;
+      filter: blur(8px) !important;
+    }
+    
+    .blur-lg {
+      -webkit-filter: blur(16px) !important;
+      filter: blur(16px) !important;
+    }
+    
+    .brightness-50 {
+      -webkit-filter: brightness(0.5) !important;
+      filter: brightness(0.5) !important;
+    }
+    
+    .contrast-125 {
+      -webkit-filter: contrast(1.25) !important;
+      filter: contrast(1.25) !important;
+    }
+    
+    /* Fix Safari clip-path issues */
+    .clip-path-circle {
+      -webkit-clip-path: circle(50%) !important;
+      clip-path: circle(50%) !important;
+    }
+    
+    .clip-path-polygon {
+      -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
+    }
+    
+    /* Fix Safari mask issues */
+    .mask-none {
+      -webkit-mask: none !important;
+      mask: none !important;
+    }
+    
+    .mask-gradient {
+      -webkit-mask: linear-gradient(black, transparent) !important;
+      mask: linear-gradient(black, transparent) !important;
+    }
+    
+    /* Fix Safari sticky positioning */
+    .sticky {
+      position: -webkit-sticky !important;
+      position: sticky !important;
+    }
+    
+    /* Fix Safari appearance */
+    button, input, textarea, select {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+    }
+    
+    /* Fix Safari text rendering */
+    body {
+      -webkit-font-smoothing: antialiased !important;
+      -moz-osx-font-smoothing: grayscale !important;
+      text-rendering: optimizeLegibility !important;
+    }
+    
+    /* Fix Safari overflow scrolling */
+    html {
+      -webkit-overflow-scrolling: touch !important;
     }
   }
+  
 }

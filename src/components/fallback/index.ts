@@ -20,3 +20,4 @@ export { WebKitNoBackground } from "./webkit-no-background";
 export { WebKitMacHero } from "./webkit-mac-hero";
 export { WebKitClean } from "./webkit-clean";
 export { WebKitTest } from "./webkit-test";
+export { SafariTest } from "./safari-test";

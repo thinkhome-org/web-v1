@@ -1,5 +1,24 @@
 // Polyfills for cross-platform compatibility
 
+// Safari detection
+export const isSafari = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+};
+
+// WebKit detection
+export const isWebKit = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  return /webkit/i.test(navigator.userAgent);
+};
+
+// Safari version detection
+export const getSafariVersion = (): number => {
+  if (typeof window === 'undefined') return 0;
+  const match = navigator.userAgent.match(/Version\/(\d+)/);
+  return match ? parseInt(match[1], 10) : 0;
+};
+
 // CSS Custom Properties fallback
 export const supportsCSSVariables = (): boolean => {
   if (typeof window === 'undefined') return false;
@@ -891,11 +910,201 @@ export const polyfillWebAssembly = (): void => {
 };
 
 // Initialize all polyfills
+// Safari-specific polyfills
+export const polyfillSafari = (): void => {
+  if (typeof window === 'undefined' || !isSafari()) return;
+  
+  // Fix Safari flexbox issues
+  if (!supportsFlexbox()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .flex { display: -webkit-box !important; }
+      .flex-col { -webkit-box-orient: vertical !important; }
+      .items-center { -webkit-box-align: center !important; }
+      .justify-center { -webkit-box-pack: center !important; }
+      .justify-between { -webkit-box-pack: justify !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari CSS Grid issues
+  if (!supportsCSSGrid()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .grid { display: -webkit-grid !important; }
+      .grid-cols-1 { -webkit-grid-template-columns: repeat(1, minmax(0, 1fr)) !important; }
+      .grid-cols-2 { -webkit-grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      .grid-cols-3 { -webkit-grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+      .gap-4 { -webkit-gap: 1rem !important; }
+      .gap-6 { -webkit-gap: 1.5rem !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari backdrop-filter issues
+  if (!supportsBackdropFilter()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .backdrop-blur-sm,
+      .backdrop-blur-md,
+      .backdrop-blur-lg {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background-color: rgba(255, 255, 255, 0.8) !important;
+      }
+      .dark .backdrop-blur-sm,
+      .dark .backdrop-blur-md,
+      .dark .backdrop-blur-lg {
+        background-color: rgba(0, 0, 0, 0.8) !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari transform issues
+  if (!supportsTransform()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .transform { -webkit-transform: translateZ(0) !important; }
+      .hover\\:scale-105:hover { -webkit-transform: scale(1.05) !important; }
+      .hover\\:-translate-y-1:hover { -webkit-transform: translateY(-0.25rem) !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari transition issues
+  if (!supportsTransition()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .transition-all { -webkit-transition: all 0.3s ease !important; }
+      .transition-colors { -webkit-transition: color 0.3s ease, background-color 0.3s ease !important; }
+      .transition-transform { -webkit-transition: transform 0.3s ease !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari border-radius issues
+  if (!supportsBorderRadius()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .rounded { -webkit-border-radius: 0.25rem !important; }
+      .rounded-lg { -webkit-border-radius: 0.5rem !important; }
+      .rounded-xl { -webkit-border-radius: 0.75rem !important; }
+      .rounded-full { -webkit-border-radius: 9999px !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari box-shadow issues
+  if (!supportsBoxShadow()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .shadow { -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important; }
+      .shadow-lg { -webkit-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important; }
+      .shadow-md { -webkit-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari text selection issues
+  if (!supportsTextSelection()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .select-none { -webkit-user-select: none !important; }
+      .select-text { -webkit-user-select: text !important; }
+      .select-all { -webkit-user-select: all !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari scrollbar styling
+  if (!supportsScrollbarStyling()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .scrollbar-thin { scrollbar-width: thin !important; }
+      .scrollbar-none { scrollbar-width: none !important; }
+      .scrollbar-none::-webkit-scrollbar { display: none !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari focus visible
+  if (!supportsFocusVisible()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .focus\\:outline-none:focus { outline: none !important; }
+      .focus\\:ring-2:focus { -webkit-box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5) !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari animation issues
+  if (!supportsAnimation()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .animate-spin { -webkit-animation: spin 1s linear infinite !important; }
+      .animate-pulse { -webkit-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important; }
+      .animate-bounce { -webkit-animation: bounce 1s infinite !important; }
+      @-webkit-keyframes spin { to { -webkit-transform: rotate(360deg); } }
+      @-webkit-keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+      @-webkit-keyframes bounce { 0%, 100% { -webkit-transform: translateY(-25%); } 50% { -webkit-transform: translateY(0); } }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari gradient issues
+  if (!supportsGradient()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .bg-gradient-to-r { background: linear-gradient(to right, var(--tw-gradient-stops)) !important; }
+      .bg-gradient-to-br { background: linear-gradient(to bottom right, var(--tw-gradient-stops)) !important; }
+      .bg-gradient-to-t { background: linear-gradient(to top, var(--tw-gradient-stops)) !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari filter issues
+  if (!supportsFilter()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .blur-sm { -webkit-filter: blur(4px) !important; }
+      .blur-md { -webkit-filter: blur(8px) !important; }
+      .blur-lg { -webkit-filter: blur(16px) !important; }
+      .brightness-50 { -webkit-filter: brightness(0.5) !important; }
+      .contrast-125 { -webkit-filter: contrast(1.25) !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari clip-path issues
+  if (!supportsClipPath()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .clip-path-circle { -webkit-clip-path: circle(50%) !important; }
+      .clip-path-polygon { -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important; }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Fix Safari mask issues
+  if (!supportsMask()) {
+    const style = document.createElement('style');
+    style.textContent = `
+      .mask-none { -webkit-mask: none !important; }
+      .mask-gradient { -webkit-mask: linear-gradient(black, transparent) !important; }
+    `;
+    document.head.appendChild(style);
+  }
+};
+
 export const initializePolyfills = (): void => {
   if (typeof window === 'undefined') return;
   
   // Apply feature detection fallbacks
   applyFallbacks();
+  
+  // Initialize Safari-specific polyfills
+  polyfillSafari();
   
   // Apply polyfills for missing features
   polyfillIntersectionObserver();
