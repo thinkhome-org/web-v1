@@ -97,6 +97,15 @@ export function FeatureCard({
         className
       )}
       onClick={handleCardClick}
+      role={onCardClick ? "button" : undefined}
+      tabIndex={onCardClick ? 0 : undefined}
+      onKeyDown={onCardClick ? (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardClick();
+        }
+      } : undefined}
+      aria-label={onCardClick ? `Zobrazit detaily o ${title || 'funkci'}` : undefined}
     >
       <div className={cn(
         "flex gap-4",
@@ -105,7 +114,6 @@ export function FeatureCard({
         {/* Icon Container */}
         <div className={cn(
           "p-2 rounded-lg bg-muted/70 group-hover:bg-muted/60 transition-colors flex-shrink-0 backdrop-blur-lg",
-          layout === "vertical" ? "" : "",
           iconContainerClassName
         )}>
           <IconComponent 

@@ -61,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="cs" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col`}
       >
@@ -76,7 +76,7 @@ export default function RootLayout({
           </BlurFade>
           <Footer />
           <FloatingDockDemo />
-         </Providers>
+        </Providers>
       </body>
     </html>
   );

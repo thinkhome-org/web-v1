@@ -98,7 +98,8 @@ const FloatingDockMobile = ({
                       window.open(item.href, '_blank');
                     }
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 hover:bg-gray-300 dark:hover:bg-neutral-700 transition-all duration-200"
+                  aria-label={item.title}
                 >
                   <div className="h-4 w-4">{item.icon}</div>
                 </button>
@@ -145,7 +146,8 @@ const FloatingDockMobile = ({
                       window.open(item.href, '_blank');
                     }
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 hover:bg-gray-300 dark:hover:bg-neutral-700 transition-all duration-200"
+                  aria-label={item.title}
                 >
                   <div className="h-4 w-4">{item.icon}</div>
                 </button>
@@ -168,7 +170,9 @@ const ToggleButton = ({
 }) => (
   <button
     onClick={() => setOpen(!open)}
-    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
+    className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 hover:bg-gray-300 dark:hover:bg-neutral-700 transition-all duration-200"
+    aria-label={open ? "Zavřít navigaci" : "Otevřít navigaci"}
+    aria-expanded={open}
   >
     <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
   </button>
@@ -206,20 +210,10 @@ const FloatingDockDesktop = ({
                 if (item.href.startsWith('#')) {
                   const element = document.getElementById(item.href.substring(1));
                   if (element) {
-                    // Safari-compatible smooth scroll
-                    if ('scrollBehavior' in document.documentElement.style) {
-                      element.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start',
-                      });
-                    } else {
-                      // Fallback for Safari
-                      const targetPosition = element.offsetTop - 80; // Account for fixed header
-                      window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                      });
-                    }
+                    element.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                    });
                   }
                 } else {
                   window.open(item.href, '_blank');
@@ -263,7 +257,7 @@ const IconContainer = ({
   icon: React.ReactNode;
   href: string;
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLButtonElement>(null);
   const [hovered, setHovered] = useState(false);
 
   const distance = useTransform(mouseX, (val) => {
@@ -284,7 +278,7 @@ const IconContainer = ({
   const heightIcon = useSpring(heightIconTransform, { mass: 0.1, stiffness: 150, damping: 12 });
 
   return (
-    <motion.div
+    <motion.button
       ref={ref}
       style={{ width, height }}
       onMouseEnter={() => setHovered(true)}
@@ -294,25 +288,16 @@ const IconContainer = ({
         if (href.startsWith('#')) {
           const element = document.getElementById(href.substring(1));
           if (element) {
-            // Safari-compatible smooth scroll
-            if ('scrollBehavior' in document.documentElement.style) {
-              element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-              });
-            } else {
-              // Fallback for Safari
-              const targetPosition = element.offsetTop - 80; // Account for fixed header
-              window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-              });
-            }
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
           }
         } else {
           window.open(href, '_blank');
         }
       }}
+      aria-label={title}
     >
       <AnimatePresence>
         {hovered && (
@@ -332,6 +317,6 @@ const IconContainer = ({
       >
         {icon}
       </motion.div>
-    </motion.div>
+    </motion.button>
   );
 };

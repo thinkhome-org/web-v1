@@ -186,30 +186,13 @@
   
   html {
     scroll-behavior: smooth;
-    /* Safari-specific scroll fixes */
-    -webkit-overflow-scrolling: touch;
     /* Ensure consistent font rendering */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     /* Reset margins and padding */
     margin: 0;
     padding: 0;
   }
   
-  /* Safari smooth scroll fallback */
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    html {
-      scroll-behavior: smooth;
-    }
-    
-    /* Fallback for older Safari versions */
-    @supports not (scroll-behavior: smooth) {
-      html {
-        scroll-behavior: auto;
-      }
-    }
-  }
   
   body {
     @apply bg-background text-foreground;
@@ -230,29 +213,24 @@
     box-sizing: border-box;
   }
   
-  /* Cross-platform compatibility fixes */
-  button {
-    -webkit-appearance: none;
-    -webkit-tap-highlight-color: transparent;
-    -moz-appearance: none;
-    appearance: none;
-    /* Reset button styles */
-    border: none;
-    background: none;
-    padding: 0;
-    margin: 0;
-    font: inherit;
-    cursor: pointer;
-  }
-  
-  /* Reset form elements */
-  input, textarea, select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: 0;
-    font: inherit;
-  }
+      /* Cross-platform compatibility fixes */
+      button {
+        appearance: none;
+        /* Reset button styles */
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        font: inherit;
+        cursor: pointer;
+      }
+      
+      /* Reset form elements */
+      input, textarea, select {
+        appearance: none;
+        border-radius: 0;
+        font: inherit;
+      }
   
   /* Ensure consistent spacing */
   h1, h2, h3, h4, h5, h6, p, ul, ol, li {
@@ -280,13 +258,11 @@
   
   /* Backdrop blur fallbacks */
   .backdrop-blur-md {
-    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     background-color: rgba(255, 255, 255, 0.8);
   }
   
   .backdrop-blur-sm {
-    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     background-color: rgba(255, 255, 255, 0.9);
   }
@@ -442,144 +418,6 @@
     background-color: rgba(0, 0, 0, 0.95);
   }
   
-  /* Safari specific fixes */
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .backdrop-blur-md,
-    .backdrop-blur-sm {
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-    }
-    
-    /* Fix Safari flexbox issues */
-    .flex {
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: flex;
-    }
-    
-    /* Fix Safari transform issues */
-    .transform {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-    
-    /* Fix Safari backdrop-filter fallback */
-    .backdrop-blur-md,
-    .backdrop-blur-sm {
-      background-color: rgba(255, 255, 255, 0.8);
-    }
-    
-    .dark .backdrop-blur-md,
-    .dark .backdrop-blur-sm {
-      background-color: rgba(0, 0, 0, 0.8);
-    }
-    
-    /* Fix Safari button appearance */
-    button {
-      -webkit-appearance: none;
-      -webkit-border-radius: 0;
-      border-radius: 0;
-    }
-    
-    /* Fix Safari input appearance */
-    input, textarea, select {
-      -webkit-appearance: none;
-      -webkit-border-radius: 0;
-      border-radius: 0;
-    }
-    
-    /* Fix Safari scroll behavior */
-    html {
-      -webkit-overflow-scrolling: touch;
-    }
-    
-    /* Fix Safari text rendering */
-    body {
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-    }
-    
-    /* Fix Safari grid issues */
-    .grid {
-      display: -webkit-grid;
-      display: grid;
-    }
-    
-    /* Fix Safari gap property fallback */
-    .gap-4 {
-      gap: 1rem;
-      -webkit-gap: 1rem;
-    }
-    
-    .gap-6 {
-      gap: 1.5rem;
-      -webkit-gap: 1.5rem;
-    }
-    
-    .gap-8 {
-      gap: 2rem;
-      -webkit-gap: 2rem;
-    }
-    
-    /* Fix Safari sticky positioning */
-    .sticky {
-      position: -webkit-sticky;
-      position: sticky;
-    }
-    
-    /* Fix Safari backdrop-filter support detection */
-    @supports not (backdrop-filter: blur(12px)) {
-      .backdrop-blur-md,
-      .backdrop-blur-sm {
-        background-color: rgba(255, 255, 255, 0.9);
-      }
-      
-      .dark .backdrop-blur-md,
-      .dark .backdrop-blur-sm {
-        background-color: rgba(0, 0, 0, 0.9);
-      }
-    }
-    
-    /* Fix Safari focus styles */
-    *:focus {
-      outline: 2px solid #3b82f6;
-      outline-offset: 2px;
-    }
-    
-    /* Fix Safari button focus */
-    button:focus {
-      outline: 2px solid #3b82f6;
-      outline-offset: 2px;
-    }
-    
-    /* Fix Safari input focus */
-    input:focus,
-    textarea:focus,
-    select:focus {
-      outline: 2px solid #3b82f6;
-      outline-offset: 2px;
-    }
-    
-    /* Fix Safari animation performance */
-    .transform-gpu {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-    }
-    
-    /* Fix Safari text selection */
-    ::selection {
-      background-color: #3b82f6;
-      color: white;
-    }
-    
-    ::-moz-selection {
-      background-color: #3b82f6;
-      color: white;
-    }
-  }
   
   /* Mozilla Firefox specific fixes */
   @-moz-document url-prefix() {
@@ -592,13 +430,6 @@
     .dark .backdrop-blur-sm {
       background-color: rgba(0, 0, 0, 0.95);
     }
-    
-    /* Fix Firefox flexbox issues */
-    .flex {
-      display: -moz-box;
-      display: -moz-flex;
-      display: flex;
-    }
   }
   
   /* Internet Explorer specific fixes */
@@ -609,10 +440,6 @@
     
     .grid {
       display: -ms-grid;
-    }
-    
-    .transform {
-      -ms-transform: translateZ(0);
     }
   }
   
@@ -649,4 +476,962 @@
   .mx-4 { margin-left: 1rem; margin-right: 1rem; }
   .mx-6 { margin-left: 1.5rem; margin-right: 1.5rem; }
   .mx-8 { margin-left: 2rem; margin-right: 2rem; }
+  
+  /* Additional cross-browser compatibility fixes */
+  
+  /* CSS Custom Properties with better fallbacks */
+  @supports not (color: var(--test)) {
+    :root {
+      --background: #ffffff;
+      --foreground: #262626;
+      --card: #ffffff;
+      --card-foreground: #262626;
+      --popover: #ffffff;
+      --popover-foreground: #262626;
+      --primary: #171717;
+      --primary-foreground: #fafafa;
+      --secondary: #f5f5f5;
+      --secondary-foreground: #171717;
+      --muted: #f5f5f5;
+      --muted-foreground: #737373;
+      --accent: #f5f5f5;
+      --accent-foreground: #171717;
+      --destructive: #dc2626;
+      --border: #e5e5e5;
+      --input: #e5e5e5;
+      --ring: #a3a3a3;
+    }
+    
+    .dark {
+      --background: #0a0a0a;
+      --foreground: #fafafa;
+      --card: #171717;
+      --card-foreground: #fafafa;
+      --popover: #171717;
+      --popover-foreground: #fafafa;
+      --primary: #e5e5e5;
+      --primary-foreground: #171717;
+      --secondary: #262626;
+      --secondary-foreground: #fafafa;
+      --muted: #262626;
+      --muted-foreground: #a3a3a3;
+      --accent: #262626;
+      --accent-foreground: #fafafa;
+      --destructive: #ef4444;
+      --border: rgba(255, 255, 255, 0.1);
+      --input: rgba(255, 255, 255, 0.15);
+      --ring: #737373;
+    }
+  }
+  
+  /* Better flexbox fallbacks for older browsers */
+  .no-flexbox .flex {
+    display: block;
+  }
+  
+  .no-flexbox .flex > * {
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+  }
+  
+  .no-flexbox .flex.flex-col > * {
+    display: block;
+    width: 100%;
+  }
+  
+  .no-flexbox .flex.flex-row > * {
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .no-flexbox .flex.justify-center {
+    text-align: center;
+  }
+  
+  .no-flexbox .flex.justify-between > *:first-child {
+    float: left;
+  }
+  
+  .no-flexbox .flex.justify-between > *:last-child {
+    float: right;
+  }
+  
+  .no-flexbox .flex.justify-between::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Better CSS Grid fallbacks */
+  .no-css-grid .grid {
+    display: block;
+  }
+  
+  .no-css-grid .grid > * {
+    display: block;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  .no-css-grid .grid.grid-cols-2 > * {
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+  }
+  
+  .no-css-grid .grid.grid-cols-2 > *:nth-child(2n) {
+    margin-right: 0;
+  }
+  
+  .no-css-grid .grid.grid-cols-3 > * {
+    display: inline-block;
+    width: 31%;
+    margin-right: 2%;
+  }
+  
+  .no-css-grid .grid.grid-cols-3 > *:nth-child(3n) {
+    margin-right: 0;
+  }
+  
+  /* Better backdrop filter fallbacks */
+  .no-backdrop-filter .backdrop-blur-md,
+  .no-backdrop-filter .backdrop-blur-sm {
+    background-color: rgba(255, 255, 255, 0.95);
+    background-image: none;
+  }
+  
+  .no-backdrop-filter .dark .backdrop-blur-md,
+  .no-backdrop-filter .dark .backdrop-blur-sm {
+    background-color: rgba(0, 0, 0, 0.95);
+    background-image: none;
+  }
+  
+  /* Better transform fallbacks */
+  .no-transform .transform {
+    position: relative;
+  }
+  
+  .no-transform .transform.translate-x-0 {
+    left: 0;
+  }
+  
+  .no-transform .transform.translate-x-full {
+    left: 100%;
+  }
+  
+  .no-transform .transform.translate-y-0 {
+    top: 0;
+  }
+  
+  .no-transform .transform.translate-y-full {
+    top: 100%;
+  }
+  
+  /* Better transition fallbacks */
+  .no-transition .transition-all {
+    transition: none;
+  }
+  
+  .no-transition .transition-opacity {
+    transition: none;
+  }
+  
+  .no-transition .transition-transform {
+    transition: none;
+  }
+  
+  /* Better border radius fallbacks */
+  .no-border-radius .rounded-lg {
+    border-radius: 0;
+  }
+  
+  .no-border-radius .rounded-full {
+    border-radius: 0;
+  }
+  
+  .no-border-radius .rounded-md {
+    border-radius: 0;
+  }
+  
+  /* Better box shadow fallbacks */
+  .no-box-shadow .shadow-lg {
+    box-shadow: none;
+    border: 1px solid #e5e5e5;
+  }
+  
+  .no-box-shadow .shadow-md {
+    box-shadow: none;
+    border: 1px solid #e5e5e5;
+  }
+  
+  .no-box-shadow .shadow-sm {
+    box-shadow: none;
+    border: 1px solid #e5e5e5;
+  }
+  
+  /* Better text selection fallbacks */
+  .no-text-selection ::selection {
+    background-color: transparent;
+    color: inherit;
+  }
+  
+  .no-text-selection ::-moz-selection {
+    background-color: transparent;
+    color: inherit;
+  }
+  
+  /* Better scrollbar fallbacks */
+  .no-scrollbar-styling ::-webkit-scrollbar {
+    width: auto;
+  }
+  
+  .no-scrollbar-styling ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .no-scrollbar-styling ::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 0;
+  }
+  
+  /* Better focus styles for older browsers */
+  .no-focus-visible *:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  /* Better animation fallbacks */
+  .no-animation .animate-spin {
+    animation: none;
+  }
+  
+  .no-animation .animate-pulse {
+    animation: none;
+  }
+  
+  .no-animation .animate-bounce {
+    animation: none;
+  }
+  
+  /* Better gradient fallbacks */
+  .no-gradient .bg-gradient-to-r {
+    background: linear-gradient(to right, #3b82f6, #1d4ed8);
+  }
+  
+  .no-gradient .bg-gradient-to-b {
+    background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
+  }
+  
+  /* Better filter fallbacks */
+  .no-filter .blur-sm {
+    filter: none;
+  }
+  
+  .no-filter .blur-md {
+    filter: none;
+  }
+  
+  .no-filter .blur-lg {
+    filter: none;
+  }
+  
+  /* Better clip-path fallbacks */
+  .no-clip-path .clip-path-circle {
+    clip-path: none;
+  }
+  
+  .no-clip-path .clip-path-polygon {
+    clip-path: none;
+  }
+  
+  /* Better mask fallbacks */
+  .no-mask .mask-gradient {
+    mask: none;
+    -webkit-mask: none;
+  }
+  
+  /* Better backdrop-filter fallbacks for older browsers */
+  @supports not (backdrop-filter: blur(10px)) {
+    .backdrop-blur-md,
+    .backdrop-blur-sm {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .dark .backdrop-blur-md,
+    .dark .backdrop-blur-sm {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+  }
+  
+  /* Better CSS Grid fallbacks for older browsers */
+  @supports not (display: grid) {
+    .grid {
+      display: block;
+    }
+    
+    .grid > * {
+      display: block;
+      margin-bottom: 1rem;
+    }
+  }
+  
+  /* Better flexbox fallbacks for older browsers */
+  @supports not (display: flex) {
+    .flex {
+      display: block;
+    }
+    
+    .flex > * {
+      display: inline-block;
+      vertical-align: top;
+    }
+  }
+  
+  /* Better CSS Custom Properties fallbacks for older browsers */
+  @supports not (color: var(--test)) {
+    .bg-background {
+      background-color: #ffffff;
+    }
+    
+    .dark .bg-background {
+      background-color: #0a0a0a;
+    }
+    
+    .text-foreground {
+      color: #262626;
+    }
+    
+    .dark .text-foreground {
+      color: #fafafa;
+    }
+    
+    .text-muted-foreground {
+      color: #737373;
+    }
+    
+    .dark .text-muted-foreground {
+      color: #a3a3a3;
+    }
+    
+    .border-border {
+      border-color: #e5e5e5;
+    }
+    
+    .dark .border-border {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  /* Additional vendor prefixes for maximum compatibility */
+  
+  /* Transform with all vendor prefixes */
+  .transform {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  .transform-gpu {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  /* Transition with all vendor prefixes */
+  .transition-all {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  
+  .transition-opacity {
+    -webkit-transition: opacity 0.3s ease;
+    -moz-transition: opacity 0.3s ease;
+    -ms-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+  }
+  
+  .transition-transform {
+    -webkit-transition: transform 0.3s ease;
+    -moz-transition: transform 0.3s ease;
+    -ms-transition: transform 0.3s ease;
+    -o-transition: transform 0.3s ease;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Border radius with all vendor prefixes */
+  .rounded-lg {
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+  }
+  
+  .rounded-md {
+    -webkit-border-radius: 0.375rem;
+    -moz-border-radius: 0.375rem;
+    -ms-border-radius: 0.375rem;
+    -o-border-radius: 0.375rem;
+    border-radius: 0.375rem;
+  }
+  
+  .rounded-full {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+  }
+  
+  /* Box shadow with all vendor prefixes */
+  .shadow-lg {
+    -webkit-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    -ms-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    -o-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .shadow-md {
+    -webkit-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    -moz-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    -ms-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    -o-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .shadow-sm {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    -ms-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    -o-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Filter with all vendor prefixes */
+  .blur-sm {
+    -webkit-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -ms-filter: blur(4px);
+    -o-filter: blur(4px);
+    filter: blur(4px);
+  }
+  
+  .blur-md {
+    -webkit-filter: blur(8px);
+    -moz-filter: blur(8px);
+    -ms-filter: blur(8px);
+    -o-filter: blur(8px);
+    filter: blur(8px);
+  }
+  
+  .blur-lg {
+    -webkit-filter: blur(12px);
+    -moz-filter: blur(12px);
+    -ms-filter: blur(12px);
+    -o-filter: blur(12px);
+    filter: blur(12px);
+  }
+  
+  /* Gradient with all vendor prefixes */
+  .bg-gradient-to-r {
+    background: -webkit-linear-gradient(left, #3b82f6, #1d4ed8);
+    background: -moz-linear-gradient(left, #3b82f6, #1d4ed8);
+    background: -ms-linear-gradient(left, #3b82f6, #1d4ed8);
+    background: -o-linear-gradient(left, #3b82f6, #1d4ed8);
+    background: linear-gradient(to right, #3b82f6, #1d4ed8);
+  }
+  
+  .bg-gradient-to-b {
+    background: -webkit-linear-gradient(top, #3b82f6, #1d4ed8);
+    background: -moz-linear-gradient(top, #3b82f6, #1d4ed8);
+    background: -ms-linear-gradient(top, #3b82f6, #1d4ed8);
+    background: -o-linear-gradient(top, #3b82f6, #1d4ed8);
+    background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
+  }
+  
+  /* Animation with all vendor prefixes */
+  .animate-spin {
+    -webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
+    -ms-animation: spin 1s linear infinite;
+    -o-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+  }
+  
+  .animate-pulse {
+    -webkit-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    -moz-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    -ms-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    -o-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-bounce {
+    -webkit-animation: bounce 1s infinite;
+    -moz-animation: bounce 1s infinite;
+    -ms-animation: bounce 1s infinite;
+    -o-animation: bounce 1s infinite;
+    animation: bounce 1s infinite;
+  }
+  
+  /* Keyframes with all vendor prefixes */
+  @-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+  }
+  
+  @-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+  }
+  
+  @-ms-keyframes spin {
+    from { -ms-transform: rotate(0deg); }
+    to { -ms-transform: rotate(360deg); }
+  }
+  
+  @-o-keyframes spin {
+    from { -o-transform: rotate(0deg); }
+    to { -o-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  @-webkit-keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  @-moz-keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  @-ms-keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  @-o-keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  @-webkit-keyframes bounce {
+    0%, 100% { -webkit-transform: translateY(-25%); }
+    50% { -webkit-transform: translateY(0); }
+  }
+  
+  @-moz-keyframes bounce {
+    0%, 100% { -moz-transform: translateY(-25%); }
+    50% { -moz-transform: translateY(0); }
+  }
+  
+  @-ms-keyframes bounce {
+    0%, 100% { -ms-transform: translateY(-25%); }
+    50% { -ms-transform: translateY(0); }
+  }
+  
+  @-o-keyframes bounce {
+    0%, 100% { -o-transform: translateY(-25%); }
+    50% { -o-transform: translateY(0); }
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(-25%); }
+    50% { transform: translateY(0); }
+  }
+  
+  /* Clip path with all vendor prefixes */
+  .clip-path-circle {
+    -webkit-clip-path: circle(50%);
+    -moz-clip-path: circle(50%);
+    -ms-clip-path: circle(50%);
+    -o-clip-path: circle(50%);
+    clip-path: circle(50%);
+  }
+  
+  .clip-path-polygon {
+    -webkit-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    -moz-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    -ms-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    -o-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  
+  /* Mask with all vendor prefixes */
+  .mask-gradient {
+    -webkit-mask: linear-gradient(black, transparent);
+    -moz-mask: linear-gradient(black, transparent);
+    -ms-mask: linear-gradient(black, transparent);
+    -o-mask: linear-gradient(black, transparent);
+    mask: linear-gradient(black, transparent);
+  }
+  
+  /* User select with all vendor prefixes */
+  .select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+  
+  .select-text {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    -o-user-select: text;
+    user-select: text;
+  }
+  
+  .select-all {
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    -o-user-select: all;
+    user-select: all;
+  }
+  
+  /* Touch action with all vendor prefixes */
+  .touch-none {
+    -webkit-touch-action: none;
+    -moz-touch-action: none;
+    -ms-touch-action: none;
+    -o-touch-action: none;
+    touch-action: none;
+  }
+  
+  .touch-pan-x {
+    -webkit-touch-action: pan-x;
+    -moz-touch-action: pan-x;
+    -ms-touch-action: pan-x;
+    -o-touch-action: pan-x;
+    touch-action: pan-x;
+  }
+  
+  .touch-pan-y {
+    -webkit-touch-action: pan-y;
+    -moz-touch-action: pan-y;
+    -ms-touch-action: pan-y;
+    -o-touch-action: pan-y;
+    touch-action: pan-y;
+  }
+  
+  /* Scroll behavior with all vendor prefixes */
+  .scroll-smooth {
+    -webkit-scroll-behavior: smooth;
+    -moz-scroll-behavior: smooth;
+    -ms-scroll-behavior: smooth;
+    -o-scroll-behavior: smooth;
+    scroll-behavior: smooth;
+  }
+  
+  /* Text rendering with all vendor prefixes */
+  .text-rendering-optimize-speed {
+    -webkit-text-rendering: optimizeSpeed;
+    -moz-text-rendering: optimizeSpeed;
+    -ms-text-rendering: optimizeSpeed;
+    -o-text-rendering: optimizeSpeed;
+    text-rendering: optimizeSpeed;
+  }
+  
+  .text-rendering-optimize-legibility {
+    -webkit-text-rendering: optimizeLegibility;
+    -moz-text-rendering: optimizeLegibility;
+    -ms-text-rendering: optimizeLegibility;
+    -o-text-rendering: optimizeLegibility;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Font smoothing with all vendor prefixes */
+  .antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+  }
+  
+  .subpixel-antialiased {
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+    -ms-font-smoothing: auto;
+    -o-font-smoothing: auto;
+    font-smoothing: auto;
+  }
+  
+  /* Appearance with all vendor prefixes */
+  .appearance-none {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+  }
+  
+  /* Outline with all vendor prefixes */
+  .outline-none {
+    -webkit-outline: none;
+    -moz-outline: none;
+    -ms-outline: none;
+    -o-outline: none;
+    outline: none;
+  }
+  
+  /* Resize with all vendor prefixes */
+  .resize-none {
+    -webkit-resize: none;
+    -moz-resize: none;
+    -ms-resize: none;
+    -o-resize: none;
+    resize: none;
+  }
+  
+  .resize-both {
+    -webkit-resize: both;
+    -moz-resize: both;
+    -ms-resize: both;
+    -o-resize: both;
+    resize: both;
+  }
+  
+  .resize-horizontal {
+    -webkit-resize: horizontal;
+    -moz-resize: horizontal;
+    -ms-resize: horizontal;
+    -o-resize: horizontal;
+    resize: horizontal;
+  }
+  
+  .resize-vertical {
+    -webkit-resize: vertical;
+    -moz-resize: vertical;
+    -ms-resize: vertical;
+    -o-resize: vertical;
+    resize: vertical;
+  }
+  
+  /* Cursor with all vendor prefixes */
+  .cursor-pointer {
+    -webkit-cursor: pointer;
+    -moz-cursor: pointer;
+    -ms-cursor: pointer;
+    -o-cursor: pointer;
+    cursor: pointer;
+  }
+  
+  .cursor-not-allowed {
+    -webkit-cursor: not-allowed;
+    -moz-cursor: not-allowed;
+    -ms-cursor: not-allowed;
+    -o-cursor: not-allowed;
+    cursor: not-allowed;
+  }
+  
+  .cursor-grab {
+    -webkit-cursor: grab;
+    -moz-cursor: grab;
+    -ms-cursor: grab;
+    -o-cursor: grab;
+    cursor: grab;
+  }
+  
+  .cursor-grabbing {
+    -webkit-cursor: grabbing;
+    -moz-cursor: grabbing;
+    -ms-cursor: grabbing;
+    -o-cursor: grabbing;
+    cursor: grabbing;
+  }
+  
+  /* Pointer events with all vendor prefixes */
+  .pointer-events-none {
+    -webkit-pointer-events: none;
+    -moz-pointer-events: none;
+    -ms-pointer-events: none;
+    -o-pointer-events: none;
+    pointer-events: none;
+  }
+  
+  .pointer-events-auto {
+    -webkit-pointer-events: auto;
+    -moz-pointer-events: auto;
+    -ms-pointer-events: auto;
+    -o-pointer-events: auto;
+    pointer-events: auto;
+  }
+  
+  /* Will change with all vendor prefixes */
+  .will-change-transform {
+    -webkit-will-change: transform;
+    -moz-will-change: transform;
+    -ms-will-change: transform;
+    -o-will-change: transform;
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    -webkit-will-change: opacity;
+    -moz-will-change: opacity;
+    -ms-will-change: opacity;
+    -o-will-change: opacity;
+    will-change: opacity;
+  }
+  
+  .will-change-auto {
+    -webkit-will-change: auto;
+    -moz-will-change: auto;
+    -ms-will-change: auto;
+    -o-will-change: auto;
+    will-change: auto;
+  }
+  
+  /* Backface visibility with all vendor prefixes */
+  .backface-hidden {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .backface-visible {
+    -webkit-backface-visibility: visible;
+    -moz-backface-visibility: visible;
+    -ms-backface-visibility: visible;
+    -o-backface-visibility: visible;
+    backface-visibility: visible;
+  }
+  
+  /* Perspective with all vendor prefixes */
+  .perspective-1000 {
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+    -ms-perspective: 1000px;
+    -o-perspective: 1000px;
+    perspective: 1000px;
+  }
+  
+  .perspective-2000 {
+    -webkit-perspective: 2000px;
+    -moz-perspective: 2000px;
+    -ms-perspective: 2000px;
+    -o-perspective: 2000px;
+    perspective: 2000px;
+  }
+  
+  /* Transform style with all vendor prefixes */
+  .transform-style-preserve-3d {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+  
+  .transform-style-flat {
+    -webkit-transform-style: flat;
+    -moz-transform-style: flat;
+    -ms-transform-style: flat;
+    -o-transform-style: flat;
+    transform-style: flat;
+  }
+  
+  /* Transform origin with all vendor prefixes */
+  .transform-origin-center {
+    -webkit-transform-origin: center;
+    -moz-transform-origin: center;
+    -ms-transform-origin: center;
+    -o-transform-origin: center;
+    transform-origin: center;
+  }
+  
+  .transform-origin-top {
+    -webkit-transform-origin: top;
+    -moz-transform-origin: top;
+    -ms-transform-origin: top;
+    -o-transform-origin: top;
+    transform-origin: top;
+  }
+  
+  .transform-origin-bottom {
+    -webkit-transform-origin: bottom;
+    -moz-transform-origin: bottom;
+    -ms-transform-origin: bottom;
+    -o-transform-origin: bottom;
+    transform-origin: bottom;
+  }
+  
+  .transform-origin-left {
+    -webkit-transform-origin: left;
+    -moz-transform-origin: left;
+    -ms-transform-origin: left;
+    -o-transform-origin: left;
+    transform-origin: left;
+  }
+  
+  .transform-origin-right {
+    -webkit-transform-origin: right;
+    -moz-transform-origin: right;
+    -ms-transform-origin: right;
+    -o-transform-origin: right;
+    transform-origin: right;
+  }
+  
+  /* Transform origin with all vendor prefixes */
+  .transform-origin-top-left {
+    -webkit-transform-origin: top left;
+    -moz-transform-origin: top left;
+    -ms-transform-origin: top left;
+    -o-transform-origin: top left;
+    transform-origin: top left;
+  }
+  
+  .transform-origin-top-right {
+    -webkit-transform-origin: top right;
+    -moz-transform-origin: top right;
+    -ms-transform-origin: top right;
+    -o-transform-origin: top right;
+    transform-origin: top right;
+  }
+  
+  .transform-origin-bottom-left {
+    -webkit-transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    -o-transform-origin: bottom left;
+    transform-origin: bottom left;
+  }
+  
+  .transform-origin-bottom-right {
+    -webkit-transform-origin: bottom right;
+    -moz-transform-origin: bottom right;
+    -ms-transform-origin: bottom right;
+    -o-transform-origin: bottom right;
+    transform-origin: bottom right;
+  }
 }

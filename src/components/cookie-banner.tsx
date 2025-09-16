@@ -20,7 +20,7 @@ const CookieBanner = () => {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-20 left-4 right-4 md:left-1/2 md:-translate-x-1/2 z-50">
+    <div className="fixed bottom-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 z-50">
       <div className="bg-background border border-border shadow-lg rounded-xl p-4 md:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 max-w-3xl mx-auto">
         <p className="text-sm text-muted-foreground">
           Tento web používá soubory cookie, aby vám zajistil co nejlepší
@@ -33,6 +33,7 @@ const CookieBanner = () => {
         <button
           onClick={handleAccept}
           className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium hover:bg-primary/90"
+          aria-label="Souhlasit s používáním cookies"
         >
           Souhlasím
         </button>

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { IconMail, IconPhone, IconSend, IconCheck, IconCopy } from '@tabler/icons-react';
+import { IconMail, IconPhone, IconSend, IconCheck, IconCopy, IconMapPin } from '@tabler/icons-react';
 
 interface ContactInfo {
   email: string;
@@ -68,11 +68,11 @@ ${formData.message}
 
   const copyToClipboard = async (text: string, type: 'email' | 'phone') => {
     try {
-      // Check if clipboard API is available (Safari compatibility)
+      // Check if clipboard API is available
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(text);
       } else {
-        // Fallback for Safari and older browsers
+        // Fallback for older browsers
         const textArea = document.createElement('textarea');
         textArea.value = text;
         textArea.style.position = 'fixed';
@@ -126,6 +126,7 @@ ${formData.message}
               size="sm"
               onClick={() => copyToClipboard(contactInfo.email, 'email')}
               className="opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label={`Kopírovat email ${contactInfo.email}`}
             >
               {copied.email ? (
                 <IconCheck className="h-4 w-4 text-green-600" />
@@ -158,6 +159,7 @@ ${formData.message}
               size="sm"
               onClick={() => copyToClipboard(contactInfo.phone, 'phone')}
               className="opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label={`Kopírovat telefon ${contactInfo.phone}`}
             >
               {copied.phone ? (
                 <IconCheck className="h-4 w-4 text-green-600" />
@@ -172,7 +174,7 @@ ${formData.message}
         <Card className="p-4 hover:shadow-lg transition-all duration-300 group md:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30 group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50 transition-colors">
-              <IconMail className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+              <IconMapPin className="h-5 w-5 text-purple-600 dark:text-purple-400" />
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Adresa</p>

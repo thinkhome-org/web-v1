@@ -50,6 +50,8 @@ export function TeamMemberCard({
     }
   };
 
+  const hasValidPhoto = member.photo_location && member.photo_location.trim() !== '';
+
   const handleCardClick = () => {
     if (onCardClick) {
       onCardClick(member);
@@ -64,6 +66,15 @@ export function TeamMemberCard({
         className
       )}
       onClick={handleCardClick}
+      role={onCardClick ? "button" : undefined}
+      tabIndex={onCardClick ? 0 : undefined}
+      onKeyDown={onCardClick ? (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardClick();
+        }
+      } : undefined}
+      aria-label={onCardClick ? `Zobrazit detaily o ${member.name}` : undefined}
     >
       <div className="flex flex-col items-center gap-4 h-full">
         {/* Avatar */}
@@ -71,7 +82,7 @@ export function TeamMemberCard({
           "relative rounded-lg bg-muted/70 group-hover:bg-muted/60 transition-colors backdrop-blur-lg overflow-hidden",
           avatarSizes[avatarSize]
         )}>
-          {member.photo_location && member.photo_location !== '' ? (
+          {hasValidPhoto && member.photo_location ? (
             <img 
               src={member.photo_location.startsWith('/') ? member.photo_location : `/team/pictures/${member.photo_location}`} 
               alt={member.name}
@@ -83,7 +94,7 @@ export function TeamMemberCard({
             className={cn(
               "text-foreground absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2",
               iconSizes[avatarSize],
-              member.photo_location && member.photo_location !== '' ? 'hidden' : ''
+              hasValidPhoto ? 'hidden' : ''
             )} 
           />
         </div>
