@@ -5,9 +5,9 @@ import { ServiceCard, servicesData } from "@/components/ui/service-card";
 
 export default function ServicesPage() {
   return (
-    <main className="webkit-no-bg">
+    <main className="">
       <div className="relative max-w-7xl mx-auto px-6 py-12">
-        <h1 className="text-5xl font-extrabold mb-10 text-foreground drop-shadow-lg text-center">
+        <h1 className="text-5xl font-extrabold mb-10 text-foreground text-center">
           Naše služby
         </h1>
 
@@ -19,12 +19,11 @@ export default function ServicesPage() {
               title={service.title}
               description={service.description}
               icon={service.icon}
-              className="h-full webkit-no-bg"
+              className="h-full"
             />
           ))}
         </div>
       </div>
-      <InteractiveGridPattern className="absolute inset-0 z-0 opacity-10 webkit-no-grid" />
     </main>
   );
 }

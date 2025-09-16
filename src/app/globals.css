@@ -1435,22 +1435,70 @@
     transform-origin: bottom right;
   }
   
+  /* Remove all backgrounds globally */
+  .backdrop-blur-md,
+  .backdrop-blur-sm {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+  
+  .dark .backdrop-blur-md,
+  .dark .backdrop-blur-sm {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+  
+  /* Global background removal */
+  * {
+    background: none !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+  
+  /* Remove all gradients */
+  .bg-gradient-to-br,
+  .bg-gradient-to-r,
+  .bg-gradient-to-l,
+  .bg-gradient-to-t,
+  .bg-gradient-to-b {
+    background: none !important;
+    background-image: none !important;
+  }
+  
+  /* Remove all patterns */
+  .pattern,
+  .grid-pattern,
+  .interactive-grid-pattern {
+    display: none !important;
+  }
+  
+  /* Remove all shadows */
+  .shadow,
+  .shadow-lg,
+  .shadow-md,
+  .shadow-sm {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+  
+  /* Remove all borders */
+  .border {
+    border: none !important;
+  }
+  
+  /* Remove all backdrop filters */
+  .backdrop-blur,
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
   /* WebKit-specific fixes for Safari */
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    /* Remove all backgrounds for WebKit */
-    .backdrop-blur-md,
-    .backdrop-blur-sm {
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
-      background-color: transparent !important;
-      background-image: none !important;
-    }
-    
-    .dark .backdrop-blur-md,
-    .dark .backdrop-blur-sm {
-      background-color: transparent !important;
-      background-image: none !important;
-    }
     
     /* WebKit-specific hero fixes for Mac */
     @media screen and (-webkit-min-device-pixel-ratio: 0) and (min-width: 1024px) {

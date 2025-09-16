@@ -32,10 +32,7 @@ const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
       <motion.div
         ref={ref}
         className={cn(
-          "group relative overflow-hidden rounded-xl border bg-card/60 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 webkit-no-bg webkit-no-backdrop",
-          variant === "featured" 
-            ? "border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10" 
-            : "border-border hover:border-primary/30",
+          "group relative overflow-hidden rounded-xl transition-all duration-300",
           className
         )}
         onMouseEnter={() => setIsHovered(true)}
@@ -43,19 +40,12 @@ const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
         whileHover={{ y: -4 }}
         transition={{ duration: 0.2 }}
       >
-        {/* Background gradient effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100 webkit-no-bg" />
         
         {/* Content */}
         <div className="relative p-6">
           {/* Icon */}
           <div className="mb-4">
-            <div className={cn(
-              "inline-flex items-center justify-center w-12 h-12 rounded-lg transition-all duration-300",
-              variant === "featured" 
-                ? "bg-primary/20 text-primary" 
-                : "bg-muted/70 text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary"
-            )}>
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg transition-all duration-300 text-primary">
               <Icon className="h-6 w-6" />
             </div>
           </div>

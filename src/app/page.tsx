@@ -91,11 +91,11 @@ export default function MainPage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="relative scroll-mt-20 py-20 webkit-no-bg">
+      <section id="services" className="relative scroll-mt-20 py-20">
         <div className="relative max-w-7xl mx-auto px-6">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-5xl font-extrabold mb-6 text-foreground drop-shadow-lg">
+            <h1 className="text-5xl font-extrabold mb-6 text-foreground">
               Naše služby
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -111,14 +111,14 @@ export default function MainPage() {
                 title={service.title}
                 description={service.description}
                 icon={service.icon}
-                className="h-full webkit-no-bg"
+                className="h-full"
               />
             ))}
           </div>
 
           {/* Call to Action */}
           <div className="text-center mt-16">
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium">
+            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-primary font-medium">
               <span>Potřebujete konzultaci?</span>
               <a 
                 href="#contact" 
@@ -130,7 +130,6 @@ export default function MainPage() {
             </div>
           </div>
         </div>
-        <InteractiveGridPattern className="absolute inset-0 z-0 opacity-10 webkit-no-grid" />
       </section>
 
       {/* Team Section */}
