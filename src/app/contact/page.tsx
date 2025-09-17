@@ -16,7 +16,6 @@ const contactWays = [
 export default function ContactPage() {
   return (
     <main className="relative min-h-screen flex flex-col bg-background">
-      {/* === Content section === */}
       <div className="flex-1 p-8 text-center flex flex-col items-center">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold pl-0 sm:pl-6 lg:pl-12 text-foreground p-3">
           Kontaktujte nás
@@ -52,3 +51,4 @@ export default function ContactPage() {
     </main>
   );
 }
+
